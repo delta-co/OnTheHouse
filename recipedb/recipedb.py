@@ -1,3 +1,4 @@
+import bcrypt
 import copy
 import json
 import logging
@@ -72,7 +73,7 @@ class RecipeDB:
             exc = exceptions.DatabaseOutOfDate(
                 current=existing_version,
                 new=constants.DATABASE_VERSION,
-            )
+            )           
             raise exc
 
     def _first_time_setup(self):
@@ -229,11 +230,12 @@ class RecipeDB:
     def new_image(self, filepath):
         '''
         Register a new image in the database.
-        Needs base to append generated filepath to
-        
+        '''
         #generate id and generate new filepath based on id
         id = helpers.random_hex()
-        new_filepath = '\\'.join(id[i:i+4] for i in range(0, len(id), 4)) + ".jpg"
+        filetype = filepath.rsplit('.',1)[1]
+        new_filepath = '\\'.join(id[i:i+4] for i in range(0, len(id), 4)) + '.' + filetype
+        shutil.copyfile(filepath,new_filepath)
         data = {
             'ImageID': id,
             'ImageFilePath': new_filepath,
@@ -243,13 +245,9 @@ class RecipeDB:
         query = 'INSERT INTO Image VALUES(%s)' qmarks
         cur.execute(query,bindings)
         self.sql.commit()
-
         image = objects.Image(self, data)
-        self.log.debug('Created image with ID: %s, filepath: %s' % (image.id,image.file_path)
-        shutil.copyfile(filepath,new_filepath)
+        self.log.debug('Created image with ID: %s, filepath: %s' % (image.id,image.file_path))
         return image
-        '''
-        raise NotImplementedError
 
     def new_ingredient(self, name):
         '''
@@ -296,6 +294,7 @@ class RecipeDB:
             name: str,
             prep_time: int,
             serving_size: int,
+            recipe_image: objects.Image,
         ):
         '''
         Add a new recipe to the database.
@@ -322,6 +321,7 @@ class RecipeDB:
             'Blurb': blurb,
             'ServingSize': serving_size,
             'Instructions': instructions,
+            'RecipeImageID': recipe_image.id,
         }
 
         (qmarks, bindings) = sqlhelpers.insert_filler(constants.SQL_RECIPE_COLUMNS, recipe_data)
@@ -389,3 +389,57 @@ class RecipeDB:
             results.append(recipe)
 
         return results
+    
+    def new_user(
+            self,
+            *,
+            username: str,
+            display_name: str,
+            password: str,
+            bio_text: str
+            profile_image: objects.Image
+        ):
+        '''
+        Register a new User to the database
+        '''
+        cur = self.sql.cursor()
+
+        user_id = helpers.random_hex()
+        password_hash = bcrypt.hashpw(password, bcrypt.gensalt())
+        date_joined = helpers.now()
+        profile_image_id = profile_image.id
+        profile_pic = profile_image.file_path
+
+        user_data = {
+            'UserID': user_id,
+            'Username': username,
+            'DisplayName': display_name,
+            'PasswordHash': password_hash,
+            'DateJoined': date_joined
+            'ProfileImageID': profile_image_id
+            'ProfilePic': profile_pic
+        }
+
+        (qmarks, bindings) = sqlhelpers.insert_filler(constants.SQL_USER_COLUMNS, user_data)
+        query = 'INSERT INTO User VALUES(%s)' % qmarks
+        cur.execute(query, bindings)
+
+        self.sql.commit()
+
+        user = objects.User(self, user_data)
+        self.log.debug('Created user %s',user.username)
+        return user
+    
+    def get_user(self, id):
+        '''
+        Fetch an user by their ID
+        '''
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM User WHERE UserID = ?', [id])
+        user_row = cur.fetchone()
+        if user_row is not None:
+            user = objects.User(self, user_row)
+        else:
+            raise ValueError('User %s does not exist' % id)
+
+        return user
