@@ -39,7 +39,27 @@ def post_login():
 
 @site.route('/register', methods=['POST'])
 def post_register():
-    raise NotImplementedError
+    try:
+        username = request.form['username']
+        displayname = request.form['displayname']
+        password = request.form['password']
+        password2 = request.form['re-enter password']
+    except KeyError:
+        flask.abort(400)
+
+    if password != password2 or username == "":
+        flask.abort(403)
+
+    common.rdb.new_user(username=username, password=password, display_name=displayname, bio_text=None, profile_image=None)
+
+    response = jsonify.make_json_response({})
+    response.set_cookie(
+        'id',
+        value=recipedb.helpers.random_hex(length=32),
+        max_age=COOKIE_MAX_AGE,
+    )
+
+    return response
 
 
 
