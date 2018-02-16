@@ -42,3 +42,11 @@ Organization:
       }
       .row.content {height: auto;}
     }
+
+    footer a {
+        color:grey;
+    }
+
+    #nav-links a {
+        color:5c3333;
+    }
