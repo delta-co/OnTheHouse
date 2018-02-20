@@ -654,3 +654,117 @@ rdb.new_recipe(
     serving_size=8,
     recipe_image=rdb.new_image(image_dir.with_child('hollandaise.jpg')),
 )
+
+#15
+instructions = '''
+Cut pork into strips. Heat sesame oil on medium heat.
+
+Cook pork until brown, add can of coconut milk and bring to a boil. 
+
+Stir in red curry paste, hot chili oil, and brown sugar and simmer for 5 minutes
+
+Add vegetables and simmer for 3 minutes, then stir in thai basil and fish sauce.
+
+Serve with jasmine rice if desired.
+'''
+rdb.new_recipe(
+    author=angela,
+    blurb="This classic curry is great with any meat choice.",
+    country_of_origin="Unknown",
+    cuisine="Unknown",
+    ingredients=["red curry paste",
+               "coconut milk",
+               "fish sauce",
+               "pork",
+               "bell pepper",
+               "bamboo shoots",
+               "thai basil",
+               "sesame oil",
+               "brown sugar",
+               "hot chili oil"],
+    instructions=instructions,
+    meal_type="Dinner",
+    name="Thai Red Curry",
+    prep_time=20,
+    serving_size=6,
+    recipe_image=rdb.new_image(image_dir.with_child('red_curry.jpg')),
+)
+
+#16
+instructions = '''
+Mince mushrooms, cabbage, garlic and scallions. 
+
+Combine pork, mushrooms, cabbage, garlic, scallions soy sauce and mix by hand. 
+Grate in ginger and mix well. 
+
+In one hand hold gyoza skin and wet edges with water. Add 2 tsps of meat mixture
+in center. As you fold over skins, pleat the edges to seal the gyoza.
+
+Add sesame oil to pan and heat of medium high heat. Add gyoza to pan but
+do not overcrowd them. Cook gyoza until bottoms start to brown, about 5 minutes. 
+Add 1/4 cup of water and place lid on pan. Steam for about 4 minutes
+
+When gyoza are done, remove and serve with ponzu sauce and rice or enjoy as is.
+'''
+rdb.new_recipe(
+    author=angela, 
+    blurb="Gyoza are also known as Japanese potstickers.",
+    country_of_origin="Unknown",
+    cuisine="Unknown",
+    ingredients=["pork",
+               "cabbage",
+               "shitake mushroom",
+               "ginger",
+               "soy sauce",
+               "scallions",
+               "garlic",
+               "gyoza skins",
+               "water",
+               "sesame oil"],
+    instructions=instructions,
+    meal_type="Appetizer",
+    name="Gyoza",
+    prep_time=30,
+    serving_size=6,
+    recipe_image=rdb.new_image(image_dir.with_child('gyoza.jpg')),
+)
+
+#17
+instructions = '''
+Add oil, peppercorns, bayleaves, cardamom seeds, cinnamon stick, and star anis in a 
+small pot over medium high heat.
+
+Mince garlic and add to a heat resistant container(No plastic!!). Add in the crushed red chilis,
+salt, sesame oil, and black vinegar.
+
+When the oil starts to bubble, place a wooden chopstick in oil, if bubbles form around the chopstick
+the oil is ready, if not, test chopstick every minute.
+
+Gradually strain oil in container (very carefully!) and let sit for at least two hours, 24 hours for best results.
+Keep refridgerated for several months.
+
+You can cook with this oil, add it to intant noodles, or use it as a sauce on many dishes.
+'''
+rdb.new_recipe(
+    author=bob, 
+    blurb="This recipe uses Chinese peppercorns which, in addition to being very spicy, can numb your mouth!",
+    country_of_origin="Unknown",
+    cuisine="Unknown",
+    ingredients=["vegetable oil",
+               "crushed red chilis",
+               "garlic",
+               "salt",
+               "Chinese peppercorn",
+               "bayleaf",
+               "cinnamon stick",
+               "star anis",
+               "cardamom seed",
+               "sesame oil",
+               "chinese black vinegar"],
+    instructions=instructions,
+    meal_type="Sauce",
+    name="Hot Chili Oil",
+    prep_time=20,
+    serving_size=40,
+    recipe_image=rdb.new_image(image_dir.with_child('hot_chili_oil.jpg')),
+)
