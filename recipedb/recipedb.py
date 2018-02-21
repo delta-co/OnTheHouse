@@ -22,7 +22,7 @@ class RecipeDB:
     def __init__(
             self,
             data_directory=None,
-    ):
+        ):
         super().__init__()
 
         if data_directory is None:
@@ -106,6 +106,30 @@ class RecipeDB:
                 handle.write(json.dumps(config, indent=4, sort_keys=True))
         return config
 
+    def _assert_valid_password(self, password):
+        '''
+        If something is wrong, raise an exception.
+        Otherwise do nothing.
+        '''
+        if len(password) < constants.PASSWORD_MINLENGTH:
+            raise exceptions.PasswordTooShort(minlength=constants.PASSWORD_MINLENGTH)
+
+    def _assert_valid_username(self, name):
+        '''
+        If something is wrong, raise an exception.
+        Otherwise do nothing.
+        '''
+        if len(name) < constants.USERNAME_MINLENGTH:
+            raise exceptions.UsernameTooShort(name=name, minlength=constants.USERNAME_MINLENGTH)
+
+        if len(name) > constants.USERNAME_MAXLENGTH:
+            raise exceptions.UsernameTooLong(name=name, maxlength=constants.USERNAME_MAXLENGTH)
+
+        badchars = set(character for character in name if character not in constants.USERNAME_CHARACTERS)
+
+        if len(badchars) > 0:
+            raise exceptions.InvalidUsernameCharacters(name=name, badchars=badchars)
+
     def _coerce_quantitied_ingredient(self, ingredient):
         '''
         Try to convert the given input to a QuantitiedIngredient.
@@ -166,6 +190,12 @@ class RecipeDB:
             return self.get_ingredient(name=name)
         except exceptions.NoSuchIngredient:
             return self.new_ingredient(name)
+
+    def get_or_create_ingredient_tag(self, name):
+        try:
+            return self.get_ingredient_tag(name=name)
+        except exceptions.NoSuchIngredientTag:
+            return self.new_ingredient_tag(name)
 
     def get_ingredient(self, *, id=None, name=None):
         '''
@@ -422,7 +452,7 @@ class RecipeDB:
             prep_time: int,
             serving_size: int,
             recipe_image: objects.Image,
-    ):
+        ):
         '''
         Add a new recipe to the database.
 
@@ -486,100 +516,6 @@ class RecipeDB:
         self.log.debug('Created recipe %s', recipe.name)
         return recipe
 
-    def search(
-            self,
-            *,
-            author=None,
-            country=None,
-            cuisine=None,
-            ingredients=None,
-            ingredients_exclude=None,
-            limit=None,
-            meal_type=None,
-            name=None,
-            strict_ingredients=False,
-        ):
-        '''
-        '''
-        cur = self.sql.cursor()
-
-        wheres = []
-        bindings = []
-
-        if author is not None:
-            wheres.append('AuthorID = ?')
-            bindings.append(author.id)
-
-        if country is not None:
-            wheres.append('Country = ?')
-            bindings.append(country)
-
-        if cuisine is not None:
-            wheres.append('Cuisine = ?')
-            bindings.append(cuisine)
-
-        if ingredients is None:
-            ingredients = set()
-        else:
-            ingredients = set(ingredients)
-
-        if ingredients_exclude is None:
-            ingredients_exclude = set()
-        else:
-            ingredients_exclude = set(ingredients_exclude)
-
-        if meal_type is not None:
-            wheres.append('MealType = ?')
-            bindings.append(meal_type)
-
-        if name is not None:
-            wheres.append('Name LIKE ?')
-            bindings.append(name)
-
-        if wheres:
-            wheres = ' AND '.join(wheres)
-            wheres = 'WHERE ' + wheres
-        else:
-            wheres = ''
-
-        query = 'SELECT * FROM Recipe {wheres}'
-        query = query.format(wheres=wheres)
-        self.log.debug("%s %s", query, bindings)
-        cur.execute(query, bindings)
-
-        match_counts = {}
-        while True:
-            recipe_row = cur.fetchone()
-            if recipe_row is None:
-                break
-            recipe = objects.Recipe(self, recipe_row)
-
-            recipe_ingredients = {qi.ingredient for qi in recipe.get_ingredients()}
-
-            if recipe_ingredients.intersection(ingredients_exclude):
-                continue
-
-            if ingredients:
-                matches = recipe_ingredients.intersection(ingredients)
-
-                if not matches:
-                    continue
-
-                if strict_ingredients and matches != ingredients:
-                    # Recipe must contain all of our search.
-                    continue
-
-                match_counts[recipe] = len(matches)
-            else:
-                match_counts[recipe] = 1
-
-            if limit is not None and len(match_counts) >= limit:
-                break
-
-        results = sorted(match_counts.keys(), key=match_counts.get, reverse=True)
-
-        return results
-
     def new_user(
             self,
             username: str,
@@ -592,6 +528,9 @@ class RecipeDB:
         '''
         Register a new User to the database
         '''
+        self._assert_valid_username(username)
+        self._assert_valid_password(password)
+
         try:
             self.get_user(username=username)
         except exceptions.NoSuchUser:
@@ -636,3 +575,127 @@ class RecipeDB:
         self.log.debug('Created user %s with ID %s', user.username, user.id)
         return user
 
+    def _get_ingredient_or_tag(self, name):
+        try:
+            return self.get_ingredient(name=name)
+        except exceptions.NoSuchIngredient:
+            pass
+
+        try:
+            return self.get_ingredient_tag(name=name)
+        except exceptions.NoSuchIngredientTag:
+            pass
+
+        return None
+
+    def _normalize_ingredient_set(self, ingredients):
+        '''
+        When the user searches for a recipe, they might be providing us with
+        a variety of data.
+        '''
+        if ingredients is None:
+            return None
+
+        elif not ingredients:
+            return set()
+
+        if isinstance(ingredients, str):
+            ingredients = [i.strip() for i in ingredients.split(',')]
+            ingredients = [i for i in ingredients if i]
+
+        final_ingredients = set()
+        for ingredient in ingredients:
+            if isinstance(ingredient, str):
+                ingredient = self._get_ingredient_or_tag(name=ingredient)
+                if ingredient is not None:
+                    final_ingredients.add(ingredient.name)
+            if isinstance(ingredient, (objects.Ingredient, objects.IngredientTag)):
+                final_ingredients.add(ingredient.name)
+        return final_ingredients
+
+    def search(
+            self,
+            *,
+            author=None,
+            country=None,
+            cuisine=None,
+            ingredients=None,
+            ingredients_exclude=None,
+            limit=None,
+            meal_type=None,
+            name=None,
+            strict_ingredients=False,
+        ):
+        wheres = []
+        bindings = []
+
+        if author is not None:
+            wheres.append('AuthorID = ?')
+            bindings.append(author.id)
+
+        if country is not None:
+            wheres.append('Country = ?')
+            bindings.append(country)
+
+        if cuisine is not None:
+            wheres.append('Cuisine = ?')
+            bindings.append(cuisine)
+
+        ingredients = self._normalize_ingredient_set(ingredients)
+        ingredients_exclude = self._normalize_ingredient_set(ingredients_exclude)
+
+        if meal_type is not None:
+            wheres.append('MealType = ?')
+            bindings.append(meal_type)
+
+        if name is not None:
+            wheres.append('Name LIKE ?')
+            bindings.append(name)
+
+        if wheres:
+            wheres = ' AND '.join(wheres)
+            wheres = 'WHERE ' + wheres
+        else:
+            wheres = ''
+
+        cur = self.sql.cursor()
+        query = 'SELECT * FROM Recipe {wheres}'
+        query = query.format(wheres=wheres)
+        self.log.debug("%s %s", query, bindings)
+        cur.execute(query, bindings)
+
+        match_counts = {}
+        while True:
+            recipe_row = cur.fetchone()
+            if recipe_row is None:
+                break
+
+            recipe = objects.Recipe(self, recipe_row)
+            recipe_ingredients = recipe.get_ingredients_and_tags()
+            recipe_ingredients = {i.name for i in recipe_ingredients}
+
+            if ingredients_exclude is not None:
+                if recipe_ingredients.intersection(ingredients_exclude):
+                    continue
+
+            if ingredients is not None:
+                matches = recipe_ingredients.intersection(ingredients)
+
+                if not matches:
+                    continue
+
+                matched_all = matches == ingredients
+                if strict_ingredients and not matched_all:
+                    continue
+
+                match_counts[recipe] = len(matches)
+
+            else:
+                match_counts[recipe] = 1
+
+            if limit is not None and len(match_counts) >= limit:
+                break
+
+        results = sorted(match_counts.keys(), key=match_counts.get, reverse=True)
+
+        return results

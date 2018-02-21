@@ -16,7 +16,8 @@ loginmanager = LoginManager(site)
 
 @site.route('/')
 def root():
-    return flask.render_template('root.html')
+    return flask.redirect('/recipe')
+    return flask.render_template('root.html', session_user=common.get_session(request))
 
 
 @site.route('/img/<imgid>')
