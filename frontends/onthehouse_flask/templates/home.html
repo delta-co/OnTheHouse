@@ -1,0 +1,74 @@
+{% extends "root.html" %}
+{% block title %}  {% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <title>Welcome | OnTheHouse</title>
+    <style>
+    #create_recipe_splash
+    {
+        display: flex;
+        flex-direction: column;
+        margin: 16px;
+        padding: 16px;
+        border: 2px solid #dddd00;
+        background-color: #ffffaa;
+        border-radius: 6px;
+    }
+    #create_recipe_splash *
+    {
+        align-self: center;
+        justify-self: center;
+    }
+    #recipe_area
+    {
+        margin: 16px;
+    }
+    </style>
+{% endblock %}
+
+{% import 'macros.html' as macros%}
+
+{% block body %}
+<div class="row content">
+    <div class="col-sm-12">
+        <div class="row content">
+            <div id="create_recipe_splash" class="col-sm">
+                <span>Have something to share?</span>
+                {% if session_user %}
+                    {% set href='/newrecipe' %}
+                {% else %}
+                    {% set href='/register' %}
+                {% endif %}
+                <a href="{{href}}"><button class="btn btn-default">Publish a recipe!</button></a>
+            </div>
+            <div id="recipe_area">
+                {% if session_user %}
+                    <div class="row"></div>
+                    <h3>Your recipes:</h3>
+                    <div>
+                        {% for recipe in user_recipes %}
+                        <div class="col-sm-3" style="overflow: hidden;white-space: nowrap;">
+                            <br>
+                            {{ macros.recipe_card(recipe,'s') }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="row"></div>
+                <h3>Community recipes</h3>
+                <div>
+                    {% for recipe in other_recipes %}
+                    <div class="col-sm-3" style="overflow: hidden;white-space: nowrap;">
+                        <br>
+                        {{ macros.recipe_card(recipe,'s') }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %} {{ super() }} {% endblock %}
