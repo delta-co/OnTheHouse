@@ -1,4 +1,4 @@
-import flask; from flask import request, render_template
+import flask; from flask import request, render_template, flash
 
 import recipedb
 
@@ -24,6 +24,7 @@ def post_login():
     user = common.rdb.get_user(username=username)
     success = common.rdb.check_password(user=user, password=password)
     if not success:
+        flash ('Incorrect name or password')
         flask.abort(403)
 
     response = jsonify.make_json_response({'username': user.username})
@@ -47,7 +48,12 @@ def post_register():
     except KeyError:
         flask.abort(400)
 
-    if password != password2 or username == "":
+    if password != password2:
+        flash('Passwords must match')
+        flask.abort(403)
+
+    if username == "":
+        flash('Must use a valid username')
         flask.abort(403)
 
     user = common.rdb.new_user(

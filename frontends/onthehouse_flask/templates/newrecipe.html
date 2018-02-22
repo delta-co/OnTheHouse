@@ -1,0 +1,67 @@
+{% extends "root.html" %}
+{% block title %} New Recipe {% endblock %}
+
+{% block head %}
+    {{ super() }}
+
+{% endblock %}
+
+{% block body %}
+    <div class="row content">
+        <div class="col-sm-5">
+            <h1>New Recipe:</h1>
+            <input type="text" id="recipe-name" class="form-control" placeholder="Recipe Name">
+            <input type="text" id="recipe-blurb" class="form-control" placeholder="Recipe Blurb">
+            <input type="text" id="country-of-origin" class="form-control" placeholder="Country of Origin">
+            <input type="text" id="cuisine" class="form-control" placeholder="Cuisine">
+            <input type="text" id="meal-type" class="form-control" placeholder="Meal Type">
+            <input type="text" id="prep-time" class="form-control" placeholder="Prep Time">
+            <input type="text" id="serving-size" class="form-control" placeholder="Serving Size">
+            <textarea id="ingredients" rows="15" cols="70" class = "form-control" placeholder="Ingredients"></textarea>
+            <textarea id="instructions" rows="15" cols="70" class = "form-control" placeholder="Instructions"></textarea>
+            <!--<input type="image" id="recipeimage" class="form-control" placeholder="Recipe Image">-->
+
+            <button class="btn btn-default" type="button" onclick="submit_recipe()">Create</button>
+        </div>
+    </div>
+
+    <script>
+    function submit_recipe()
+    {
+        var recipename = document.getElementById("recipe-name").value;
+        var blurb = document.getElementById("recipe-blurb").value;
+        var countryoforigin = document.getElementById("country_of_origin").value;
+        var cuisine = document.getElementById("cuisine").value;
+        var mealtype = document.getElementById("meal-type").value;
+        var preptime = document.getElementById("prep-time").value;
+        var servingsize = document.getElementById("serving-size").value;
+        var ingredient = document.getElementById("ingredients").value;
+        var instructions = document.getElementById("instructions").value;
+        var data = new FormData();
+        
+        data.append("Recipe Name", recipename);
+        data.append("Recipe Blurb", blurb);
+        data.append("Country of Origin", countryoforigin);
+        data.append("Cuisine", cuisine);
+        data.append("Meal Type", mealtype);
+        data.append("Prep Time", preptime);
+        data.append("Serving Size", servingsize);
+        data.append("Ingredient", ingredient);
+        data.append("Recipe Instructions", instructions);
+        var url = "/createrecipe";
+        return post(url, data, receive_callback);
+    }
+  function receive_callback(response)
+    {
+        if ("error_type" in response)
+        {
+        }
+        else
+        {
+            window.location.href = "/user/" + response['username'];
+        }
+    }
+    </script>
+{% endblock %}
+
+{% block footer %} {{ super() }} {% endblock %}
