@@ -137,10 +137,24 @@ class RecipeDB:
         if isinstance(ingredient, objects.QuantitiedIngredient):
             return ingredient
 
+        prefix = None
+        suffix = None
+        quantity = None
+
         if isinstance(ingredient, (tuple, list)):
-            (ingredient, quantity) = ingredient
-        else:
-            quantity = None
+            if len(ingredient) == 2:
+                (quantity, ingredient) = ingredient
+            elif len(ingredient) == 3:
+                (quantity, prefix, ingredient) = ingredient
+            elif len(ingredient) == 4:
+                (quanitty, prefix, ingredient, suffix) = ingredient
+
+        if isinstance(ingredient, dict):
+            ingr = ingredient
+            ingredient = ingr.get('ingredient', None)
+            prefix = ingr.get('prefix', None)
+            suffix = ingr.get('suffix', None)
+            quantity = ingr.get('quantity', None)
 
         if isinstance(ingredient, str):
             ingredient = self.get_or_create_ingredient(name=ingredient)
@@ -149,6 +163,8 @@ class RecipeDB:
             ingredient = objects.QuantitiedIngredient.from_existing(
                 ingredient=ingredient,
                 quantity=quantity,
+                prefix=prefix,
+                suffix=suffix,
             )
 
         if not isinstance(ingredient, objects.QuantitiedIngredient):
