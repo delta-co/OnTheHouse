@@ -771,3 +771,14 @@ rdb.new_recipe(
     prep_time=45,
     recipe_image=rdb.new_image(image_dir.with_child('cinnamon_rolls.jpg')),
 )
+
+import random
+AGE_MAX = 30 * 24 * 60 * 60
+now = recipedb.helpers.now()
+cur = rdb.sql.cursor()
+cur.execute('SELECT RecipeID FROM Recipe')
+recipe_ids = [x[0] for x in cur.fetchall()]
+for recipe_id in recipe_ids:
+    created = now - random.randint(1, AGE_MAX)
+    cur.execute('UPDATE Recipe SET DateAdded=? WHERE RecipeID=?', [created, recipe_id])
+rdb.sql.commit()
