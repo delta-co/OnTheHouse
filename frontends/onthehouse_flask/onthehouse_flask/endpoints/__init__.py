@@ -16,8 +16,21 @@ loginmanager = LoginManager(site)
 
 @site.route('/')
 def root():
-    recipes = common.rdb.get_recipes()
-    return flask.render_template('home.html', recipes=recipes, session_user=common.get_session(request))
+    all_recipes = common.rdb.get_recipes()
+    session_user = common.get_session(request)
+
+    user_recipes = []
+    other_recipes = []
+    if session_user:
+        for recipe in all_recipes:
+            if recipe.author == session_user:
+                user_recipes.append(recipe)
+            else:
+                other_recipes.append(recipe)
+    else:
+        other_recipes = all_recipes
+
+    return flask.render_template('home.html', user_recipes=user_recipes, other_recipes=other_recipes, session_user=session_user)
 
 
 @site.route('/img/<imgid>')

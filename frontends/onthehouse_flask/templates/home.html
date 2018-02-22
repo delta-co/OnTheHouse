@@ -20,6 +20,10 @@
         align-self: center;
         justify-self: center;
     }
+    #recipe_area
+    {
+        margin: 16px;
+    }
     </style>
 {% endblock %}
 
@@ -38,13 +42,29 @@
                 {% endif %}
                 <a href="{{href}}"><button class="btn btn-default">Publish a recipe!</button></a>
             </div>
-            <div class="col-sm">
-                {% for recipe in recipes %}
-                <div class="col-sm-3" style="overflow: hidden;white-space: nowrap;">
-                    <br>
-                    {{ macros.recipe_card(recipe,'s') }}
+            <div id="recipe_area">
+                {% if session_user %}
+                    <div class="row"></div>
+                    <h3>Your recipes:</h3>
+                    <div>
+                        {% for recipe in user_recipes %}
+                        <div class="col-sm-3" style="overflow: hidden;white-space: nowrap;">
+                            <br>
+                            {{ macros.recipe_card(recipe,'s') }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="row"></div>
+                <h3>Community recipes</h3>
+                <div>
+                    {% for recipe in other_recipes %}
+                    <div class="col-sm-3" style="overflow: hidden;white-space: nowrap;">
+                        <br>
+                        {{ macros.recipe_card(recipe,'s') }}
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>
