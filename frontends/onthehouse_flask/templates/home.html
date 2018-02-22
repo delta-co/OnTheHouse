@@ -31,7 +31,12 @@
         <div class="row content">
             <div id="create_recipe_splash" class="col-sm">
                 <span>Have something to share?</span>
-                <a href="/newrecipe"><button class="btn btn-default">Publish a recipe!</button></a>
+                {% if session_user %}
+                    {% set href='/newrecipe' %}
+                {% else %}
+                    {% set href='/register' %}
+                {% endif %}
+                <a href="{{href}}"><button class="btn btn-default">Publish a recipe!</button></a>
             </div>
             <div class="col-sm">
                 {% for recipe in recipes %}
@@ -45,5 +50,5 @@
     </div>
 </div>
 {% endblock %}
-<
+
 {% block footer %} {{ super() }} {% endblock %}
