@@ -28,12 +28,14 @@ def recipes_search():
     ingredients_exclude = request.args.get('exclude', None)
     meal_type = request.args.get('meal_type', None)
     strict_ingredients = request.args.get('strict', False)
+    name = request.args.get('name', None)
     strict_ingredients = recipedb.helpers.truthystring(strict_ingredients)
 
     results = common.rdb.search(
         ingredients=ingredients,
         ingredients_exclude=ingredients_exclude,
         meal_type=meal_type,
+        name=name,
         strict_ingredients=strict_ingredients,
     )
 
