@@ -29,6 +29,14 @@ caitlyn = rdb.new_user(
     profile_image = rdb.new_image(image_dir.with_child('meringue.jpg'))
 )
 
+ethan = rdb.new_user(
+    username='voussoir',
+    display_name='Ethan Dalool',
+    password='A',
+    bio_text='Computer Science student who likes pizza.',
+    profile_image=rdb.new_image(image_dir.with_child('voussoir.png'))
+)
+
 anonymous = rdb.new_user(
     username='anon',
     display_name='Rainbowman',
@@ -43,7 +51,18 @@ ingredient_tags = {
         'cheese',
         'whipping cream',
         'butter',
-    ]
+    ],
+    'sugar': [
+        'brown sugar',
+        'cane sugar',
+        'powdered sugar',
+        'sugar',
+    ],
+    'rice': [
+        'brown rice',
+        'sushi rice',
+        'white rice',
+    ],
 }
 
 for (tag_name, ingredient_names) in ingredient_tags.items():
@@ -811,3 +830,69 @@ rdb.new_recipe(
     serving_size=40,
     recipe_image=rdb.new_image(image_dir.with_child('hot_chili_oil.jpg')),
 )
+=======
+instructions = '''
+Make the dough: In a large bowl, mix the flour, the sugar, salt, and yeast
+together until evenly dispersed. Set aside. In a small microwavable bowl, heat
+the water, milk, and butter together in the microwave until the butter is melted
+(about 30-45 seconds). Stir the butter mixture into the flour mixture. Add the
+egg and knead with hand or with stand mixer for 3-4 minutes or until the dough
+is no longer sticky. Place in a lightly greased bowl and let rest for about
+5 minutes.
+
+Preheat the oven to 200 degrees and turn off after 10 minutes or just before
+placing rolls in oven.
+
+Make the filling: After the dough has rested for 5 minutes, roll it out in a
+15x9 inch rectangle. Spread the softened butter on top. Mix together the
+cinnamon and sugar and sprinkle it all over the dough. Roll up the dough tightly
+and cut into 9 (large) even piece. Place in a lightly greased 9-inch or square
+pan (or cut into 12 small pieces and place in a 9x13 pan) and lightly cover
+with aluminum foil or plastic wrap.
+
+Turn off the oven and place the cinnamon buns in the oven to rise for 20
+minutes. Keep the buns in the oven (REMOVE THE FOIL OR PLASTIC) and turn on
+the oven to 375F. Bake the cinnamon rolls for 15-20 minutes or until golden.
+Remove from oven and top with glaze.
+
+Make the glaze: Mix the powdered sugar, vanilla and 2 Tablespoons milk together
+until smooth and lump free. Drizzle over warm rolls.
+'''
+rdb.new_recipe(
+    name='Homemade Cinnamon Rolls',
+    author=ethan,
+    blurb='Quick homehade cinnamon rolls from scratch.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 and 3/4 cups', 'all-purpose','flour'),
+        ('3 Tablespoons', 'granulated', 'sugar'),
+        ('1 teaspoon', 'salt'),
+        ('1/2 cup', 'water'),
+        ('1/4 cup', 'milk'),
+        ('2 Tablespoons', 'unsalted', 'butter'),
+        ('1', 'large', 'egg'),
+        ('1/4 cup', 'unsalted, softened', 'butter'),
+        ('2 Tablespoons', 'ground cinnamon'),
+        ('1/4 cup', 'brown sugar'),
+        ('1 cup', 'powdered sugar'),
+        ('1 teaspoon', 'vanilla extract'),
+        ('2-3 Tablespoons', 'milk'),
+    ],
+    instructions=instructions,
+    serving_size=9,
+    meal_type='Breakfast',
+    prep_time=45,
+    recipe_image=rdb.new_image(image_dir.with_child('cinnamon_rolls.jpg')),
+)
+
+import random
+AGE_MAX = 30 * 24 * 60 * 60
+now = recipedb.helpers.now()
+cur = rdb.sql.cursor()
+cur.execute('SELECT RecipeID FROM Recipe')
+recipe_ids = [x[0] for x in cur.fetchall()]
+for recipe_id in recipe_ids:
+    created = now - random.randint(1, AGE_MAX)
+    cur.execute('UPDATE Recipe SET DateAdded=? WHERE RecipeID=?', [created, recipe_id])
+rdb.sql.commit()
