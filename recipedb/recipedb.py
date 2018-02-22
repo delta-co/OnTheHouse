@@ -666,7 +666,7 @@ class RecipeDB:
 
         if name is not None:
             wheres.append('Name LIKE ?')
-            bindings.append(name)
+            bindings.append('%' + name + '%')
 
         if wheres:
             wheres = ' AND '.join(wheres)
