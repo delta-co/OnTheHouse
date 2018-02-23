@@ -43,7 +43,7 @@ CREATE INDEX IF NOT EXISTS index_Ingredient_Name on Ingredient(Name COLLATE NOCA
 ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS IngredientAutocorrect(
     IngredientID TEXT,
-    AlternateName TEXT,
+    AlternateName TEXT COLLATE NOCASE,
     FOREIGN KEY(IngredientID) REFERENCES Ingredient(IngredientID)
 );
 CREATE INDEX IF NOT EXISTS index_IngredientAutocorrect_AlternateName on IngredientAutocorrect(AlternateName);

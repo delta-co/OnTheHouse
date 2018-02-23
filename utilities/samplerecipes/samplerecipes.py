@@ -79,6 +79,9 @@ for (tag_name, ingredient_names) in ingredient_tags.items():
         ingredient = rdb.get_or_create_ingredient(name=ingredient_name)
         ingredient.add_tag(tag)
 
+rdb.get_or_create_ingredient('potato').add_autocorrect('potatoes')
+rdb.get_or_create_ingredient('egg').add_autocorrect('eggs')
+
 # 1
 instructions = '''
 Soften cream cheese and Brie cheese.
@@ -1094,6 +1097,340 @@ rdb.new_recipe(
 
 
 instructions = '''
+Mix together egg, milk, salt, vanilla, and cinnamon or other spicesin a wide,
+shallow bowl.
+
+Prepare a lightly oiled skillet over medium-high heat.
+
+Dip each slice of bread into the egg mixture, soaking thoroughly.
+
+Place slice in pan and cook both sides.
+
+Top with butter, powdered sugar, and maple syrup to preference. Serve.
+'''
+rdb.new_recipe(
+    name='Easy French Toast',
+    author=ethan,
+    blurb='Quick, delicious breakfast.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('6 slices', 'thick', 'bread'),
+        ('2', 'eggs'),
+        ('2/3 cup', 'milk'),
+        ('1/4 teaspoon', 'ground cinnamon'),
+        ('1 teaspoon', 'vanilla extract'),
+        ('A pinch of', 'salt'),
+        'powdered sugar',
+        'butter',
+        'maple syrup',
+    ],
+    instructions=instructions,
+    serving_size=3,
+    meal_type='Breakfast',
+    prep_time=20,
+    recipe_image=rdb.new_image(image_dir.with_child('french_toast.jpg')),
+)
+
+instructions = '''
+Peel potatoes.
+
+Boil potatoes in salted water for 15 minutes. Potatoes should be cooked on the
+outside but still stiff.
+
+Dry on paper towels, and cut into slices.
+
+Deep fry in hot oil until brown and crispy.
+
+Dry, add salt, and serve.
+'''
+rdb.new_recipe(
+    name='Family-fun French Fries',
+    author=ethan,
+    blurb='Quick, delicious breakfast.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('4', 'large', 'potatoes'),
+        'frying oil',
+        'salt',
+    ],
+    instructions=instructions,
+    serving_size=3,
+    meal_type='Anytime',
+    prep_time=20,
+    recipe_image=rdb.new_image(image_dir.with_child('french_fries.jpg')),
+)
+
+instructions = '''
+Blend strawberries, banana, and yogurt in a blender.
+
+Once smooth, add ice and blend again.
+
+Pour, and top with whipped cream.
+'''
+rdb.new_recipe(
+    name='Strawberry Banana Smoothie',
+    author=ethan,
+    blurb='Healthy and tasty smoothie to start your day.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1/2 cup', 'fresh chopped', 'strawberries'),
+        ('1/4', 'peeled', 'banana'),
+        ('1/4 cup', 'vanilla yogurt'),
+        ('1/2 cup', 'crushed', 'ice'),
+        'whipped cream',
+    ],
+    instructions=instructions,
+    serving_size=1,
+    meal_type='Drink',
+    prep_time=10,
+    recipe_image=rdb.new_image(image_dir.with_child('strawberry_banana_smoothie.jpg')),
+)
+
+instructions = '''
+Preheat oven to 350 degrees F (175 degrees C). Grease and flour two 9 inch cake
+pans.
+
+Use the first set of ingredients to make the cake. In a medium bowl, stir
+together the sugar, flour, cocoa, baking soda, baking powder and salt. Add the
+eggs, milk, oil and vanilla, mix for 3 minutes with an electric mixer. Stir in
+the boiling water by hand. Pour evenly into the two prepared pans.
+
+Bake for 30 to 35 minutes in the preheated oven, until a toothpick inserted
+comes out clean. Cool for 10 minutes before removing from pans to cool
+completely.
+
+To make the frosting, use the second set of ingredients. Cream butter until
+light and fluffy. Stir in the cocoa and confectioners' sugar alternately with
+the milk and vanilla. Beat to a spreading consistency.
+
+Split the layers of cooled cake horizontally, cover the top of each layer with
+frosting, then stack them onto a serving plate. Frost the outside of the cake.
+'''
+rdb.new_recipe(
+    name='Very Chocolate Cake',
+    author=ethan,
+    blurb='Bye bye, diet.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 cups', 'white sugar'),
+        ('1 and 3/4 cups', 'all-purpose flour'),
+        ('3/4 cup', 'unsweetened', 'cocoa powder'),
+        ('1 and 1/2 teaspoons', 'baking soda'),
+        ('1 and 1/2 teaspoons', 'baking powder'),
+        ('1 teaspoon', 'salt'),
+        ('1/2 cup', 'vegetable oil'),
+        ('2 teaspoons', 'vanilla extract'),
+        ('1 cup', 'water'),
+        ('3/4 cup', 'butter',),
+        ('2', 'eggs'),
+        ('1 cup', 'milk'),
+    ],
+    instructions=instructions,
+    serving_size=1,
+    meal_type='Dessert',
+    prep_time=70,
+    recipe_image=rdb.new_image(image_dir.with_child('chocolate_cake.jpg')),
+)
+
+instructions = '''
+Put the bones and carcass from a leftover chicken (they can be in pieces) in a
+large pot. Cover with the broth and 4 cups water. Bring to a boil over
+medium-high heat, reduce to a simmer and cook for 20 minutes. Skim any foam or
+fat from the broth with a ladle as necessary.
+
+Remove the bones and carcass with tongs or a slotted spoon; set aside to cool.
+Add the carrots, celery, onion and bay leaf to the broth, bring back to a simmer
+and cook until the vegetables are about half cooked (they will still have
+resistance when tested with a knife but be somewhat pliable when bent),
+about 10 minutes. Stir in the rice (to keep it from sticking to the bottom),
+and cook until the grains are just al dente, 10 to 12 minutes.
+
+Meanwhile, when the carcass and bones are cool enough to handle, pick off the
+meat, and shred it into bite-size pieces.
+
+When the rice is done, add the meat to the broth and simmer until warmed
+through, about 1 minute. Stir in the parsley, and season with 1/2 teaspoon salt
+or more to taste. Serve hot.
+'''
+rdb.new_recipe(
+    name='"Get Well Soon" Chicken Soup',
+    author=ethan,
+    blurb=None,
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('4 or 5 pounds', 'roast chicken'),
+        ('4 cups', 'low-sodium', 'chicken broth'),
+        ('2', 'sliced', 'carrots'),
+        ('2 stalks', 'celery'),
+        ('1', 'medium, chopped', 'onion'),
+        ('1', 'bay leaf'),
+        ('1/2 cup', 'white rice'),
+        ('2 tablespoons', 'chopped', 'parsley'),
+        'salt',
+    ],
+    instructions=instructions,
+    serving_size=4,
+    meal_type='Dinner',
+    prep_time=55,
+    recipe_image=rdb.new_image(image_dir.with_child('chicken_soup.jpg')),
+)
+
+instructions = '''
+Preheat oven to 400 degrees F (200 degrees C). Line a baking sheet with
+parchment paper or lightly grease.
+
+Beat 1 1/2 cups white sugar, butter, and eggs together in a bowl using an
+electric mixer until smooth and creamy. Combine flour, cream of tartar, baking
+soda, and salt in a separate bowl; stir into creamed butter mixture until dough
+holds together.
+
+Mix 2 tablespoons white sugar and cinnamon together in a bowl.
+
+Form dough into 2-teaspoon-size balls and roll in the cinnamon-sugar mixture.
+Place dough balls, about 2 inches apart, on the prepared baking sheet.
+
+Bake in the preheated oven on the center rack for 7 minutes. Allow cookies to
+cool on the baking sheet for 5 minutes before transferring to a wire rack.
+'''
+rdb.new_recipe(
+    name='Mom\'s Snickerdoodles',
+    author=ethan,
+    blurb='Just like mom used to make. But now you\'re making them.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 and 1/2 cups', 'white sugar'),
+        ('1 cup', 'softened', 'butter'),
+        ('2', 'eggs'),
+        ('2 and 3/4 cups', 'all-purpose flour'),
+        ('2 teaspoons', 'cream of tartar'),
+        ('1 teaspoon', 'baking soda'),
+        ('1/4 teaspoon', 'salt'),
+        ('2 tablespoons', 'white sugar'),
+        ('2 teaspoons', 'ground cinnamon'),
+    ],
+    instructions=instructions,
+    serving_size=36,
+    meal_type='Dessert',
+    prep_time=35,
+    recipe_image=rdb.new_image(image_dir.with_child('snickerdoodles.jpg')),
+)
+
+instructions = '''
+Preheat oven to 375 degrees F (190 degrees C). Grease 24 mini-muffin cups.
+
+Mix 1/2 cup sugar, 1/4 cup margarine, and nutmeg in a large bowl. Stir in the
+milk, then mix in the baking powder and flour until just combined. Fill the
+prepared mini muffin cups about half full.
+
+Bake in the preheated oven until the tops are lightly golden, 15 to 20 minutes.
+
+While muffins are baking, place 1/4 cup of melted margarine in a bowl. In a
+separate bowl, mix together 1/2 cup of sugar with the cinnamon. Remove muffins
+from their cups, dip each muffin in the melted margarine, and roll in the
+sugar-cinnamon mixture. Let cool and serve.
+'''
+rdb.new_recipe(
+    name='Donut Muffins',
+    author=ethan,
+    blurb='For when making that choice is just too hard.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1/2 cup', 'white sugar'),
+        ('1/4 cup', 'melted', 'margarine'),
+        ('3/4 teaspoon', 'ground nutmeg'),
+        ('1/2 cup', 'milk'),
+        ('1 teaspoon', 'baking powder'),
+        ('1 cup', 'all-purpose flour'),
+        ('1 teaspoon', 'ground cinnamon'),
+    ],
+    instructions=instructions,
+    serving_size=24,
+    meal_type='Dessert',
+    prep_time=40,
+    recipe_image=rdb.new_image(image_dir.with_child('donut_muffins.jpg')),
+)
+
+instructions = '''
+Beat the eggs in a mixing bowl. Whisk in the milk, then set aside. Place the
+bread crumbs into a plastic bag, and set aside.
+
+Separate and place an egg roll wrapper onto your work surface with one of the
+tips pointed towards you. Moisten the two far edges of the wrapper with water.
+Place a string cheese stick onto the corner nearest you, and roll it in 1/3 of
+the way, fold over the right and left corners, then continue rolling to the end,
+pressing to seal. Repeat with the remaining string cheese sticks and egg roll
+wrappers.
+
+Heat oil in a deep-fryer or large saucepan to 375 degrees F (190 degrees C).
+
+Dip the mozzarella sticks into the egg wash, then toss in the bread crumbs.
+Cook in batches in the hot oil until crisp and golden brown, 3 to 4 minutes.
+'''
+rdb.new_recipe(
+    name='Mozzarella Sticks',
+    author=ethan,
+    blurb='Sometimes all you need is a stick of cheese.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2', 'egg'),
+        ('2 cups', 'milk'),
+        ('1 and 1/2 cups', 'Italian seasoned', 'bread crumbs'),
+        ('10', 'egg roll wrapper'),
+        ('10 sticks', 'mozzarella cheese'),
+        ('1 quart', 'frying oil'),
+    ],
+    instructions=instructions,
+    serving_size=5,
+    meal_type='Appetizer',
+    prep_time=30,
+    recipe_image=rdb.new_image(image_dir.with_child('mozzarella_sticks.jpg')),
+)
+
+instructions = '''
+In a medium bowl, combine cornmeal, flour, salt, pepper, sugar and baking
+powder. Stir in eggs and milk.
+
+Preheat oil in a deep saucepan over medium heat. Insert wooden skewers into
+frankfurters. Roll frankfurters in batter until well coated.
+
+Fry 2 or 3 corn dogs at a time until lightly browned, about 3 minutes. Drain on
+paper towels.
+'''
+rdb.new_recipe(
+    name='Corn Dogs',
+    author=ethan,
+    blurb='It\'s like you\'re at the fair!',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 cup', 'yellow', 'cornmeal'),
+        ('1 cup', 'all-purpose flour'),
+        ('1/4 teaspoon', 'salt'),
+        ('1/8 teaspoon', 'black pepper'),
+        ('1/4 cup', 'white sugar'),
+        ('4 teaspoons', 'baking powder'),
+        ('1', 'egg'),
+        ('1 cup', 'milk'),
+        ('1 quart', 'frying oil'),
+        ('16 ounces', 'beef frankfurters'),
+        ('16', 'wooden', 'skewers'),
+    ],
+    instructions=instructions,
+    serving_size=16,
+    meal_type='Anytime',
+    prep_time=40,
+    recipe_image=rdb.new_image(image_dir.with_child('corn_dogs.jpg')),
+)
+
+instructions = '''
 Make the dough: In a large bowl, mix the flour, the sugar, salt, and yeast
 together until evenly dispersed. Set aside. In a small microwavable bowl, heat
 the water, milk, and butter together in the microwave until the butter is melted
@@ -1127,7 +1464,7 @@ rdb.new_recipe(
     country_of_origin=None,
     cuisine=None,
     ingredients=[
-        ('2 and 3/4 cups', 'all-purpose','flour'),
+        ('2 and 3/4 cups', 'all-purpose flour'),
         ('3 Tablespoons', 'granulated', 'sugar'),
         ('1 teaspoon', 'salt'),
         ('1/2 cup', 'water'),
