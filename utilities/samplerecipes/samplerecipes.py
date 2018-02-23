@@ -830,7 +830,7 @@ rdb.new_recipe(
     serving_size=40,
     recipe_image=rdb.new_image(image_dir.with_child('hot_chili_oil.jpg')),
 )
-=======
+
 instructions = '''
 Make the dough: In a large bowl, mix the flour, the sugar, salt, and yeast
 together until evenly dispersed. Set aside. In a small microwavable bowl, heat
