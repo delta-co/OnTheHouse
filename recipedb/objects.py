@@ -231,7 +231,6 @@ class Recipe(ObjectBase):
         self.serving_size = db_row['ServingSize']
         self.instructions = db_row['Instructions']
         self.recipe_image_id = db_row['RecipeImageID']
-        self.recipe_pic = self.recipedb.get_image(self.recipe_image_id)
 
     def get_ingredients(self):
         cur = self.recipedb.sql.cursor()

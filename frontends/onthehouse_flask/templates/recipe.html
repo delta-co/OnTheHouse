@@ -59,6 +59,7 @@
     <div class="row content">
         <div class="col-sm-12">
             <p class="recipe-name">{{recipe.name}}</p>
+            {% if recipe.image is not none %}
             <p><img class="img-rounded" src="/image/{{recipe.recipe_image_id}}"/></p>
             {% if recipe.author is not none %}
             <p class="recipe-author">Recipe by <a href="/user/{{recipe.author.username}}">{{recipe.author.display_name}}</a></p>

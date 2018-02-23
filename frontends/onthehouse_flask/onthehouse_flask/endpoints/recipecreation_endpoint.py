@@ -1,6 +1,9 @@
 import flask; from flask import request, render_template
 import recipedb
 
+from voussoirkit import pathclass
+image_dir = pathclass.Path(__file__).parent.with_child('sample_images')
+
 from .. import jsonify   
 
 from . import common
@@ -27,6 +30,11 @@ def post_recipe():
     except KeyError:
         flask.abort(400)
 
+    user= common.get_session(request)
+   
+    if user==None:
+        flask.abort(403)     
+
     if instructions == "":
         flash('Instructions cannot be blank')
         flask.abort(403)
@@ -36,7 +44,7 @@ def post_recipe():
         flask.abort(403)
 
     recipe = common.rdb.new_recipe(
-        author= common.rdb.get_user(),
+        author= user,
         blurb= blurb,
         country_of_origin= countryoforigin,
         cuisine= cuisine,
