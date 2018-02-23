@@ -48,5 +48,6 @@ def post_recipe():
         serving_size= servingsize,
         recipe_image= None,
     )
+    response = jsonify.make_json_response({'recipeid': recipe.recipe_id})
 
     return response

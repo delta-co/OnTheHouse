@@ -60,14 +60,16 @@
         var url = "/newrecipe";
         return post(url, data, receive_callback);
     }
-  function receive_callback(response)
+
+    function receive_callback(response)
     {
         if ("error_type" in response)
         {
+            window.location.href = "/recipe";
         }
         else
         {
-            window.location.href = "/user/" + response['username'];
+            window.location.href = "/recipe/" + response['recipeid'];
         }
     }
     </script>
