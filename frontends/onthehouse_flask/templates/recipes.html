@@ -20,9 +20,7 @@
         <div class="row content">
             <div class="col-sm">
                 {% for recipe in recipes %}
-                <div class="col-sm-3">
                     {{ macros.recipe_card(recipe,'s') }}
-                </div>
                 {% endfor %}
             </div>
         </div>

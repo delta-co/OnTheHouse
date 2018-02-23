@@ -24,6 +24,10 @@
     .profile.h3{
     font-family: 'Oxygen', sans-serif;
     }
+
+    .pic{
+        padding-top: 15px;
+    }
 </style>
 {% endblock %}
 
@@ -50,9 +54,7 @@
 
             <div class="col-sm-12"></div>
             {% for recipe in recipes %}
-                <div class="col-sm-3 user-recipe">
                 {{ macros.recipe_card(recipe, 's') }}
-                </div>
             {% endfor %}
         </div>
         </div>
