@@ -21,7 +21,7 @@ def post_recipe():
         mealtype = request.form['meal type']
         preptime = request.form['prep time']
         servingsize = request.form['serving size']
-        ingredient = request.form['ingredient']
+        ingredients = request.form['ingredients'].split(',')
         instructions = request.form['instructions']
         #image = request.form['image']
     except KeyError:
@@ -31,7 +31,7 @@ def post_recipe():
         flash('Instructions cannot be blank')
         flask.abort(403)
 
-    if ingredient == "":
+    if ingredients == "":
         flash('Must have at least 1 ingredient')
         flask.abort(403)
 
@@ -40,7 +40,7 @@ def post_recipe():
         blurb= blurb,
         country_of_origin= countryoforigin,
         cuisine= cuisine,
-        ingredients= ingredient,
+        ingredients= ingredients,
         instructions= instructions,
         meal_type= mealtype,
         name= recipename,
@@ -48,5 +48,7 @@ def post_recipe():
         serving_size= servingsize,
         recipe_image= None,
     )
+
+    response = jsonify.make_json_response({'recipeid': recipe.recipe_id})
 
     return response
