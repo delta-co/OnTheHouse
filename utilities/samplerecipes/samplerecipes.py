@@ -1772,7 +1772,7 @@ rdb.new_recipe(
     serving_size=8,
     meal_type='Dessert',
     prep_time=1500,
-    recipe_image=rdb.new_image(image_dir.with_child('fried_koolaid.jpg')),
+    recipe_image=rdb.new_image(image_dir.with_child('1950s_jello.jpg')),
 )
 
 #ian 8
