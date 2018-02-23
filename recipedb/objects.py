@@ -47,6 +47,8 @@ class Ingredient(ObjectBase):
 
         self.id = db_row['IngredientID']
         self.name = db_row['Name']
+        self.description = db_row['Description']
+        self.ingredient_image_id = db_row['IngredientImageID']
 
     def add_autocorrect(self, alternate_name):
         alternate_name = self.recipedb._normalize_ingredient_name(alternate_name)
