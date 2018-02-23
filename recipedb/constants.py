@@ -6,6 +6,7 @@ This file should not import any other file in the same package.
 '''
 
 import logging
+import string
 
 
 FILENAME_BADCHARS = '\\/:*?<>|"'
@@ -35,14 +36,17 @@ CREATE TABLE IF NOT EXISTS Image_Recipe_Map(
 ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS Ingredient(
     IngredientID TEXT PRIMARY KEY,
-    Name TEXT COLLATE NOCASE
+    Name TEXT COLLATE NOCASE,
+    Description TEXT,
+    IngredientImageID TEXT,
+    FOREIGN KEY(IngredientImageID) REFERENCES Image(ImageID)
 );
 CREATE INDEX IF NOT EXISTS index_Ingredient_IngredientID on Ingredient(IngredientID);
 CREATE INDEX IF NOT EXISTS index_Ingredient_Name on Ingredient(Name COLLATE NOCASE);
 ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS IngredientAutocorrect(
     IngredientID TEXT,
-    AlternateName TEXT,
+    AlternateName TEXT COLLATE NOCASE,
     FOREIGN KEY(IngredientID) REFERENCES Ingredient(IngredientID)
 );
 CREATE INDEX IF NOT EXISTS index_IngredientAutocorrect_AlternateName on IngredientAutocorrect(AlternateName);
@@ -75,7 +79,7 @@ CREATE TABLE IF NOT EXISTS Recipe(
     ServingSize INT,
     Instructions TEXT,
     RecipeImageID TEXT,
-    FOREIGN KEY(RecipeImageID) REFERENCES Image(ImageID)
+    FOREIGN KEY(RecipeImageID) REFERENCES Image(ImageID),
     FOREIGN KEY(AuthorID) REFERENCES User(UserID)
 );
 CREATE INDEX IF NOT EXISTS index_Recipe_RecipeID on Recipe(RecipeID);
@@ -163,6 +167,11 @@ DEFAULT_DATADIR = '.\\_recipedb'
 DEFAULT_DBNAME = 'recipe.db'
 DEFAULT_CONFIGNAME = 'config.json'
 DEFAULT_IMAGEDIR = 'images'
+
+USERNAME_CHARACTERS = set(string.ascii_letters + string.digits + '_-')
+USERNAME_MAXLENGTH = 24
+USERNAME_MINLENGTH = 1
+PASSWORD_MINLENGTH = 1
 
 DEFAULT_CONFIGURATION = {
     'log_level': logging.DEBUG,

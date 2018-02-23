@@ -5,9 +5,11 @@ import random
 
 from . import common
 from . import image_endpoint
+from . import ingredient_endpoint
 from . import profile_endpoint
 from . import recipe_endpoint
 from . import register_endpoint
+from . import recipecreation_endpoint
 
 
 site = common.site
@@ -16,7 +18,21 @@ loginmanager = LoginManager(site)
 
 @site.route('/')
 def root():
-    return flask.render_template('root.html')
+    all_recipes = common.rdb.get_recipes()
+    session_user = common.get_session(request)
+
+    user_recipes = []
+    other_recipes = []
+    if session_user:
+        for recipe in all_recipes:
+            if recipe.author == session_user:
+                user_recipes.append(recipe)
+            else:
+                other_recipes.append(recipe)
+    else:
+        other_recipes = all_recipes
+
+    return flask.render_template('home.html', user_recipes=user_recipes, other_recipes=other_recipes, session_user=session_user)
 
 
 @site.route('/img/<imgid>')

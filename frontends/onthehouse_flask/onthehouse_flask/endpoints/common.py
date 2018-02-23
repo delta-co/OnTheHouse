@@ -35,9 +35,22 @@ site.debug = True
 
 rdb = recipedb.RecipeDB()
 
+COOKIE_MAX_AGE = 7 * 24 * 60 * 60
+COOKIE_NAME = 'cookie_name'
+cookie_dict = {}
 
 def back_url():
     return request.args.get('goto') or request.referrer or '/'
+
+def new_user_cookie(cookie_value, user):
+    cookie_dict[cookie_value] = user
+
+def get_user_from_cookie(cookie_value):
+    return cookie_dict.get(cookie_value, None)
+
+def get_session(request):
+    cookie_check = request.cookies.get(COOKIE_NAME, None)
+    return get_user_from_cookie(cookie_check)
 
 def send_file(filepath, override_mimetype=None):
     '''

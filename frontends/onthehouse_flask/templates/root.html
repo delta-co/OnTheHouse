@@ -13,9 +13,14 @@
         <link rel="stylesheet" href="/static/common.css">
         <link rel="stylesheet" href="/static/profile.css">
         <link rel="stylesheet" href="/static/recipes.css">
+
     {% endblock %}
         <title>Home | OnTheHouse</title>
     <style>
+    #logo
+    {
+        width: 100%;
+    }
     </style>
 </head>
 
@@ -24,14 +29,27 @@
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav">
-                <h4>OnTheHouse</h4>
+                <h4><a href="/"><img id="logo" src="/static/onthehouselogo.png" alt="On the House"/></a></h4>
+                {% if session_user %}
+                    <h5>Welcome, <a href="/user/{{session_user.username}}">{{session_user.display_name}}</a></h5>
+                {% endif %}
                 <ul id="nav-list" class="nav nav-pills nav-stacked">
                     <li><a href="/">Home</a></li>
                     <li><a href="/recipe">Explore</a></li>
                     <li><a href="https://delta-co.github.io/">The Team</a></li>
                     <li><a href="/register">New? Register Here!</a></li>
                 </ul><br>
+
                 <div class="input-group">
+                    <div id="basic_searchform">
+                        <input type="text" id="searchform_name" class="form-control" placeholder="Recipe Name..."/>
+                        <input type="text" id="searchform_ingredients" class="form-control" placeholder="Search Ingredients..."/>
+                        <input type="text" id="searchform_exclude" class="form-control" placeholder="Exclude Ingredients..."/>
+                        <label><input type="checkbox" id="searchform_strict" class="form-control" placeholder/>Strict Search</label>
+                        <button class="btn btn-default" onclick="submit_search()"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+
+                    <!--
                     <form id="searchForm" action="/recipe/search" method="get">
                         <input type="text" class="form-control" name="ingredients" placeholder="Search Ingredients...">
                     </form>
@@ -40,7 +58,9 @@
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
                     </span>
+                    -->
                 </div>
+
             </div>
         <div class="col-sm-9">{% block body %}{% endblock %}</div>
         </div>
@@ -56,5 +76,72 @@
 
 
 <script type="text/javascript">
+function join_parameters(parameters)
+{
+    if (parameters.length == 0)
+    {
+        return "";
+    }
+    var parameters = "?" + parameters.join("&");
+    return parameters;
+}
+function build_search_url()
+{
+    parameters = [];
+
+    var name = document.getElementById("searchform_name").value.trim();
+    if (name)
+        {parameters.push("name=" + name)}
+
+    var ingredients = document.getElementById("searchform_ingredients").value.trim();
+    if (ingredients)
+        {parameters.push("ingredients=" + ingredients)}
+
+    var exclude = document.getElementById("searchform_exclude").value.trim();
+    if (exclude)
+        {parameters.push("exclude=" + exclude)};
+
+    var strict = document.getElementById("searchform_strict").checked;
+    if (strict)
+    {
+        // False is already the default so only include if true.
+        parameters.push("strict=" + strict);
+    }
+    parameters = join_parameters(parameters);
+    var url = "/recipe/search" + parameters;
+    return url;
+}
+function submit_search()
+{
+    url = build_search_url();
+    window.location.href = url;
+}
+
+function prefill_searchform_from_url()
+{
+    /*
+    Take the arguments out of the URL and put them into the searchform.
+    */
+    var parameters = new URL(location.href).searchParams;
+
+
+    var name = parameters.get("name");
+    if (name != null)
+        {document.getElementById("searchform_name").value = name.trim();}
+
+    var ingredients = parameters.get("ingredients");
+    if (ingredients != null)
+        {document.getElementById("searchform_ingredients").value = ingredients.replace(/_/, " ");}
+
+    var exclude = parameters.get("exclude");
+    if (exclude != null)
+        {document.getElementById("searchform_exclude").value = exclude.replace(/_/, " ");}
+
+    var strict = parameters.get("strict");
+    if (strict != null)
+        {document.getElementById("searchform_strict").checked = strict;}
+}
+document.addEventListener("DOMContentLoaded", prefill_searchform_from_url);
+
 </script>
 </html>

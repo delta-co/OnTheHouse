@@ -47,6 +47,8 @@ class Ingredient(ObjectBase):
 
         self.id = db_row['IngredientID']
         self.name = db_row['Name']
+        self.description = db_row['Description']
+        self.ingredient_image_id = db_row['IngredientImageID']
 
     def add_autocorrect(self, alternate_name):
         alternate_name = self.recipedb._normalize_ingredient_name(alternate_name)
@@ -68,15 +70,10 @@ class Ingredient(ObjectBase):
         self.recipedb.sql.commit()
 
     def add_tag(self, tag):
-        cur = self.recipedb.sql.cursor()
-        cur.execute(
-            'SELECT * FROM Ingredient_IngredientTag_Map WHERE IngredientID = ? AND IngredientTagID = ?',
-            [self.id, tag.id]
-        )
-        exists = cur.fetchone()
-        if exists is not None:
+        if self.has_tag(tag):
             return
 
+        cur = self.recipedb.sql.cursor()
         data = {
             'IngredientID': self.id,
             'IngredientTagID': tag.id,
@@ -93,6 +90,15 @@ class Ingredient(ObjectBase):
         tags = {self.recipedb.get_ingredient_tag_by_id(line[0]) for line in lines}
 
         return tags
+
+    def has_tag(self, tag):
+        cur = self.recipedb.sql.cursor()
+        cur.execute(
+            'SELECT * FROM Ingredient_IngredientTag_Map WHERE IngredientID = ? AND IngredientTagID = ?',
+            [self.id, tag.id]
+        )
+        exists = cur.fetchone()
+        return bool(exists)
 
     def remove_tag(self, tag):
         cur = self.recipedb.sql.cursor()

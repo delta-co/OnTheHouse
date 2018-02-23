@@ -2,6 +2,29 @@
 {% block head %}
     {{ super() }}
     <title>{{ user.display_name }}   | OnTheHouse</title>
+    <style>
+    .user-recipe img {
+    border-radius:12px;
+    width:100%;
+    }
+
+    .user-recipes{
+    margin-top:30px;
+    font-family: 'Rubik Mono One', sans-serif;
+
+    }
+    .user-recipe{
+    font-family: 'Roboto', sans-serif;
+    }
+
+    .profile.h2{
+    font-family: 'Rubik Mono One', sans-serif;
+    }
+
+    .profile.h3{
+    font-family: 'Oxygen', sans-serif;
+    }
+</style>
 {% endblock %}
 
 {% import 'macros.html' as macros%}
@@ -10,10 +33,10 @@
     <div class="row content">
         <div class="col-sm-12 profile">
             <div class ="col-sm-4 pic">
-                <img class="img-rounded" width="100%" src="/static/default_profile_pic.jpg" alt="Profile picture">
+                <img class="img-rounded" width="100%" src="/user/{{user.username}}/profilepic.jpg" alt="Profile picture">
             </div>
             <div class="col-sm-6">
-                <h2 style="margin: 50px 30px 20px 0px;" class="well">{{ user.display_name }}</h2>
+                <h2>{{ user.display_name }}</h2>
                 <h4 id="join-date">Member Since {{ user.date_joined|unix_to_human }}</h4>
                 <p id="bio" class="well well-lg">{{ user.bio_text }}</p>
             </div>
@@ -22,13 +45,13 @@
 
         <div class="row">
             <div class="col-sm-12 user-recipes">
-                <h2 style="text-align:center;">User Recipes</h2>
+                <h2 style="text-align:center;">{{user.display_name}}'s Recipes</h2>
             </div>
 
-            <div class="col-sm-12" style="margin-top: 50px"></div>
+            <div class="col-sm-12"></div>
             {% for recipe in recipes %}
-                <div class="col-sm-4 user-recipe">
-                {{ macros.recipe_card(recipe) }}
+                <div class="col-sm-3 user-recipe">
+                {{ macros.recipe_card(recipe, 's') }}
                 </div>
             {% endfor %}
         </div>

@@ -59,7 +59,7 @@
     <div class="row content">
         <div class="col-sm-12">
             <p class="recipe-name">{{recipe.name}}</p>
-            <p><img class="img-rounded" src="/image/{{recipe.recipe_image_id}}"/></p>
+            <p><img class="img-rounded" width="600" src="/image/{{recipe.recipe_image_id}}"/></p>
             {% if recipe.author is not none %}
             <p class="recipe-author">Recipe by <a href="/user/{{recipe.author.username}}">{{recipe.author.display_name}}</a></p>
             {% endif %}
@@ -82,8 +82,8 @@
                 <ul>
                   {% for quantitied in ingredients %}
                     <li>
-                      <a class="ingredient-link" href="/recipe/search?ingredients={{quantitied.ingredient.name.replace(' ', '_')}}">
-                        {{-quantitied.quantity or ""-}} {{-quantitied.prefix or ""-}} {{-quantitied.ingredient.name-}} {{-quantitied.suffix or ""-}}
+                      <a class="ingredient-link" href="/ingredient/{{quantitied.ingredient.name.replace(' ', '_')}}">
+                        {{-quantitied.quantity or ""}} {{quantitied.prefix or ""}} {{quantitied.ingredient.name}} {{quantitied.suffix or ""-}}
                       </a>
                     </li>
                   {% endfor %}
