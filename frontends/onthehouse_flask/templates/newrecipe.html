@@ -11,13 +11,22 @@
         <div class="col-sm-5">
             <h1>New Recipe:</h1>
             <input type="text" id="recipe-name" class="form-control" placeholder="Recipe Name">
+            <p></p>
             <input type="text" id="recipe-blurb" class="form-control" placeholder="Recipe Blurb">
+            <p></p>
             <input type="text" id="country-of-origin" class="form-control" placeholder="Country of Origin">
+            <p></p>
             <input type="text" id="cuisine" class="form-control" placeholder="Cuisine">
+            <p></p>
             <input type="text" id="meal-type" class="form-control" placeholder="Meal Type">
+            <p></p>
             <input type="text" id="prep-time" class="form-control" placeholder="Prep Time">
+            <p></p>
             <input type="text" id="serving-size" class="form-control" placeholder="Serving Size">
+            <p></p>
+            <p>Enter ingredients: ('1 cup','flour'), ('1 pound','ground','beef'), etc..</p>
             <textarea id="ingredients" rows="15" cols="70" class = "form-control" placeholder="Ingredients"></textarea>
+            <p></p>
             <textarea id="instructions" rows="15" cols="70" class = "form-control" placeholder="Instructions"></textarea>
             <!--<input type="image" id="recipeimage" class="form-control" placeholder="Recipe Image">-->
 
@@ -48,7 +57,7 @@
         data.append("Serving Size", servingsize);
         data.append("Ingredient", ingredient);
         data.append("Recipe Instructions", instructions);
-        var url = "/createrecipe";
+        var url = "/newrecipe";
         return post(url, data, receive_callback);
     }
   function receive_callback(response)
