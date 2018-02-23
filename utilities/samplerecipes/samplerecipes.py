@@ -37,6 +37,14 @@ ethan = rdb.new_user(
     profile_image=rdb.new_image(image_dir.with_child('voussoir.png'))
 )
 
+panmomma = rdb.new_user(
+    username='panmomma',
+    display_name='Pan Momma',
+    password='P',
+    bio_text='Pan is life',
+    profile_image=None
+)
+
 anonymous = rdb.new_user(
     username='anon',
     display_name='Rainbowman',
@@ -717,7 +725,7 @@ rdb.new_recipe(
     recipe_image=rdb.new_image(image_dir.with_child('hollandaise.jpg')),
 )
 
-#15
+#v1
 instructions = '''
 Cut pork into strips. Heat sesame oil on medium heat.
 
@@ -730,20 +738,22 @@ Add vegetables and simmer for 3 minutes, then stir in thai basil and fish sauce.
 Serve with jasmine rice if desired.
 '''
 rdb.new_recipe(
-    author=angela,
+    author=panmomma,
     blurb="This classic curry is great with any meat choice.",
     country_of_origin="Unknown",
     cuisine="Unknown",
-    ingredients=["red curry paste",
-               "coconut milk",
-               "fish sauce",
-               "pork",
-               "bell pepper",
-               "bamboo shoots",
-               "thai basil",
-               "sesame oil",
-               "brown sugar",
-               "hot chili oil"],
+    ingredients=[
+      ('2 tbs', 'red curry paste'),
+      ('13 oz','coconut milk'),
+      ('2 tbs','fish sauce'),
+      ('1 pound','pork'),
+      ('2','bell pepper'),
+      ('1 cup', 'bamboo shoots'),
+      ('2 sprigs', 'thai basil'),
+      ('2 tbs', 'sesame oil'),
+      ('2 tbs', 'brown sugar'),
+      ('1 tbs', 'hot chili oil')
+    ],
     instructions=instructions,
     meal_type="Dinner",
     name="Thai Red Curry",
@@ -752,7 +762,7 @@ rdb.new_recipe(
     recipe_image=rdb.new_image(image_dir.with_child('red_curry.jpg')),
 )
 
-#16
+#v2
 instructions = '''
 Mince mushrooms, cabbage, garlic and scallions. 
 
@@ -769,20 +779,22 @@ Add 1/4 cup of water and place lid on pan. Steam for about 4 minutes
 When gyoza are done, remove and serve with ponzu sauce and rice or enjoy as is.
 '''
 rdb.new_recipe(
-    author=angela, 
+    author=panmomma, 
     blurb="Gyoza are also known as Japanese potstickers.",
     country_of_origin="Unknown",
     cuisine="Unknown",
-    ingredients=["pork",
-               "cabbage",
-               "shitake mushroom",
-               "ginger",
-               "soy sauce",
-               "scallions",
-               "garlic",
-               "gyoza skins",
-               "water",
-               "sesame oil"],
+    ingredients=[
+      ('1 pound', 'ground','pork'),
+      ('2 leaves','cabbage'),
+      ('3','shitake mushroom'),
+      ('2 tbs','grated','ginger'),
+      ('2 tbs','soy sauce'),
+      ('2','scallions'),
+      ('2 cloves','garlic'),
+      ('1 package','gyoza skins'),
+      ('1 cup','water'),
+      ('2 tbs','sesame oil')
+    ],
     instructions=instructions,
     meal_type="Appetizer",
     name="Gyoza",
@@ -791,9 +803,9 @@ rdb.new_recipe(
     recipe_image=rdb.new_image(image_dir.with_child('gyoza.jpg')),
 )
 
-#17
+#v3
 instructions = '''
-Add oil, peppercorns, bayleaves, cardamom seeds, cinnamon stick, and star anis in a 
+Add oil, peppercorns, bayleaves, cinnamon stick, and star anis in a 
 small pot over medium high heat.
 
 Mince garlic and add to a heat resistant container(No plastic!!). Add in the crushed red chilis,
@@ -808,21 +820,22 @@ Keep refridgerated for several months.
 You can cook with this oil, add it to intant noodles, or use it as a sauce on many dishes.
 '''
 rdb.new_recipe(
-    author=bob, 
+    author=panmomma, 
     blurb="This recipe uses Chinese peppercorns which, in addition to being very spicy, can numb your mouth!",
-    country_of_origin="Unknown",
+    country_of_origin="China",
     cuisine="Unknown",
-    ingredients=["vegetable oil",
-               "crushed red chilis",
-               "garlic",
-               "salt",
-               "Chinese peppercorn",
-               "bayleaf",
-               "cinnamon stick",
-               "star anis",
-               "cardamom seed",
-               "sesame oil",
-               "chinese black vinegar"],
+    ingredients=[
+      ('1-1/2 cup','vegetable oil'),
+      ('3/4 cup''crushed','red chili'),
+      ('4-5''cloves of','garlic'),
+      ('1 tsp','salt'),
+      ('3 tbs','chinese peppercorn'),
+      ('3','bayleaves'),
+      ('1 stick', 'cinnamon'),
+      ('4','star anis'),
+      ('1 tsp','sesame oil' ),
+      ('1 tsp','chinese black vinegar')
+    ],         
     instructions=instructions,
     meal_type="Sauce",
     name="Hot Chili Oil",
@@ -830,6 +843,255 @@ rdb.new_recipe(
     serving_size=40,
     recipe_image=rdb.new_image(image_dir.with_child('hot_chili_oil.jpg')),
 )
+
+#v4
+instructions = '''
+In a large bowl, sift together the flour, baking powder, salt and sugar.
+Make a well in the center and pour in the milk, egg and melted butter; mix until smooth.
+
+Heat a lightly oiled griddle or frying pan over medium high heat. Pour or scoop the batter 
+onto the griddle, using approximately 1/4 cup for each pancake. Brown on both sides and serve hot.
+'''
+rdb.new_recipe(
+    name='Fluffy Pancakes',
+    author=panmomma,
+    blurb='this is a family favorite.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 and 1/2 cups', 'all-purpose','flour'),
+        ('1 tbs', 'granulated', 'sugar'),
+        ('1 tsp', 'salt'),
+        ('1 1/4 cup', 'milk'),
+        ('3 Tbs', 'unsalted', 'butter'),
+        ('1', 'large', 'egg'),
+        ('3 1/2 tsps','baking powder'),
+    ],
+    instructions=instructions,
+    serving_size=10,
+    meal_type="breakfast",
+    prep_time=20,
+    recipe_image=rdb.new_image(image_dir.with_child('pancake.jpg')),
+)
+
+#v5
+instructions = '''
+Preheat oven to 350 degrees F (175 degrees C). Grease and flour one 9x5 inch pan.
+Mash bananas.
+
+Cream margarine and sugar until smooth. Beat in eggs, then bananas. Add flour and soda, 
+stirring just until combined.
+
+Pour into prepared pan and bake at 350 degrees F (175 degrees C) for about 1 hour 
+(or till toothpick comes out clean). Remove from pan and let cool, store in refrigerator or freeze.
+'''
+rdb.new_recipe(
+    name='Banana bread',
+    author=panmomma,
+    blurb='A classic recipe for those uneaten bananas',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 cups', 'all-purpose','flour'),
+        ('1 cup', 'white', 'sugar'),
+        ('2','ripe','bananas'),
+        ('1/2 cup', 'margarine'),
+        ('2', 'eggs'),
+        ('1 tsps','baking soda'),
+    ],
+    instructions=instructions,
+    serving_size=10,
+    meal_type="Anytime",
+    prep_time=75,
+    recipe_image=rdb.new_image(image_dir.with_child('banana_bread.jpg')),
+)
+
+#v6
+instructions = '''
+Preheat oven to 350 degrees F (175 degrees C). Grease and flour a 9x13 inch pan.
+
+In a large bowl, beat together eggs, oil, white sugar and 2 teaspoons vanilla. 
+Mix in flour, baking soda, baking powder, salt and cinnamon. Stir in carrots. Fold in pecans. 
+Pour into prepared pan.
+
+Bake in the preheated oven for 40 to 50 minutes, or until a toothpick inserted into the center 
+of the cake comes out clean. Let cool in pan for 10 minutes, then turn out onto a wire rack and cool 
+completely.
+
+To Make Frosting: In a medium bowl, combine butter, cream cheese, powdered sugar and 1 teaspoon vanilla. 
+Beat until the mixture is smooth and creamy. Stir in chopped pecans. Frost the cooled cake.
+'''
+rdb.new_recipe(
+    name='Carrot Cake',
+    author=panmomma,
+    blurb='Dont even think of putting raisins in this',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 cups', 'all-purpose','flour'),
+        ('2 cups', 'white', 'sugar'),
+        ('3 cups','grated','carrots'),
+        ('1 1/4 cups', 'vegetable oil'),
+        ('4', 'eggs'),
+        ('2 tsp','vanilla extract'),
+        ('2 tsp','baking powder'),
+        ('1/2 tsp','salt'),
+        ('1 tsps','baking soda'),
+        ('t tsps','ground','cinnamon'),
+        ('1/2 cup','butter'),
+        ('8 oz','cream cheese'),
+        ('4 cups','powdered sugar'),
+        ('1 tsp','vanilla extract'),
+    ],
+    instructions=instructions,
+    serving_size=10,
+    meal_type="Dessert",
+    prep_time=120,
+    recipe_image=rdb.new_image(image_dir.with_child('carrot_cake.jpg')),
+)
+
+#v7
+instructions = '''
+Preheat oven to 375 degrees F (175 degrees C). Grease an 8 inch square pan.
+
+Melt butter in large skillet. Remove from heat and stir in sugar. Quickly add 
+eggs and beat until well blended. Combine buttermilk with baking soda and stir 
+into mixture in pan. Stir in cornmeal, flour, and salt until well blended and few 
+lumps remain. Pour batter into the prepared pan.
+
+Bake in the preheated oven for 30 to 40 minutes, or until a toothpick inserted in the 
+center comes out clean.
+'''
+rdb.new_recipe(
+    name='Corn Bread',
+    author=panmomma,
+    blurb='Sweet and delicious',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 cup', 'all-purpose','flour'),
+        ('2/3 cup', 'white', 'sugar'),
+        ('2', 'eggs'),
+        ('1 cup','buttermilk'),
+        ('1/2 tsp','salt'),
+        ('1/2 tsps','baking soda'),
+        ('1/2 cup','butter'),
+        ('1 cup','corn meal'),
+      ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type="Anytime",
+    prep_time=55,
+    recipe_image=rdb.new_image(image_dir.with_child('corn_bread.jpg')),
+)
+
+#v8
+instructions = '''
+Preheat the oven to 325 degrees F (165 degrees C).
+
+In a large bowl, cream together the butter, brown sugar, and white sugar until smooth. 
+Beat in eggs one at a time, then stir in vanilla. Combine the flour, baking soda, and 
+salt; stir into the creamed mixture until just blended. Mix in the quick oats, walnuts,
+and chocolate chips. Drop by heaping spoonfuls onto ungreased baking sheets.
+
+Bake for 12 minutes in the preheated oven. Allow cookies to cool on baking sheet for 5 
+minutes before transferring to a wire rack to cool completely.
+'''
+rdb.new_recipe(
+    name='Oatmeal Chocolate Chip Cookies',
+    author=panmomma,
+    blurb='Why are raisins even a thing?',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 1/4 cup', 'all-purpose','flour'),
+        ('1/2 cup', 'white', 'sugar'),
+        ('2', 'eggs'),
+        ('1 cup','butter'),
+        ('1 tsp','salt'),
+        ('1/2 tsps','baking soda'),
+        ('3 cups','oats'),
+        ('1 cup','semisweet','chocolate chips'),
+        ('1 cup','brown','sugar'),
+        ('2 tsps','vanilla extract'),
+        ('1 cup','walnuts')
+      ],
+    instructions=instructions,
+    serving_size=24,
+    meal_type="Anytime",
+    prep_time=55,
+    recipe_image=rdb.new_image(image_dir.with_child('oatmeal_cookies.jpg')),
+)
+
+#v9
+instructions = '''
+Preheat oven to 400 degrees F (205 degrees C).
+
+In a large bowl, beat eggs until foamy, and stir in melted butter. Stir in the brown sugar, 
+white sugar and the flour; mix well. Last add the milk, vanilla and nuts.
+
+Pour into an unbaked 9-in pie shell. Bake in preheated oven for 10 minutes at 400 degrees, 
+then reduce temperature to 350 degrees and bake for 30 to 40 minutes, or until done.
+'''
+rdb.new_recipe(
+    name='Pecan Pie',
+    author=panmomma,
+    blurb='Unlike most pecan pies, this one does not require corn syrup.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 tbs', 'all-purpose','flour'),
+        ('1/4 cup', 'white', 'sugar'),
+        ('2', 'eggs'),
+        ('1/2 cup','butter'),
+        ('1/2 tbs','milk'),
+        ('1 cup','brown','sugar'),
+        ('1 tsps','vanilla extract'),
+        ('1 cup','pecans')
+      ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type="Anytime",
+    prep_time=65,
+    recipe_image=rdb.new_image(image_dir.with_child('pecan_pie.jpg')),
+)
+
+#v10
+instructions = '''
+Preheat oven to 350 degrees F (175 degrees C). Grease one 9 or 10 inch tube/Bundt(R) pan.
+
+Mix white sugar and cinnamon in a plastic bag. Cut biscuits into quarters. Shake 6 to 8 biscuit 
+pieces in the sugar cinnamon mix. Arrange pieces in the bottom of the prepared pan. Continue until 
+all biscuits are coated and placed in pan. If using nuts, arrange them in and among the 
+biscuit pieces as you go along.
+
+In a small saucepan, melt the margarine with the brown sugar over medium heat. Boil for 1 minute. 
+Pour over the biscuits.
+
+Bake at 350 degrees F (175 degrees C) for 35 minutes. Let bread cool in pan for 10 minutes, then turn 
+out onto a plate. Do not cut! The bread just pulls apart.
+'''
+rdb.new_recipe(
+    name='Monkey Bread',
+    author=panmomma,
+    blurb='Easy to make, and will become any cinnamon-lovers favorite',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('3 packages','biscuit dough'),
+        ('1 cup', 'white', 'sugar'),
+        ('2 tsps','cinnamon'),
+        ('1/2 cup','margarine'),
+        ('1 cup','brown','sugar'),
+        ('1/2 cup','walnuts')
+      ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type="Anytime",
+    prep_time=60,
+    recipe_image=rdb.new_image(image_dir.with_child('monkey_bread.jpg')),
+)
+
 
 instructions = '''
 Make the dough: In a large bowl, mix the flour, the sugar, salt, and yeast
