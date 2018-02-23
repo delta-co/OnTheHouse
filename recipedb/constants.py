@@ -36,14 +36,17 @@ CREATE TABLE IF NOT EXISTS Image_Recipe_Map(
 ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS Ingredient(
     IngredientID TEXT PRIMARY KEY,
-    Name TEXT COLLATE NOCASE
+    Name TEXT COLLATE NOCASE,
+    Description TEXT,
+    IngredientImageID TEXT,
+    FOREIGN KEY(IngredientImageID) REFERENCES Image(ImageID)
 );
 CREATE INDEX IF NOT EXISTS index_Ingredient_IngredientID on Ingredient(IngredientID);
 CREATE INDEX IF NOT EXISTS index_Ingredient_Name on Ingredient(Name COLLATE NOCASE);
 ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS IngredientAutocorrect(
     IngredientID TEXT,
-    AlternateName TEXT,
+    AlternateName TEXT COLLATE NOCASE,
     FOREIGN KEY(IngredientID) REFERENCES Ingredient(IngredientID)
 );
 CREATE INDEX IF NOT EXISTS index_IngredientAutocorrect_AlternateName on IngredientAutocorrect(AlternateName);
@@ -76,7 +79,7 @@ CREATE TABLE IF NOT EXISTS Recipe(
     ServingSize INT,
     Instructions TEXT,
     RecipeImageID TEXT,
-    FOREIGN KEY(RecipeImageID) REFERENCES Image(ImageID)
+    FOREIGN KEY(RecipeImageID) REFERENCES Image(ImageID),
     FOREIGN KEY(AuthorID) REFERENCES User(UserID)
 );
 CREATE INDEX IF NOT EXISTS index_Recipe_RecipeID on Recipe(RecipeID);

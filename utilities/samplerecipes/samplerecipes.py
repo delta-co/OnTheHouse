@@ -37,6 +37,22 @@ ethan = rdb.new_user(
     profile_image=rdb.new_image(image_dir.with_child('voussoir.png'))
 )
 
+ian = rdb.new_user(
+    username='ian',
+    display_name='Ian Atol',
+    password='I',
+    bio_text='CS can stand for Computer Science or for Cooking Skills',
+    profile_image=None
+)
+
+matt = rdb.new_user(
+    username='matt',
+    display_name='Matthew Haddad',
+    password='M',
+    bio_text='If Buzz Lightyear thinks he is a real space ranger, why is he still motionless when humans are around?',
+    profile_image=None
+)
+
 panmomma = rdb.new_user(
     username='panmomma',
     display_name='Pan Momma',
@@ -52,6 +68,7 @@ anonymous = rdb.new_user(
     bio_text='You cant touch me.',
     profile_image=None,
 )
+
 
 ingredient_tags = {
     'dairy': [
@@ -79,6 +96,9 @@ for (tag_name, ingredient_names) in ingredient_tags.items():
         ingredient = rdb.get_or_create_ingredient(name=ingredient_name)
         ingredient.add_tag(tag)
 
+rdb.get_or_create_ingredient('potato').add_autocorrect('potatoes')
+rdb.get_or_create_ingredient('egg').add_autocorrect('eggs')
+
 # 1
 instructions = '''
 Soften cream cheese and Brie cheese.
@@ -103,15 +123,15 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "cream cheese",
-        "Brie cheese",
-        "basil",
-        "parsley",
-        "Parmesan cheese",
-        "almonds",
-        "garlic",
-        "olive oil",
-        "whipping cream",
+        ('1','8-ounce package','cream cheese'),
+        ('1','4 1/2-ounce package','Brie cheese'),
+        ('1','cup firmly packed fresh','basil','leaves'),
+        ('1/2','cup firmly packed','parsley','sprigs'),
+        ('1/2','cup grated','Parmesan cheese'),
+        ('1/4','cup','almond','s'),
+        ('2','cloves','garlic',', quartered'),
+        ('1/4','cup','olive oil'),
+        ('1/2','cup','whipping cream')
     ],
     instructions=instructions,
     meal_type="Appetizer",
@@ -149,16 +169,16 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "olive oil",
-        "red bell pepper",
-        "onion",
-        "mushroom",
-        "spinach",
-        "egg",
-        "water",
-        "salt",
-        "pepper",
-        "Cheddar cheese",
+        ('1','teaspoon','olive oil'),
+        ('2','tablespoons chopped','red bell pepper'),
+        ('1','tablespoon chopped','onion'),
+        ('1/4','cup sliced','mushroom','s'),
+        ('1','cup loosely packed fresh baby','spinach','leaves, rinsed'),
+        ('2','','egg','s, beaten'),
+        ('1','tablespoon','water'),
+        ('','dash','salt'),
+        ('','dash','pepper'),
+        ('1','tablespoon shredded reduced-fat','Cheddar cheese')
     ],
     instructions=instructions,
     meal_type="Breakfast",
@@ -198,23 +218,23 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "dry yeast",
-        "water",
-        "all-purpose flour",
-        "salt",
-        "shortening",
-        "vegetable oil",
-        "onion",
-        "tomato paste",
-        "white sugar",
-        "black pepper",
-        "garlic powder",
-        "basil",
-        "oregano",
-        "marjoram",
-        "cumin",
-        "chili powder",
-        "red pepper flake",
+        ('1','envelope active dry','yeast'),
+        ('1','cup lukewarm','water'),
+        ('3','cups','all-purpose flour'),
+        ('1/4','teaspoon','salt'),
+        ('2','tablespoons','shortening'),
+        ('1','tablespoon','vegetable oil'),
+        ('1/2','cup chopped','onion'),
+        ('1','can','tomato paste'),
+        ('6','fluid ounces','water'),
+        ('1/2','teaspoon','white sugar'),
+        ('1/8','teaspoon','ground black pepper'),
+        ('1/4','teaspoon','garlic powder'),
+        ('1/4','teaspoon dried','basil'),
+        ('1/4','teaspoon dried','oregano'),
+        ('1/4','teaspoon dried','marjoram'),
+        ('1/4','teaspoon','chili powder'),
+        ('1/8','teaspoon crushed','red pepper flakes')
     ],
     instructions=instructions,
     meal_type="Anytime",
@@ -263,17 +283,18 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "water",
-        "butter",
-        "salt",
-        "all-purpose flour",
-        "egg",
-        "vegetable oil",
-        "sugar",
-        "cinnamon",
-        "cornstarch",
-        "milk",
-        "dark chocolate",
+        ('1','cup','water'),
+        ('1/2','cup','butter'),
+        ('1/4','teaspoon','salt'),
+        ('1','cup','all-purpose flour'),
+        ('3','','egg','s, beaten'),
+        ('','','vegetable oil',', for frying'),
+        ('1/4','cup','sugar'),
+        ('1/4','teaspoon ground','cinnamon'),
+        ('1','tablespoon','cornstarch'),
+        ('2','cups','milk'),
+        ('4','ounces','dark chocolate',', chopped'),
+        ('1/4','cup','sugar')
     ],
     instructions=instructions,
     meal_type="Dessert",
@@ -319,17 +340,17 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "nori",
-        "sushi rice",
-        "tuna",
-        "salmon",
-        "cucumber",
-        "carrot",
-        "avocado",
-        "water",
-        "rice vinegar",
-        "sugar",
-        "salt",
+        ('5','sheets','nori'),
+        ('2','ounces sushi-grade','tuna',', cut into 1/4 by 1/2 by 3-inch strips'),
+        ('2','ounces sushi-grade','salmon',', cut into 1/4 by 1/2 by 3-inch strips'),
+        ('1','','hot house cucumber',', julienne'),
+        ('1','','carrot',', peeled and julienne'),
+        ('1/2','','avocado','thinly sliced'),
+        ('5','cups short-grain','sushi rice'),
+        ('6','cups','water'),
+        ('1/2','cup','rice vinegar'),
+        ('2','tablespoons','sugar'),
+        ('1','teaspoon','salt')
     ],
     instructions=instructions,
     meal_type="Anytime",
@@ -375,17 +396,17 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "nori",
-        "sushi rice",
-        "tuna",
-        "salmon",
-        "cucumber",
-        "carrot",
-        "avocado",
-        "water",
-        "rice vinegar",
-        "sugar",
-        "salt",
+        ('5','sheets','nori'),
+        ('2','ounces sushi-grade','tuna',', cut into 1/4 by 1/2 by 3-inch strips'),
+        ('2','ounces sushi-grade','salmon',', cut into 1/4 by 1/2 by 3-inch strips'),
+        ('1','','hot house cucumber',', julienne'),
+        ('1','','carrot',', peeled and julienne'),
+        ('1/2','','avocado','thinly sliced'),
+        ('5','cups short-grain','sushi rice'),
+        ('6','cups','water'),
+        ('1/2','cup','rice vinegar'),
+        ('2','tablespoons','sugar'),
+        ('1','teaspoon','salt')
     ],
     instructions=instructions,
     meal_type="Anytime",
@@ -427,8 +448,8 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "cabbage",
-        "sea salt",
+        ('1','medium head of','cabbage'),
+        ('2','tablespoons','sea salt')
     ],
     instructions=instructions,
     meal_type="Anytime",
@@ -455,15 +476,15 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "egg",
-        "milk",
-        "sugar",
-        "light rum",
-        "bourbon",
-        "vanilla",
-        "whipping cream",
-        "sugar",
-        "nutmeg",
+        ('6','beaten','egg','s'),
+        ('2','cups','milk'),
+        ('1/3','cup','sugar'),
+        ('3','tablespoons','light rum'),
+        ('3','tablespoons','bourbon'),
+        ('1','teaspoon','vanilla'),
+        ('1','cup','whipping cream'),
+        ('2','tablespoons','sugar'),
+        ('','ground','nutmeg')
     ],
     instructions=instructions,
     meal_type="Drink",
@@ -496,12 +517,12 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "egg white",
-        "powdered sugar",
-        "cake flour",
-        "cream of tartar",
-        "vanilla",
-        "sugar",
+        ('1 1/2','cups','egg white','s (10 to 12 large)'),
+        ('1 1/2','cups sifted','powdered sugar'),
+        ('1','cups sifted','all-purpose flour'),
+        ('1 1/2','teaspoons','cream of tartar'),
+        ('1','teaspoon','vanilla'),
+        ('1','cup','sugar')
     ],
     instructions=instructions,
     meal_type="Dessert",
@@ -530,17 +551,17 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "beef",
-        "onion",
-        "garlic",
-        "green bell pepper",
-        "tomato",
-        "tomato sauce",
-        "tomato paste",
-        "oregano",
-        "basil",
-        "salt",
-        "black pepper",
+        ('1','pound ground','beef'),
+        ('1','','onion',', chopped'),
+        ('4','cloves','garlic',', chopped'),
+        ('1','small','green bell pepper',', diced'),
+        ('1','28-ounce can diced','tomato','es'),
+        ('1','16-ounce can','tomato sauce'),
+        ('1','6-ounce can','tomato paste'),
+        ('2','teaspoons dried','oregano'),
+        ('2','teaspoons dried','basil'),
+        ('1','teaspoon','salt'),
+        ('1/2','teaspoon','black pepper')
     ],
     instructions=instructions,
     meal_type="Dinner",
@@ -579,16 +600,16 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "white sugar",
-        "all-purpose flour",
-        "cornstarch",
-        "salt",
-        "water",
-        "lemon",
-        "butter",
-        "egg yolk",
-        "pie crust",
-        "egg white",
+        ('1','cup','white sugar'),
+        ('2','tablespoons','all-purpose flour'),
+        ('3','tablespoons','cornstarch'),
+        ('1/4','tablespoon','salt'),
+        ('1 1/2','cups','water'),
+        ('2','','lemon','s, juiced and zested'),
+        ('2','tablespoons','butter'),
+        ('4','','egg yolk','s, beaten'),
+        ('1','9-inch','pie crust',', baked'),
+        ('4','','egg white','s')
     ],
     instructions=instructions,
     meal_type="Dessert",
@@ -636,20 +657,17 @@ Unwrap and serve immediately.
 '''
 rdb.new_recipe(
     author=caitlyn,
-    blurb="This grilled cheese sandwich recipe actually grills the cheese.",
+    blurb="Not just a grilled cheese sandwich, but a grilled, grilled cheese sandwich.",
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "country bread",
-        "butter",
-        "extra sharp Cheddar cheese",
-        "Gruyere cheese",
-        "dry mustard",
-        "smoked paprika",
-        "black pepper",
-        "egg yolk",
-        "pie crust",
-        "egg white",
+        ('4','1/2-inch slices hearty','country bread'),
+        ('1','ounce unsalted','butter',', at room temperature'),
+        ('3','ounces grated extra sharp','Cheddar cheese'),
+        ('3','ounces grated','Gruyere cheese'),
+        ('1','teaspoon','dry mustard'),
+        ('1/2','teaspoon smoked','paprika'),
+        ('1/4','teaspoon freshly ground','black pepper')
     ],
     instructions=instructions,
     meal_type="Lunch",
@@ -678,11 +696,11 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "potato",
-        "butter",
-        "milk",
-        "salt",
-        "pepper",
+        ('2','pounds baking','potato','es, peeled and quartered'),
+        ('2','tablespoons','butter'),
+        ('1','cup','milk'),
+        ('','','salt','to taste'),
+        ('','','pepper','to taste'),
     ],
     instructions=instructions,
     meal_type="Dinner",
@@ -711,11 +729,11 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        "margarine",
-        "egg yolk",
-        "water",
-        "lemon juice",
-        "pepper",
+        ('1/2','cup','margarine'),
+        ('3','beaten','egg yolk','s'),
+        ('1','tablespoon','water'),
+        ('1','tablespoon','lemon juice'),
+        ('','dash','white pepper')
     ],
     instructions=instructions,
     meal_type="Sauce",
@@ -1094,6 +1112,340 @@ rdb.new_recipe(
 
 
 instructions = '''
+Mix together egg, milk, salt, vanilla, and cinnamon or other spicesin a wide,
+shallow bowl.
+
+Prepare a lightly oiled skillet over medium-high heat.
+
+Dip each slice of bread into the egg mixture, soaking thoroughly.
+
+Place slice in pan and cook both sides.
+
+Top with butter, powdered sugar, and maple syrup to preference. Serve.
+'''
+rdb.new_recipe(
+    name='Easy French Toast',
+    author=ethan,
+    blurb='Quick, delicious breakfast.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('6 slices', 'thick', 'bread'),
+        ('2', 'eggs'),
+        ('2/3 cup', 'milk'),
+        ('1/4 teaspoon', 'ground cinnamon'),
+        ('1 teaspoon', 'vanilla extract'),
+        ('A pinch of', 'salt'),
+        'powdered sugar',
+        'butter',
+        'maple syrup',
+    ],
+    instructions=instructions,
+    serving_size=3,
+    meal_type='Breakfast',
+    prep_time=20,
+    recipe_image=rdb.new_image(image_dir.with_child('french_toast.jpg')),
+)
+
+instructions = '''
+Peel potatoes.
+
+Boil potatoes in salted water for 15 minutes. Potatoes should be cooked on the
+outside but still stiff.
+
+Dry on paper towels, and cut into slices.
+
+Deep fry in hot oil until brown and crispy.
+
+Dry, add salt, and serve.
+'''
+rdb.new_recipe(
+    name='Family-fun French Fries',
+    author=ethan,
+    blurb='Make this night in feel like a night out.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('4', 'large', 'potatoes'),
+        'frying oil',
+        'salt',
+    ],
+    instructions=instructions,
+    serving_size=3,
+    meal_type='Anytime',
+    prep_time=20,
+    recipe_image=rdb.new_image(image_dir.with_child('french_fries.jpg')),
+)
+
+instructions = '''
+Blend strawberries, banana, and yogurt in a blender.
+
+Once smooth, add ice and blend again.
+
+Pour, and top with whipped cream.
+'''
+rdb.new_recipe(
+    name='Strawberry Banana Smoothie',
+    author=ethan,
+    blurb='Healthy and tasty smoothie to start your day.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1/2 cup', 'fresh chopped', 'strawberries'),
+        ('1/4', 'peeled', 'banana'),
+        ('1/4 cup', 'vanilla yogurt'),
+        ('1/2 cup', 'crushed', 'ice'),
+        'whipped cream',
+    ],
+    instructions=instructions,
+    serving_size=1,
+    meal_type='Drink',
+    prep_time=10,
+    recipe_image=rdb.new_image(image_dir.with_child('strawberry_banana_smoothie.jpg')),
+)
+
+instructions = '''
+Preheat oven to 350 degrees F (175 degrees C). Grease and flour two 9 inch cake
+pans.
+
+Use the first set of ingredients to make the cake. In a medium bowl, stir
+together the sugar, flour, cocoa, baking soda, baking powder and salt. Add the
+eggs, milk, oil and vanilla, mix for 3 minutes with an electric mixer. Stir in
+the boiling water by hand. Pour evenly into the two prepared pans.
+
+Bake for 30 to 35 minutes in the preheated oven, until a toothpick inserted
+comes out clean. Cool for 10 minutes before removing from pans to cool
+completely.
+
+To make the frosting, use the second set of ingredients. Cream butter until
+light and fluffy. Stir in the cocoa and confectioners' sugar alternately with
+the milk and vanilla. Beat to a spreading consistency.
+
+Split the layers of cooled cake horizontally, cover the top of each layer with
+frosting, then stack them onto a serving plate. Frost the outside of the cake.
+'''
+rdb.new_recipe(
+    name='Very Chocolate Cake',
+    author=ethan,
+    blurb='Bye bye, diet.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 cups', 'white sugar'),
+        ('1 and 3/4 cups', 'all-purpose flour'),
+        ('3/4 cup', 'unsweetened', 'cocoa powder'),
+        ('1 and 1/2 teaspoons', 'baking soda'),
+        ('1 and 1/2 teaspoons', 'baking powder'),
+        ('1 teaspoon', 'salt'),
+        ('1/2 cup', 'vegetable oil'),
+        ('2 teaspoons', 'vanilla extract'),
+        ('1 cup', 'water'),
+        ('3/4 cup', 'butter',),
+        ('2', 'eggs'),
+        ('1 cup', 'milk'),
+    ],
+    instructions=instructions,
+    serving_size=1,
+    meal_type='Dessert',
+    prep_time=70,
+    recipe_image=rdb.new_image(image_dir.with_child('chocolate_cake.jpg')),
+)
+
+instructions = '''
+Put the bones and carcass from a leftover chicken (they can be in pieces) in a
+large pot. Cover with the broth and 4 cups water. Bring to a boil over
+medium-high heat, reduce to a simmer and cook for 20 minutes. Skim any foam or
+fat from the broth with a ladle as necessary.
+
+Remove the bones and carcass with tongs or a slotted spoon; set aside to cool.
+Add the carrots, celery, onion and bay leaf to the broth, bring back to a simmer
+and cook until the vegetables are about half cooked (they will still have
+resistance when tested with a knife but be somewhat pliable when bent),
+about 10 minutes. Stir in the rice (to keep it from sticking to the bottom),
+and cook until the grains are just al dente, 10 to 12 minutes.
+
+Meanwhile, when the carcass and bones are cool enough to handle, pick off the
+meat, and shred it into bite-size pieces.
+
+When the rice is done, add the meat to the broth and simmer until warmed
+through, about 1 minute. Stir in the parsley, and season with 1/2 teaspoon salt
+or more to taste. Serve hot.
+'''
+rdb.new_recipe(
+    name='"Get Well Soon" Chicken Soup',
+    author=ethan,
+    blurb=None,
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('4 or 5 pounds', 'roast chicken'),
+        ('4 cups', 'low-sodium', 'chicken broth'),
+        ('2', 'sliced', 'carrots'),
+        ('2 stalks', 'celery'),
+        ('1', 'medium, chopped', 'onion'),
+        ('1', 'bay leaf'),
+        ('1/2 cup', 'white rice'),
+        ('2 tablespoons', 'chopped', 'parsley'),
+        'salt',
+    ],
+    instructions=instructions,
+    serving_size=4,
+    meal_type='Dinner',
+    prep_time=55,
+    recipe_image=rdb.new_image(image_dir.with_child('chicken_soup.jpg')),
+)
+
+instructions = '''
+Preheat oven to 400 degrees F (200 degrees C). Line a baking sheet with
+parchment paper or lightly grease.
+
+Beat 1 1/2 cups white sugar, butter, and eggs together in a bowl using an
+electric mixer until smooth and creamy. Combine flour, cream of tartar, baking
+soda, and salt in a separate bowl; stir into creamed butter mixture until dough
+holds together.
+
+Mix 2 tablespoons white sugar and cinnamon together in a bowl.
+
+Form dough into 2-teaspoon-size balls and roll in the cinnamon-sugar mixture.
+Place dough balls, about 2 inches apart, on the prepared baking sheet.
+
+Bake in the preheated oven on the center rack for 7 minutes. Allow cookies to
+cool on the baking sheet for 5 minutes before transferring to a wire rack.
+'''
+rdb.new_recipe(
+    name='Mom\'s Snickerdoodles',
+    author=ethan,
+    blurb='Just like mom used to make. But now you\'re making them.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 and 1/2 cups', 'white sugar'),
+        ('1 cup', 'softened', 'butter'),
+        ('2', 'eggs'),
+        ('2 and 3/4 cups', 'all-purpose flour'),
+        ('2 teaspoons', 'cream of tartar'),
+        ('1 teaspoon', 'baking soda'),
+        ('1/4 teaspoon', 'salt'),
+        ('2 tablespoons', 'white sugar'),
+        ('2 teaspoons', 'ground cinnamon'),
+    ],
+    instructions=instructions,
+    serving_size=36,
+    meal_type='Dessert',
+    prep_time=35,
+    recipe_image=rdb.new_image(image_dir.with_child('snickerdoodles.jpg')),
+)
+
+instructions = '''
+Preheat oven to 375 degrees F (190 degrees C). Grease 24 mini-muffin cups.
+
+Mix 1/2 cup sugar, 1/4 cup margarine, and nutmeg in a large bowl. Stir in the
+milk, then mix in the baking powder and flour until just combined. Fill the
+prepared mini muffin cups about half full.
+
+Bake in the preheated oven until the tops are lightly golden, 15 to 20 minutes.
+
+While muffins are baking, place 1/4 cup of melted margarine in a bowl. In a
+separate bowl, mix together 1/2 cup of sugar with the cinnamon. Remove muffins
+from their cups, dip each muffin in the melted margarine, and roll in the
+sugar-cinnamon mixture. Let cool and serve.
+'''
+rdb.new_recipe(
+    name='Donut Muffins',
+    author=ethan,
+    blurb='For when making that choice is just too hard.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1/2 cup', 'white sugar'),
+        ('1/4 cup', 'melted', 'margarine'),
+        ('3/4 teaspoon', 'ground nutmeg'),
+        ('1/2 cup', 'milk'),
+        ('1 teaspoon', 'baking powder'),
+        ('1 cup', 'all-purpose flour'),
+        ('1 teaspoon', 'ground cinnamon'),
+    ],
+    instructions=instructions,
+    serving_size=24,
+    meal_type='Dessert',
+    prep_time=40,
+    recipe_image=rdb.new_image(image_dir.with_child('donut_muffins.jpg')),
+)
+
+instructions = '''
+Beat the eggs in a mixing bowl. Whisk in the milk, then set aside. Place the
+bread crumbs into a plastic bag, and set aside.
+
+Separate and place an egg roll wrapper onto your work surface with one of the
+tips pointed towards you. Moisten the two far edges of the wrapper with water.
+Place a string cheese stick onto the corner nearest you, and roll it in 1/3 of
+the way, fold over the right and left corners, then continue rolling to the end,
+pressing to seal. Repeat with the remaining string cheese sticks and egg roll
+wrappers.
+
+Heat oil in a deep-fryer or large saucepan to 375 degrees F (190 degrees C).
+
+Dip the mozzarella sticks into the egg wash, then toss in the bread crumbs.
+Cook in batches in the hot oil until crisp and golden brown, 3 to 4 minutes.
+'''
+rdb.new_recipe(
+    name='Mozzarella Sticks',
+    author=ethan,
+    blurb='Sometimes all you need is a stick of cheese.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2', 'egg'),
+        ('2 cups', 'milk'),
+        ('1 and 1/2 cups', 'Italian seasoned', 'bread crumbs'),
+        ('10', 'egg roll wrapper'),
+        ('10 sticks', 'mozzarella cheese'),
+        ('1 quart', 'frying oil'),
+    ],
+    instructions=instructions,
+    serving_size=5,
+    meal_type='Appetizer',
+    prep_time=30,
+    recipe_image=rdb.new_image(image_dir.with_child('mozzarella_sticks.jpg')),
+)
+
+instructions = '''
+In a medium bowl, combine cornmeal, flour, salt, pepper, sugar and baking
+powder. Stir in eggs and milk.
+
+Preheat oil in a deep saucepan over medium heat. Insert wooden skewers into
+frankfurters. Roll frankfurters in batter until well coated.
+
+Fry 2 or 3 corn dogs at a time until lightly browned, about 3 minutes. Drain on
+paper towels.
+'''
+rdb.new_recipe(
+    name='Corn Dogs',
+    author=ethan,
+    blurb='It\'s like you\'re at the fair!',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 cup', 'yellow', 'cornmeal'),
+        ('1 cup', 'all-purpose flour'),
+        ('1/4 teaspoon', 'salt'),
+        ('1/8 teaspoon', 'black pepper'),
+        ('1/4 cup', 'white sugar'),
+        ('4 teaspoons', 'baking powder'),
+        ('1', 'egg'),
+        ('1 cup', 'milk'),
+        ('1 quart', 'frying oil'),
+        ('16 ounces', 'beef frankfurters'),
+        ('16', 'wooden', 'skewers'),
+    ],
+    instructions=instructions,
+    serving_size=16,
+    meal_type='Anytime',
+    prep_time=40,
+    recipe_image=rdb.new_image(image_dir.with_child('corn_dogs.jpg')),
+)
+
+instructions = '''
 Make the dough: In a large bowl, mix the flour, the sugar, salt, and yeast
 together until evenly dispersed. Set aside. In a small microwavable bowl, heat
 the water, milk, and butter together in the microwave until the butter is melted
@@ -1127,7 +1479,7 @@ rdb.new_recipe(
     country_of_origin=None,
     cuisine=None,
     ingredients=[
-        ('2 and 3/4 cups', 'all-purpose','flour'),
+        ('2 and 3/4 cups', 'all-purpose flour'),
         ('3 Tablespoons', 'granulated', 'sugar'),
         ('1 teaspoon', 'salt'),
         ('1/2 cup', 'water'),
@@ -1146,6 +1498,413 @@ rdb.new_recipe(
     meal_type='Breakfast',
     prep_time=45,
     recipe_image=rdb.new_image(image_dir.with_child('cinnamon_rolls.jpg')),
+)
+
+#ian 1
+instructions = '''
+Use paper towels to thoroughly dry excess moisture from fish fillets - this step is crucial for fish to brown nicely in pan. 
+Set aside.
+
+In a bowl, combine melted butter, lemon juice and zest, and 1½ tsp kosher salt. Stir to combine well.
+In a separate bowl, combine the remaining ½ tsp kosher salt, paprika, garlic powder, onion powder, and black pepper. 
+Evenly press spice mixture onto both sides of fish fillets.
+
+In a large, heavy pan over medium high heat, heat up the olive oil until hot.
+Cook 2 fish fillets at a time to avoid overcrowding (allows for browning.)
+Cook each side just until fish becomes opaque, feels somewhat firm in the center, 
+and is browned - lightly drizzle some of the lemon butter sauce as you cook, reserving the rest for serving.
+Take care not to over-cook, as that will result in a tougher texture.
+
+Serve fish with with remaining lemon butter sauce, basil or parsley, and lemon wedges.
+'''
+rdb.new_recipe(
+    name='Easy Lemon Butter Fish',
+    author=ian,
+    blurb='Delicious and zesty',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('4', 'white fish fillets'),
+        ('3 TB', 'melted butter'),
+        ('1', 'lemon'),
+        ('2 tsp', 'salt'),
+        ('1 tsp', 'garlic powder'),
+        ('1 tsp', 'onion powder'),
+        ('1/4 tsp', 'ground', 'black pepper'),
+        ('3 TB', 'olive oil'),
+        ('1 tsp', 'onion powder'),
+    ],
+    instructions=instructions,
+    serving_size=4,
+    meal_type='Dinner',
+    prep_time=19,
+    recipe_image=rdb.new_image(image_dir.with_child('easy_lemon_butter_fish.jpg')),
+)
+
+#ian 2
+instructions = '''
+Let steaks stand 30 minutes at room temperature.
+
+Sprinkle salt and pepper evenly over steaks. Heat a large cast-iron skillet over high heat.
+Add oil to pan; swirl to coat. Add steaks to pan; cook 3 minutes on each side or until browned.
+Reduce heat to medium-low; add butter, thyme, and garlic to pan. Carefully grasp pan handle using an oven mitt or folded dish towel. 
+Tilt pan toward you so butter pools; cook 1 1/2 minutes, basting steaks with butter constantly. Remove steaks from pan; cover loosely with foil. 
+Let stand 10 minutes. Reserve butter mixture.
+
+Cut steak diagonally across grain into thin slices. Discard thyme and garlic; spoon reserved butter mixture over steak.
+'''
+rdb.new_recipe(
+    name='Pan Seared Strip Steak',
+    author=ian,
+    blurb='The three S\'s: Simple, Seared, and Steak. Oh, and Strip. 4 S\'s',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2', 'lean, grass-fed', 'strip steaks'),
+        ('1 tbsp', 'salt'),
+        ('3/4 tbsp', 'black pepper'),
+        ('2 tsp', 'salt'),
+        ('2 tsp', 'butter'),
+        ('2 sprigs', 'thyme'),
+        ('2 cloves', 'crushed', 'garlic'),
+        ('1 tbsp', 'olive oil'),
+    ],
+    instructions=instructions,
+    serving_size=6,
+    meal_type='Dinner',
+    prep_time=51,
+    recipe_image=rdb.new_image(image_dir.with_child('seared_strip_steak.jpg')),
+)
+
+#ian 3
+instructions = '''
+Preheat oven to 350 degrees F (175 degrees C).
+
+
+In a large bowl, combine the beef, egg, onion, milk and bread OR cracker crumbs.
+Season with salt and pepper to taste and place in a lightly greased 5x9 inch loaf pan, OR form into a loaf and place in a lightly greased 9x13 inch baking dish.
+
+In a separate small bowl, combine the brown sugar, mustard and ketchup. Mix well and pour over the meatloaf.
+
+Bake at 350 degrees F (175 degrees C) for 1 hour.
+'''
+rdb.new_recipe(
+    name='Easy Meatloaf',
+    author=ian,
+    blurb='Easy and loafy',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 1/2 pounds', 'ground beef'),
+        ('1', 'egg'),
+        ('1', 'onion'),
+        ('1 cup', 'milk'),
+        ('1 cup', 'dried', 'bread crumbs'),
+        ('2 tbsp', 'brown sugar'),
+        ('2 tbsp', 'mustard'),
+        ('1/3 cup', 'ketchup'),
+    ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type='Dinner',
+    prep_time=70,
+    recipe_image=rdb.new_image(image_dir.with_child('easy_meatloaf.jpg')),
+)
+
+#ian 4
+instructions = '''
+Freeze the twinkies for at least 2 hours. Can freeze overnight.
+
+Heat your oil in fryer to 375 degrees.
+
+Mix your batter as such: milk, vinegar,oil.
+
+In another bowl blend flour, baking powder and salt.
+
+Whisk wet ingredients into dry, mix until smooth.
+
+Refrigerate until oil reaches temperature.
+
+Insert sticks into twinkies, leaving enough of a end to hold.
+
+Dust with flour and dip into batter.
+Be sure batter covers the entire twinkie place twinkie in hot oil with utensil.
+Be sure the twinkie browns evenly (the twinkie will float) about 3- 4 minutes.
+
+Remove to paper towel- cool 5 minutes.
+Serve with a Berry Sauce Raspberries or mixed Berry preserves heated until warm.
+Use for dipping.
+'''
+rdb.new_recipe(
+    name='Fried Twinkies',
+    author=ian,
+    blurb='Fried and Twinky',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('6', 'twinkies'),
+        ('6', 'wooden', 'popsicle sticks'),
+        ('1 cup', 'vegetable oil'),
+        ('1 cup', 'milk'),
+        ('2 tbsp', 'vinegar'),
+        ('1 cup', 'flour'),
+        ('1 tbsp', 'baking powder'),
+        ('1/2 teaspoon', 'salt'),
+    ],
+    instructions=instructions,
+    serving_size=6,
+    meal_type='Anytime',
+    prep_time=15,
+    recipe_image=rdb.new_image(image_dir.with_child('fried_twinkie.jpg')),
+)
+
+#ian 5
+instructions = '''
+Mix granulated sugar, cornstarch and nutmeg in 3-quart saucepan.
+
+Gradually stir in milk.
+
+Heat to boiling over medium heat, stirring constantly.
+
+Boil and stir 1 minute; remove from heat.
+
+Stir in butter and lemon peel.
+
+Spread evenly in ungreased square baking dish, 8x8x2 inches.
+
+Refrigerate uncovered at least 3 hours until firm.
+
+Cut custard into 2-inch squares, using wet knife.
+
+Dip custard squares into eggs, then coat with bread crumbs.
+
+Heat oil (1 to 1/2 inches) to 360°F; fry 2 or 3 squares at a time in oil
+1 to 2 minutes or until light brown; drain on paper towels.
+
+Sprinkle with powdered sugar.
+'''
+rdb.new_recipe(
+    name='Fried Milk',
+    author=ian,
+    blurb='Fried and Milky',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1/2 cup', 'granulated', 'sugar'),
+        ('1/2 cup','cornstarch'),
+        ('1/4 teaspoon', 'ground', 'nutmeg'),
+        ('3 cups', 'milk'),
+        ('1 tbsp', 'butter'),
+        ('1/4 teaspoon', 'lemon rind'),
+        ('2', 'eggs'),
+        ('3/4 cup', 'breadcrumbs'),
+        ('1/3 cup', 'powdered', 'sugar'),
+    ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type='Anytime',
+    prep_time=195,
+    recipe_image=rdb.new_image(image_dir.with_child('fried_milk.jpg')),
+)
+
+#ian 6
+instructions = '''
+Make the batter by beating the eggs and sugar together.
+
+Gradually add the milk and dry ingredients.
+
+Preheat oil to 350°F.
+
+Cook in hot vegetable oil until golden brown (a few minutes, depending on heat).
+
+Cool on paper-towel covered tray for a few minutes, then dig in!
+'''
+rdb.new_recipe(
+    name='Fried Kool-Aid',
+    author=ian,
+    blurb='Fried and Kool-Aidy',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('vegetable oil'),
+        ('1/4 cup','Kool-Aid mix'),
+        ('1/2 teaspoon', 'salt'),
+        ('2 teaspoon', 'baking powder'),
+        ('2 cups', 'milk'),
+        ('3', 'eggs'),
+        ('1/4 cup', 'sugar'),
+        ('3 2/3 cup', 'flour'),
+    ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type='Dessert',
+    prep_time=7,
+    recipe_image=rdb.new_image(image_dir.with_child('fried_koolaid.jpg')),
+)
+
+#ian 7
+instructions = '''
+Prepare lime, orange and 1 package of strawberry Jello as directed on the packages.
+
+Pour each flavor into separate 8-inch square pans.
+Refrigerate 4 hours or until firm. Cut into 1/2 inch cubes; measure 1 1/2 cups of each flavor.
+(You can use the remaining cubes for garnish if desired, or for snacking).
+
+Stir 1 cup boiling water into remaining package of lemon Jello in a medium bowl until dissolved completely.
+Stir in 1/2 cup cold water. Refrigerate 45 minutes or until slightly thickened (consistency of unbeaten egg whites).
+
+Stir in 1/2 of the Cool Whip. Gently stir in measured gelatin cubes.
+
+Pour into a 9 x 5-inch loaf pan. Refrigerate overnight.
+
+Unmold and garnish with remaining gelatin cubes and whipped topping, if desired.
+'''
+rdb.new_recipe(
+    name='1950s Jello Dessert',
+    author=ian,
+    blurb='This retro dish is a tasty throwback!',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 package', 'lime Jell-O'),
+        ('1 package', 'orange Jell-O'),
+        ('1 package', 'strawberry Jell-O'),
+        ('1 package', 'lemon Jell-O'),
+        ('4 cups', 'boiling', 'water'),
+        ('2 1/2 cups', 'cold', 'water'),
+        ('1 container', 'Cool Whip'),
+    ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type='Dessert',
+    prep_time=1500,
+    recipe_image=rdb.new_image(image_dir.with_child('1950s_jello.jpg')),
+)
+
+#ian 8
+instructions = '''
+Melt the butter in a medium frying pan over medium heat.
+Add the flour and mix to form a paste, cooking it for 2 minutes.
+Remove from the heat and let cool for 2 minutes, then gradually add the milk, whisking continuously.
+
+Place the pan back over medium heat; add the onion, clove, and bay leaf; and simmer gently for 10 minutes, whisking frequently.
+If the sauce becomes too thick, whisk in a little more milk 1 tablespoon at a time until saucy.
+
+Preheat the oven to 350°F.
+
+Bring a stockpot of salted water to a boil. 
+Put the pasta in the water and cook for 2 minutes less than the package instructions say.
+
+Finish the sauce by removing the onion, clove, and bay leaf, then adding the nutmeg and seasoning with salt and white pepper. 
+Stir in the mustard and half the cheese.
+
+Drain the pasta and arrange the rigatoni pieces upright tightly in four ovenproof dishes; they will look a bit like honeycomb. 
+Pour the sauce over the pasta. Tap the base of the baking dishes to allow the sauce to get between the holes, spooning more on if necessary. 
+Place the mushroom stalks into the rigatoni holes, leaving the caps poking out. Sprinkle with the remaining cheese.
+
+Bake for 20 to 25 minutes, or until the cheese is golden and bubbling. Serve with a sprinkle of finely chopped parsley on top.
+'''
+rdb.new_recipe(
+    name='Cup Mushroom Pasta',
+    author=ian,
+    blurb='Totally trip out with this earthy dish',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 tbsp', 'butter'),
+        ('1/4 cup', 'flour'),
+        ('2 cups', 'milk'),
+        ('1 clove', 'garlic'),
+        ('1/4 cup', 'peeled', 'onion'),
+        ('1', 'bay leaf'),
+        ('9 ounces', 'pasta'),
+        ('1 pinch', 'ground', 'nutmeg'),
+        ('sea salt'),
+        ('2 tbsp', 'mustard'),
+        ('3 1/2 ounces', 'cheese'),
+        ('6 ounces', 'mushrooms'),
+        ('parsley'),
+    ],
+    instructions=instructions,
+    serving_size=4,
+    meal_type='Anytime',
+    prep_time=30,
+    recipe_image=rdb.new_image(image_dir.with_child('cup_mushroom_pasta.jpg')),
+)
+
+#ian 9
+instructions = '''
+Measure the tequila, lime juice, sweetened lime juice and triple sec into a cocktail shaker and add a generous scoop of ice. 
+
+Cover and shake until the shaker is frosty, about 30 seconds.
+
+Rub a lime wedge around the rim of a margarita glass and dip in salt. 
+
+Fill each glass with ice. Strain equal amounts of the cocktail into the glasses to serve. Garnish with a lime wedge.
+'''
+rdb.new_recipe(
+    name='Tasty Margarita',
+    author=ian,
+    blurb='Don\'t have too many of these delicious margaritas!',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('5 oz', 'tequila'),
+        ('3 oz', 'lime juice'),
+        ('3 oz', 'triple sec'),
+        ('ice cubes'),
+        ('1', 'lime'),
+        ('salt'),
+    ],
+    instructions=instructions,
+    serving_size=4,
+    meal_type='Drinks',
+    prep_time=5,
+    recipe_image=rdb.new_image(image_dir.with_child('tasty_margarita.jpg')),
+)
+
+#ian 10
+instructions = '''
+Preheat an oven to 350 degrees F (175 degrees C).
+
+Line a turkey roaster with long sheets of aluminum foil that will be long enough to wrap over the turkey.
+
+Stir together the parsley, rosemary, sage, thyme, lemon pepper, and salt in a small bowl.
+
+Rub the herb mixture into the cavity of the turkey, then stuff with the celery, orange, onion, and carrot. 
+Truss if desired, and place the turkey into the roasting pan. Pour the chicken broth and champagne over the turkey, making sure to get some champagne in the cavity.
+Bring the aluminum foil over the top of the turkey, and seal. Try to keep the foil from touching the skin of the turkey breast or legs.
+
+Bake the turkey in the preheated oven for 2 1/2 to 3 hours until no longer pink at the bone and the juices run clear. 
+Uncover the turkey, and continue baking until the skin turns golden brown, 30 minutes to 1 hour longer. 
+An instant-read thermometer inserted into the thickest part of the thigh, near the bone should read 180 degrees F (82 degrees C). 
+Remove the turkey from the oven, cover with a doubled sheet of aluminum foil, and allow to rest in a warm area 10 to 15 minutes before slicing.
+'''
+rdb.new_recipe(
+    name='Juicy Thanksgiving Turkey',
+    author=ian,
+    blurb='Just in time for the holidays.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 tbsp', 'dried', 'parsley'),
+        ('2 tbsp', 'ground', 'rosemary'),
+        ('2 tbsp', 'dried' 'sage'),
+        ('1 tbsp', 'lemon pepper'),
+        ('1 tbsp', 'salt'),
+        ('1', 'turkey'),
+        ('2 stalks', 'celery'),
+        ('1', 'orange'),
+        ('1', 'onion'),
+        ('1', 'carrot'),
+        ('1 can', 'chicken broth'),
+        ('1 bottle', 'champagne'),
+    ],
+    instructions=instructions,
+    serving_size=20,
+    meal_type='Dinner',
+    prep_time=200,
+    recipe_image=rdb.new_image(image_dir.with_child('juicy_turkey.jpg')),
 )
 
 import random

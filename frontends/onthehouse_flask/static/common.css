@@ -42,3 +42,16 @@ Organization:
       }
       .row.content {height: auto;}
     }
+
+    footer a {
+        color:grey;
+    }
+
+    #nav-links a {
+        color:5c3333;
+    }
+
+    .recipe-box img{
+      max-width: 100%;
+      height: auto;
+    }
