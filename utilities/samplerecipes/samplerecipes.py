@@ -37,6 +37,14 @@ ethan = rdb.new_user(
     profile_image=rdb.new_image(image_dir.with_child('voussoir.png'))
 )
 
+ian = rdb.new_user(
+    username='ian',
+    display_name='Ian Atol',
+    password='I',
+    bio_text='CS can stand for Computer Science or for Cooking Skills',
+    profile_image=None
+)
+
 panmomma = rdb.new_user(
     username='panmomma',
     display_name='Pan Momma',
@@ -52,6 +60,7 @@ anonymous = rdb.new_user(
     bio_text='You cant touch me.',
     profile_image=None,
 )
+
 
 ingredient_tags = {
     'dairy': [
@@ -1483,6 +1492,413 @@ rdb.new_recipe(
     meal_type='Breakfast',
     prep_time=45,
     recipe_image=rdb.new_image(image_dir.with_child('cinnamon_rolls.jpg')),
+)
+
+#ian 1
+instructions = '''
+Use paper towels to thoroughly dry excess moisture from fish fillets - this step is crucial for fish to brown nicely in pan. 
+Set aside.
+
+In a bowl, combine melted butter, lemon juice and zest, and 1½ tsp kosher salt. Stir to combine well.
+In a separate bowl, combine the remaining ½ tsp kosher salt, paprika, garlic powder, onion powder, and black pepper. 
+Evenly press spice mixture onto both sides of fish fillets.
+
+In a large, heavy pan over medium high heat, heat up the olive oil until hot.
+Cook 2 fish fillets at a time to avoid overcrowding (allows for browning.)
+Cook each side just until fish becomes opaque, feels somewhat firm in the center, 
+and is browned - lightly drizzle some of the lemon butter sauce as you cook, reserving the rest for serving.
+Take care not to over-cook, as that will result in a tougher texture.
+
+Serve fish with with remaining lemon butter sauce, basil or parsley, and lemon wedges.
+'''
+rdb.new_recipe(
+    name='Easy Lemon Butter Fish',
+    author=ian,
+    blurb='Delicious and zesty',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('4', 'white fish fillets'),
+        ('3 TB', 'melted butter'),
+        ('1', 'lemon'),
+        ('2 tsp', 'salt'),
+        ('1 tsp', 'garlic powder'),
+        ('1 tsp', 'onion powder'),
+        ('1/4 tsp', 'ground', 'black pepper'),
+        ('3 TB', 'olive oil'),
+        ('1 tsp', 'onion powder'),
+    ],
+    instructions=instructions,
+    serving_size=4,
+    meal_type='Dinner',
+    prep_time=19,
+    recipe_image=rdb.new_image(image_dir.with_child('easy_lemon_butter_fish.jpg')),
+)
+
+#ian 2
+instructions = '''
+Let steaks stand 30 minutes at room temperature.
+
+Sprinkle salt and pepper evenly over steaks. Heat a large cast-iron skillet over high heat.
+Add oil to pan; swirl to coat. Add steaks to pan; cook 3 minutes on each side or until browned.
+Reduce heat to medium-low; add butter, thyme, and garlic to pan. Carefully grasp pan handle using an oven mitt or folded dish towel. 
+Tilt pan toward you so butter pools; cook 1 1/2 minutes, basting steaks with butter constantly. Remove steaks from pan; cover loosely with foil. 
+Let stand 10 minutes. Reserve butter mixture.
+
+Cut steak diagonally across grain into thin slices. Discard thyme and garlic; spoon reserved butter mixture over steak.
+'''
+rdb.new_recipe(
+    name='Pan Seared Strip Steak',
+    author=ian,
+    blurb='The three S\'s: Simple, Seared, and Steak. Oh, and Strip. 4 S\'s',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2', 'lean, grass-fed', 'strip steaks'),
+        ('1 tbsp', 'salt'),
+        ('3/4 tbsp', 'black pepper'),
+        ('2 tsp', 'salt'),
+        ('2 tsp', 'butter'),
+        ('2 sprigs', 'thyme'),
+        ('2 cloves', 'crushed', 'garlic'),
+        ('1 tbsp', 'olive oil'),
+    ],
+    instructions=instructions,
+    serving_size=6,
+    meal_type='Dinner',
+    prep_time=51,
+    recipe_image=rdb.new_image(image_dir.with_child('seared_strip_steak.jpg')),
+)
+
+#ian 3
+instructions = '''
+Preheat oven to 350 degrees F (175 degrees C).
+
+
+In a large bowl, combine the beef, egg, onion, milk and bread OR cracker crumbs.
+Season with salt and pepper to taste and place in a lightly greased 5x9 inch loaf pan, OR form into a loaf and place in a lightly greased 9x13 inch baking dish.
+
+In a separate small bowl, combine the brown sugar, mustard and ketchup. Mix well and pour over the meatloaf.
+
+Bake at 350 degrees F (175 degrees C) for 1 hour.
+'''
+rdb.new_recipe(
+    name='Easy Meatloaf',
+    author=ian,
+    blurb='Easy and loafy',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 1/2 pounds', 'ground beef'),
+        ('1', 'egg'),
+        ('1', 'onion'),
+        ('1 cup', 'milk'),
+        ('1 cup', 'dried', 'bread crumbs'),
+        ('2 tbsp', 'brown sugar'),
+        ('2 tbsp', 'mustard'),
+        ('1/3 cup', 'ketchup'),
+    ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type='Dinner',
+    prep_time=70,
+    recipe_image=rdb.new_image(image_dir.with_child('easy_meatloaf.jpg')),
+)
+
+#ian 4
+instructions = '''
+Freeze the twinkies for at least 2 hours. Can freeze overnight.
+
+Heat your oil in fryer to 375 degrees.
+
+Mix your batter as such: milk, vinegar,oil.
+
+In another bowl blend flour, baking powder and salt.
+
+Whisk wet ingredients into dry, mix until smooth.
+
+Refrigerate until oil reaches temperature.
+
+Insert sticks into twinkies, leaving enough of a end to hold.
+
+Dust with flour and dip into batter.
+Be sure batter covers the entire twinkie place twinkie in hot oil with utensil.
+Be sure the twinkie browns evenly (the twinkie will float) about 3- 4 minutes.
+
+Remove to paper towel- cool 5 minutes.
+Serve with a Berry Sauce Raspberries or mixed Berry preserves heated until warm.
+Use for dipping.
+'''
+rdb.new_recipe(
+    name='Fried Twinkies',
+    author=ian,
+    blurb='Fried and Twinky',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('6', 'twinkies'),
+        ('6', 'wooden', 'popsicle sticks'),
+        ('1 cup', 'vegetable oil'),
+        ('1 cup', 'milk'),
+        ('2 tbsp', 'vinegar'),
+        ('1 cup', 'flour'),
+        ('1 tbsp', 'baking powder'),
+        ('1/2 teaspoon', 'salt'),
+    ],
+    instructions=instructions,
+    serving_size=6,
+    meal_type='Anytime',
+    prep_time=15,
+    recipe_image=rdb.new_image(image_dir.with_child('fried_twinkie.jpg')),
+)
+
+#ian 5
+instructions = '''
+Mix granulated sugar, cornstarch and nutmeg in 3-quart saucepan.
+
+Gradually stir in milk.
+
+Heat to boiling over medium heat, stirring constantly.
+
+Boil and stir 1 minute; remove from heat.
+
+Stir in butter and lemon peel.
+
+Spread evenly in ungreased square baking dish, 8x8x2 inches.
+
+Refrigerate uncovered at least 3 hours until firm.
+
+Cut custard into 2-inch squares, using wet knife.
+
+Dip custard squares into eggs, then coat with bread crumbs.
+
+Heat oil (1 to 1/2 inches) to 360°F; fry 2 or 3 squares at a time in oil
+1 to 2 minutes or until light brown; drain on paper towels.
+
+Sprinkle with powdered sugar.
+'''
+rdb.new_recipe(
+    name='Fried Milk',
+    author=ian,
+    blurb='Fried and Milky',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1/2 cup', 'granulated', 'sugar'),
+        ('1/2 cup','cornstarch'),
+        ('1/4 teaspoon', 'ground', 'nutmeg'),
+        ('3 cups', 'milk'),
+        ('1 tbsp', 'butter'),
+        ('1/4 teaspoon', 'lemon rind'),
+        ('2', 'eggs'),
+        ('3/4 cup', 'breadcrumbs'),
+        ('1/3 cup', 'powdered', 'sugar'),
+    ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type='Anytime',
+    prep_time=195,
+    recipe_image=rdb.new_image(image_dir.with_child('fried_milk.jpg')),
+)
+
+#ian 6
+instructions = '''
+Make the batter by beating the eggs and sugar together.
+
+Gradually add the milk and dry ingredients.
+
+Preheat oil to 350°F.
+
+Cook in hot vegetable oil until golden brown (a few minutes, depending on heat).
+
+Cool on paper-towel covered tray for a few minutes, then dig in!
+'''
+rdb.new_recipe(
+    name='Fried Kool-Aid',
+    author=ian,
+    blurb='Fried and Kool-Aidy',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('vegetable oil'),
+        ('1/4 cup','Kool-Aid mix'),
+        ('1/2 teaspoon', 'salt'),
+        ('2 teaspoon', 'baking powder'),
+        ('2 cups', 'milk'),
+        ('3', 'eggs'),
+        ('1/4 cup', 'sugar'),
+        ('3 2/3 cup', 'flour'),
+    ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type='Dessert',
+    prep_time=7,
+    recipe_image=rdb.new_image(image_dir.with_child('fried_koolaid.jpg')),
+)
+
+#ian 7
+instructions = '''
+Prepare lime, orange and 1 package of strawberry Jello as directed on the packages.
+
+Pour each flavor into separate 8-inch square pans.
+Refrigerate 4 hours or until firm. Cut into 1/2 inch cubes; measure 1 1/2 cups of each flavor.
+(You can use the remaining cubes for garnish if desired, or for snacking).
+
+Stir 1 cup boiling water into remaining package of lemon Jello in a medium bowl until dissolved completely.
+Stir in 1/2 cup cold water. Refrigerate 45 minutes or until slightly thickened (consistency of unbeaten egg whites).
+
+Stir in 1/2 of the Cool Whip. Gently stir in measured gelatin cubes.
+
+Pour into a 9 x 5-inch loaf pan. Refrigerate overnight.
+
+Unmold and garnish with remaining gelatin cubes and whipped topping, if desired.
+'''
+rdb.new_recipe(
+    name='1950s Jello Dessert',
+    author=ian,
+    blurb='This retro dish is a tasty throwback!',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 package', 'lime Jell-O'),
+        ('1 package', 'orange Jell-O'),
+        ('1 package', 'strawberry Jell-O'),
+        ('1 package', 'lemon Jell-O'),
+        ('4 cups', 'boiling', 'water'),
+        ('2 1/2 cups', 'cold', 'water'),
+        ('1 container', 'Cool Whip'),
+    ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type='Dessert',
+    prep_time=1500,
+    recipe_image=rdb.new_image(image_dir.with_child('fried_koolaid.jpg')),
+)
+
+#ian 8
+instructions = '''
+Melt the butter in a medium frying pan over medium heat.
+Add the flour and mix to form a paste, cooking it for 2 minutes.
+Remove from the heat and let cool for 2 minutes, then gradually add the milk, whisking continuously.
+
+Place the pan back over medium heat; add the onion, clove, and bay leaf; and simmer gently for 10 minutes, whisking frequently.
+If the sauce becomes too thick, whisk in a little more milk 1 tablespoon at a time until saucy.
+
+Preheat the oven to 350°F.
+
+Bring a stockpot of salted water to a boil. 
+Put the pasta in the water and cook for 2 minutes less than the package instructions say.
+
+Finish the sauce by removing the onion, clove, and bay leaf, then adding the nutmeg and seasoning with salt and white pepper. 
+Stir in the mustard and half the cheese.
+
+Drain the pasta and arrange the rigatoni pieces upright tightly in four ovenproof dishes; they will look a bit like honeycomb. 
+Pour the sauce over the pasta. Tap the base of the baking dishes to allow the sauce to get between the holes, spooning more on if necessary. 
+Place the mushroom stalks into the rigatoni holes, leaving the caps poking out. Sprinkle with the remaining cheese.
+
+Bake for 20 to 25 minutes, or until the cheese is golden and bubbling. Serve with a sprinkle of finely chopped parsley on top.
+'''
+rdb.new_recipe(
+    name='Cup Mushroom Pasta',
+    author=ian,
+    blurb='Totally trip out with this earthy dish',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 tbsp', 'butter'),
+        ('1/4 cup', 'flour'),
+        ('2 cups', 'milk'),
+        ('1 clove', 'garlic'),
+        ('1/4 cup', 'peeled', 'onion'),
+        ('1', 'bay leaf'),
+        ('9 ounces', 'pasta'),
+        ('1 pinch', 'ground', 'nutmeg'),
+        ('sea salt'),
+        ('2 tbsp', 'mustard'),
+        ('3 1/2 ounces', 'cheese'),
+        ('6 ounces', 'mushrooms'),
+        ('parsley'),
+    ],
+    instructions=instructions,
+    serving_size=4,
+    meal_type='Anytime',
+    prep_time=30,
+    recipe_image=rdb.new_image(image_dir.with_child('cup_mushroom_pasta.jpg')),
+)
+
+#ian 9
+instructions = '''
+Measure the tequila, lime juice, sweetened lime juice and triple sec into a cocktail shaker and add a generous scoop of ice. 
+
+Cover and shake until the shaker is frosty, about 30 seconds.
+
+Rub a lime wedge around the rim of a margarita glass and dip in salt. 
+
+Fill each glass with ice. Strain equal amounts of the cocktail into the glasses to serve. Garnish with a lime wedge.
+'''
+rdb.new_recipe(
+    name='Tasty Margarita',
+    author=ian,
+    blurb='Don\'t have too many of these delicious margaritas!',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('5 oz', 'tequila'),
+        ('3 oz', 'lime juice'),
+        ('3 oz', 'triple sec'),
+        ('ice cubes'),
+        ('1', 'lime'),
+        ('salt'),
+    ],
+    instructions=instructions,
+    serving_size=4,
+    meal_type='Drinks',
+    prep_time=5,
+    recipe_image=rdb.new_image(image_dir.with_child('tasty_margarita.jpg')),
+)
+
+#ian 10
+instructions = '''
+Preheat an oven to 350 degrees F (175 degrees C).
+
+Line a turkey roaster with long sheets of aluminum foil that will be long enough to wrap over the turkey.
+
+Stir together the parsley, rosemary, sage, thyme, lemon pepper, and salt in a small bowl.
+
+Rub the herb mixture into the cavity of the turkey, then stuff with the celery, orange, onion, and carrot. 
+Truss if desired, and place the turkey into the roasting pan. Pour the chicken broth and champagne over the turkey, making sure to get some champagne in the cavity.
+Bring the aluminum foil over the top of the turkey, and seal. Try to keep the foil from touching the skin of the turkey breast or legs.
+
+Bake the turkey in the preheated oven for 2 1/2 to 3 hours until no longer pink at the bone and the juices run clear. 
+Uncover the turkey, and continue baking until the skin turns golden brown, 30 minutes to 1 hour longer. 
+An instant-read thermometer inserted into the thickest part of the thigh, near the bone should read 180 degrees F (82 degrees C). 
+Remove the turkey from the oven, cover with a doubled sheet of aluminum foil, and allow to rest in a warm area 10 to 15 minutes before slicing.
+'''
+rdb.new_recipe(
+    name='Juicy Thanksgiving Turkey',
+    author=ian,
+    blurb='Just in time for the holidays.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 tbsp', 'dried', 'parsley'),
+        ('2 tbsp', 'ground', 'rosemary'),
+        ('2 tbsp', 'dried' 'sage'),
+        ('1 tbsp', 'lemon pepper'),
+        ('1 tbsp', 'salt'),
+        ('1', 'turkey'),
+        ('2 stalks', 'celery'),
+        ('1', 'orange'),
+        ('1', 'onion'),
+        ('1', 'carrot'),
+        ('1 can', 'chicken broth'),
+        ('1 bottle', 'champagne'),
+    ],
+    instructions=instructions,
+    serving_size=20,
+    meal_type='Dinner',
+    prep_time=200,
+    recipe_image=rdb.new_image(image_dir.with_child('juicy_turkey.jpg')),
 )
 
 import random
