@@ -37,7 +37,11 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/recipe">Explore</a></li>
                     <li><a href="https://delta-co.github.io/">The Team</a></li>
+                {% if session_user %}
+                    <li><a href="/logout"> Logout</a></li>
+                {% else %}
                     <li><a href="/register">New? Register Here!</a></li>
+                {% endif %}
                 </ul><br>
 
                 <div class="input-group">
@@ -141,6 +145,7 @@ function prefill_searchform_from_url()
     if (strict != null)
         {document.getElementById("searchform_strict").checked = strict;}
 }
+
 document.addEventListener("DOMContentLoaded", prefill_searchform_from_url);
 
 </script>
