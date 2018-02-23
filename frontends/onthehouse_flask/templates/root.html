@@ -21,6 +21,41 @@
     {
         width: 100%;
     }
+    #searchform_strict_label
+    {
+        display: inline-flex;
+        align-items: center;
+    }
+    #searchform_strict
+    {
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+    }
+    #searchform_submit
+    {
+        display: block;
+        width: 100%;
+    }
+    .sidenav li a {
+        background-color: #ee3333;
+	color: #efefef;
+        -o-transition:.5s;
+        -ms-transition:.5s;
+        -moz-transition:.5s;
+  	-webkit-transition:.5s;
+  	transition:.5s;
+    }
+
+    .sidenav li a:hover {
+	background-color: #efefef;
+	color: #ee3333;
+        -o-transition:.5s;
+        -ms-transition:.5s;
+        -moz-transition:.5s;
+  	-webkit-transition:.5s;
+  	transition:.5s;
+    }
     </style>
 </head>
 
@@ -28,7 +63,7 @@
 <body>
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-3 sidenav">
+            <div class="col-sm-3 sidenav" style="background-image:url('/static/tilablepicnic.png');background-size:50px 50px">
                 <h4><a href="/"><img id="logo" src="/static/onthehouselogo.png" alt="On the House"/></a></h4>
                 {% if session_user %}
                     <h5>Welcome, <a href="/user/{{session_user.username}}">{{session_user.display_name}}</a></h5>
@@ -37,7 +72,11 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/recipe">Explore</a></li>
                     <li><a href="https://delta-co.github.io/">The Team</a></li>
+                {% if session_user %}
+                    <li><a href="/logout"> Logout</a></li>
+                {% else %}
                     <li><a href="/register">New? Register Here!</a></li>
+                {% endif %}
                 </ul><br>
 
                 <div class="input-group">
@@ -45,8 +84,10 @@
                         <input type="text" id="searchform_name" class="form-control" placeholder="Recipe Name..."/>
                         <input type="text" id="searchform_ingredients" class="form-control" placeholder="Search Ingredients..."/>
                         <input type="text" id="searchform_exclude" class="form-control" placeholder="Exclude Ingredients..."/>
-                        <label><input type="checkbox" id="searchform_strict" class="form-control" placeholder/>Strict Search</label>
-                        <button class="btn btn-default" onclick="submit_search()"><span class="glyphicon glyphicon-search"></span></button>
+                        <label id="searchform_strict_label">
+                            <input type="checkbox" id="searchform_strict" class="form-control" placeholder/>Strict Search
+                        </label>
+                        <button id="searchform_submit" class="btn btn-default" onclick="submit_search()">Search! <span class="glyphicon glyphicon-search"></span></button>
                     </div>
 
                     <!--
@@ -141,6 +182,7 @@ function prefill_searchform_from_url()
     if (strict != null)
         {document.getElementById("searchform_strict").checked = strict;}
 }
+
 document.addEventListener("DOMContentLoaded", prefill_searchform_from_url);
 
 </script>

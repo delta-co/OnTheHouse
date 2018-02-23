@@ -34,6 +34,12 @@ def root():
 
     return flask.render_template('home.html', user_recipes=user_recipes, other_recipes=other_recipes, session_user=session_user)
 
+@site.route('/logout')
+def user_logout():
+    cookie_check = request.cookies.get(common.COOKIE_NAME, None)
+    common.remove_cookie(cookie_check)
+    return flask.redirect('/')
+
 
 @site.route('/img/<imgid>')
 def get_img(imgid):

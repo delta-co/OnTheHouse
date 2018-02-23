@@ -39,35 +39,37 @@
     {
         var recipename = document.getElementById("recipe-name").value;
         var blurb = document.getElementById("recipe-blurb").value;
-        var countryoforigin = document.getElementById("country_of_origin").value;
+        var countryoforigin = document.getElementById("country-of-origin").value;
         var cuisine = document.getElementById("cuisine").value;
         var mealtype = document.getElementById("meal-type").value;
         var preptime = document.getElementById("prep-time").value;
         var servingsize = document.getElementById("serving-size").value;
-        var ingredient = document.getElementById("ingredients").value;
+        var ingredients = document.getElementById("ingredients").value;
         var instructions = document.getElementById("instructions").value;
         var data = new FormData();
         
-        data.append("Recipe Name", recipename);
-        data.append("Recipe Blurb", blurb);
-        data.append("Country of Origin", countryoforigin);
-        data.append("Cuisine", cuisine);
-        data.append("Meal Type", mealtype);
-        data.append("Prep Time", preptime);
-        data.append("Serving Size", servingsize);
-        data.append("Ingredient", ingredient);
-        data.append("Recipe Instructions", instructions);
+        data.append("recipe name", recipename);
+        data.append("recipe blurb", blurb);
+        data.append("country of origin", countryoforigin);
+        data.append("cuisine", cuisine);
+        data.append("meal type", mealtype);
+        data.append("prep time", preptime);
+        data.append("serving size", servingsize);
+        data.append("ingredients", ingredients);
+        data.append("instructions", instructions);
         var url = "/newrecipe";
         return post(url, data, receive_callback);
     }
-  function receive_callback(response)
+
+    function receive_callback(response)
     {
         if ("error_type" in response)
         {
+            
         }
         else
         {
-            window.location.href = "/user/" + response['username'];
+            window.location.href = "/recipe/" + response['recipeid'];
         }
     }
     </script>

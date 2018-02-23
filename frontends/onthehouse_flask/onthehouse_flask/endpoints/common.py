@@ -48,6 +48,9 @@ def new_user_cookie(cookie_value, user):
 def get_user_from_cookie(cookie_value):
     return cookie_dict.get(cookie_value, None)
 
+def remove_cookie(cookie_value):
+    cookie_dict[cookie_value] = None
+
 def get_session(request):
     cookie_check = request.cookies.get(COOKIE_NAME, None)
     return get_user_from_cookie(cookie_check)
