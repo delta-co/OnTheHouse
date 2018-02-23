@@ -1,0 +1,63 @@
+{% extends "root.html" %}
+
+{% block head %}
+    {{ super() }}
+    <title>{{ ingredient.name }} | OnTheHouse</title>
+    <style>
+    h3
+    {
+        font-family: Verdana;
+        font-size:24px;
+        color:#555555;
+    }
+    #infobar a
+    {
+        color: inherit;
+    }
+    .boxed
+    {
+        border-radius: 10px;
+        background: #ee3333;
+        height: 25px;
+        padding-top: 2px;
+        padding-left: 8px;
+        font-family: Verdana;
+        color: #efefef
+    }
+    .ingredient-link
+    {
+        color:#ee3333;
+    }
+    .ingredient-name
+    {
+        padding-top:50px;
+        font-family:Verdana;font-size:32px;color:#555555;text-shadow:2px 2px #dddddd
+    }
+    .ingredient-description
+    {
+        font-family:Verdana;font-size:16px;color:#555555;font-style:italic
+    }
+    .recipes-link
+    {
+        color:#ee3333;
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="row content">
+        <div class="col-sm-12">
+            <p class="ingredient-name">{{ingredient.name}}</p>
+            {% if ingredient.ingredient_image_id %}
+                <p><img class="img-rounded" src="/image/{{ingredient.ingredient_image_id}}"/></p>
+            {% endif %}
+            <hr>
+            {% if ingredient.description %}
+                <p class="ingredient-description">{{ingredient.description}}</p>
+            {% endif %}
+            <p class="recipes-link"><a href="/recipe/search?ingredients={{ingredient.name}}">Search for recipes that have {{ingredient.name}}</a></p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %} {{ super() }} {% endblock %}

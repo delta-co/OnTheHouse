@@ -393,11 +393,17 @@ class RecipeDB:
         self.log.debug('Created image with ID: %s, filepath: %s' % (image.id, image.file_path))
         return image
 
-    def new_ingredient(self, name):
+    def new_ingredient(self, name, description=None, image=None):
         '''
         Add a new Ingredient to the database.
         '''
         name = self._normalize_ingredient_name(name)
+
+        if image is not None:
+            image_id = image.id
+        else:
+            image_id = None
+
         try:
             self.get_ingredient_by_name(name)
         except exceptions.NoSuchIngredient:
@@ -410,6 +416,8 @@ class RecipeDB:
         data = {
             'IngredientID': helpers.random_hex(),
             'Name': name,
+            'Description': description,
+            'IngredientImageID': image_id,
         }
 
         (qmarks, bindings) = sqlhelpers.insert_filler(constants.SQL_INGREDIENT_COLUMNS, data)

@@ -7,11 +7,11 @@ from . import common
 
 site = common.site
 
-@site.route('/createrecipe')
+@site.route('/newrecipe')
 def create_recipe_page():
     return flask.render_template('newrecipe.html', session_user=common.get_session(request))
 
-@site.route('/createrecipe', methods=['POST'])
+@site.route('/newrecipe', methods=['POST'])
 def post_recipe():
     try:
         recipename = request.form['recipe name']
@@ -36,7 +36,6 @@ def post_recipe():
         flask.abort(403)
 
     recipe = common.rdb.new_recipe(
-        self,
         author= common.rdb.get_user(),
         blurb= blurb,
         country_of_origin= countryoforigin,
@@ -49,3 +48,5 @@ def post_recipe():
         serving_size= servingsize,
         recipe_image= None,
     )
+
+    return response

@@ -1156,7 +1156,7 @@ Dry, add salt, and serve.
 rdb.new_recipe(
     name='Family-fun French Fries',
     author=ethan,
-    blurb='Quick, delicious breakfast.',
+    blurb='Make this night in feel like a night out.',
     country_of_origin=None,
     cuisine=None,
     ingredients=[
