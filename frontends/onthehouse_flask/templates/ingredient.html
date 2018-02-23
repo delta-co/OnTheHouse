@@ -44,6 +44,8 @@
     </style>
 {% endblock %}
 
+{% import 'macros.html' as macros%}
+
 {% block body %}
     <div class="row content">
         <div class="col-sm-12">
@@ -55,8 +57,13 @@
             {% if ingredient.description %}
                 <p class="ingredient-description">{{ingredient.description}}</p>
             {% endif %}
-            <p class="recipes-link"><a href="/recipe/search?ingredients={{ingredient.name}}">Search for recipes that have {{ingredient.name}}</a></p>
         </div>
+        <div class="col-sm-12"><h3>Recipes that contain {{ingredient.name}}</h3></div>
+        {% for recipe in recipes %}
+            <div class="col-sm-3 user-recipe">
+            {{ macros.recipe_card(recipe, 's') }}
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
 
