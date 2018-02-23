@@ -792,7 +792,7 @@ rdb.new_recipe(
       ('2','scallions'),
       ('2 cloves','garlic'),
       ('1 package','gyoza skins'),
-      ('1 cup'.'water'),
+      ('1 cup','water'),
       ('2 tbs','sesame oil')
     ],
     instructions=instructions,
@@ -1007,7 +1007,7 @@ rdb.new_recipe(
         ('1 1/4 cup', 'all-purpose','flour'),
         ('1/2 cup', 'white', 'sugar'),
         ('2', 'eggs'),
-        ('1 cup','butter')
+        ('1 cup','butter'),
         ('1 tsp','salt'),
         ('1/2 tsps','baking soda'),
         ('3 cups','oats'),
