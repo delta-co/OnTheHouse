@@ -71,6 +71,8 @@ for (tag_name, ingredient_names) in ingredient_tags.items():
         ingredient = rdb.get_or_create_ingredient(name=ingredient_name)
         ingredient.add_tag(tag)
 
+rdb.get_or_create_ingredient('potato').add_autocorrect('potatoes')
+
 # 1
 instructions = '''
 Soften cream cheese and Brie cheese.
@@ -832,6 +834,146 @@ rdb.new_recipe(
 )
 
 instructions = '''
+Mix together egg, milk, salt, vanilla, and cinnamon or other spicesin a wide,
+shallow bowl.
+
+Prepare a lightly oiled skillet over medium-high heat.
+
+Dip each slice of bread into the egg mixture, soaking thoroughly.
+
+Place slice in pan and cook both sides.
+
+Top with butter, powdered sugar, and maple syrup to preference. Serve.
+'''
+rdb.new_recipe(
+    name='Easy French Toast',
+    author=ethan,
+    blurb='Quick, delicious breakfast.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('6 slices', 'thick', 'bread'),
+        ('2', 'eggs'),
+        ('2/3 cup', 'milk'),
+        ('1/4 teaspoon', 'ground cinnamon'),
+        ('1 teaspoon', 'vanilla extract'),
+        ('A pinch of', 'salt'),
+        'powdered sugar',
+        'butter',
+        'maple syrup',
+    ],
+    instructions=instructions,
+    serving_size=3,
+    meal_type='Breakfast',
+    prep_time=20,
+    recipe_image=rdb.new_image(image_dir.with_child('french_toast.jpg')),
+)
+
+instructions = '''
+Peel potatoes.
+
+Boil potatoes in salted water for 15 minutes. Potatoes should be cooked on the
+outside but still stiff.
+
+Dry on paper towels, and cut into slices.
+
+Deep fry in hot oil until brown and crispy.
+
+Dry, add salt, and serve.
+'''
+rdb.new_recipe(
+    name='Family-fun French Fries',
+    author=ethan,
+    blurb='Quick, delicious breakfast.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('4', 'large', 'potatoes'),
+        'frying oil',
+        'salt',
+    ],
+    instructions=instructions,
+    serving_size=3,
+    meal_type='Anytime',
+    prep_time=20,
+    recipe_image=rdb.new_image(image_dir.with_child('french_fries.jpg')),
+)
+
+instructions = '''
+Blend strawberries, banana, and yogurt in a blender.
+
+Once smooth, add ice and blend again.
+
+Pour, and top with whipped cream.
+'''
+rdb.new_recipe(
+    name='Strawberry Banana Smoothie',
+    author=ethan,
+    blurb='Healthy and tasty smoothie to start your day.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1/2 cup', 'fresh chopped', 'strawberries'),
+        ('1/4', 'peeled', 'banana'),
+        ('1/4 cup', 'vanilla yogurt'),
+        ('1/2 cup', 'crushed', 'ice'),
+        'whipped cream',
+    ],
+    instructions=instructions,
+    serving_size=1,
+    meal_type='Drink',
+    prep_time=10,
+    recipe_image=rdb.new_image(image_dir.with_child('strawberry_banana_smoothie.jpg')),
+)
+
+instructions = '''
+Preheat oven to 350 degrees F (175 degrees C). Grease and flour two 9 inch cake
+pans.
+
+Use the first set of ingredients to make the cake. In a medium bowl, stir
+together the sugar, flour, cocoa, baking soda, baking powder and salt. Add the
+eggs, milk, oil and vanilla, mix for 3 minutes with an electric mixer. Stir in
+the boiling water by hand. Pour evenly into the two prepared pans.
+
+Bake for 30 to 35 minutes in the preheated oven, until a toothpick inserted
+comes out clean. Cool for 10 minutes before removing from pans to cool
+completely.
+
+To make the frosting, use the second set of ingredients. Cream butter until
+light and fluffy. Stir in the cocoa and confectioners' sugar alternately with
+the milk and vanilla. Beat to a spreading consistency.
+
+Split the layers of cooled cake horizontally, cover the top of each layer with
+frosting, then stack them onto a serving plate. Frost the outside of the cake.
+'''
+rdb.new_recipe(
+    name='Very Chocolate Cake',
+    author=ethan,
+    blurb='Bye bye, diet.',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 cups', 'white sugar'),
+        ('1 and 3/4 cups', 'all-purpose flour'),
+        ('3/4 cup', 'unsweetened', 'cocoa powder'),
+        ('1 and 1/2 teaspoons', 'baking soda'),
+        ('1 and 1/2 teaspoons', 'baking powder'),
+        ('1 teaspoon', 'salt'),
+        ('1/2 cup', 'vegetable oil'),
+        ('2 teaspoons', 'vanilla extract'),
+        ('1 cup', 'water'),
+        ('3/4 cup', 'butter',),
+        ('2', 'eggs'),
+        ('1 cup', 'milk'),
+    ],
+    instructions=instructions,
+    serving_size=1,
+    meal_type='Dessert',
+    prep_time=70,
+    recipe_image=rdb.new_image(image_dir.with_child('chocolate_cake.jpg')),
+)
+
+instructions = '''
 Make the dough: In a large bowl, mix the flour, the sugar, salt, and yeast
 together until evenly dispersed. Set aside. In a small microwavable bowl, heat
 the water, milk, and butter together in the microwave until the butter is melted
@@ -865,7 +1007,7 @@ rdb.new_recipe(
     country_of_origin=None,
     cuisine=None,
     ingredients=[
-        ('2 and 3/4 cups', 'all-purpose','flour'),
+        ('2 and 3/4 cups', 'all-purpose flour'),
         ('3 Tablespoons', 'granulated', 'sugar'),
         ('1 teaspoon', 'salt'),
         ('1/2 cup', 'water'),
