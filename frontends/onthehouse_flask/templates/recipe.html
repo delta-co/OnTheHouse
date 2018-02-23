@@ -82,7 +82,7 @@
                 <ul>
                   {% for quantitied in ingredients %}
                     <li>
-                      <a class="ingredient-link" href="/recipe/search?ingredients={{quantitied.ingredient.name.replace(' ', '_')}}">
+                      <a class="ingredient-link" href="/ingredient/{{quantitied.ingredient.name.replace(' ', '_')}}">
                         {{-quantitied.quantity or ""}} {{quantitied.prefix or ""}} {{quantitied.ingredient.name}} {{quantitied.suffix or ""-}}
                       </a>
                     </li>
