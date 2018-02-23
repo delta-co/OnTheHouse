@@ -24,13 +24,13 @@ def post_recipe():
         mealtype = request.form['meal type']
         preptime = request.form['prep time']
         servingsize = request.form['serving size']
-        ingredients = request.form['ingredients'].split(',')
-        instructions = request.form['instructions']
+        ingredients = request.form['ingredients'].strip().split('\n')
+        instructions = request.form['instructions'].strip()
         #image = request.form['image']
     except KeyError:
         flask.abort(400)
 
-    user= common.get_session(request)
+    user = common.get_session(request)
    
     if user==None:
         flask.abort(403)     
@@ -57,6 +57,6 @@ def post_recipe():
         recipe_image= None,
     )
 
-    response = jsonify.make_json_response({'recipeid': recipe.recipe_id})
+    response = jsonify.make_json_response({'recipeid': recipe.id})
 
     return response

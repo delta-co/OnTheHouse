@@ -69,6 +69,7 @@ anonymous = rdb.new_user(
     profile_image=None,
 )
 
+rdb.new_ingredient('egg', description='Laid by a chicken.')
 
 ingredient_tags = {
     'dairy': [

@@ -65,8 +65,10 @@
         <div class="recipe-main col-sm-12">
             <p class="recipe-name">{{recipe.name}}</p>
 
-            {% if recipe.image is not none %}
+            {% if recipe.recipe_image_id is not none %}
             <p><img class="img-rounded" width="600" src="/image/{{recipe.recipe_image_id}}"/></p>
+            {% else %}
+            <p><img class="img-rounded" width="600" src="/static/default_recipe_pic.jpg"/></p>
             {% endif %}
 
             {% if recipe.author is not none %}

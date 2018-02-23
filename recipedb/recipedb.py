@@ -177,6 +177,7 @@ class RecipeDB:
         Apply any normalization rules that bring multiple equivalent forms
         of an ingredient name to a single, consistent form.
         '''
+        name = name.strip()
         name = name.replace('_', ' ')
         return name
 
@@ -491,6 +492,9 @@ class RecipeDB:
             author_id = author.id
         else:
             author_id = None
+
+        if instructions is not None:
+            instructions = instructions.replace('\r', '')
 
         if recipe_image is not None:
             recipe_image_id = recipe_image.id
