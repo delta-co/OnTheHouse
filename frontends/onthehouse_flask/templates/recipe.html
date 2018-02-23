@@ -52,12 +52,17 @@
         padding-top:50px;
         font-family:Verdana;font-size:32px;color:#555555;text-shadow:2px 2px #dddddd
     }
+
+    .recipe-main
+    {
+        padding-top:15px;
+    }
     </style>
 {% endblock %}
 
 {% block body %}
     <div class="row content">
-        <div class="col-sm-12">
+        <div class="recipe-main col-sm-12">
             <p class="recipe-name">{{recipe.name}}</p>
             <p><img class="img-rounded" width="600" src="/image/{{recipe.recipe_image_id}}"/></p>
             {% if recipe.author is not none %}

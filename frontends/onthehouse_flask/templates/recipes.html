@@ -4,17 +4,23 @@
 {% block head %}
     {{ super() }}
     <title>All Recipes | OnTheHouse</title>
+    <style>
+        .recipes-main
+        {
+            padding-top:15px;
+        }
+    </style>
 {% endblock %}
 
 {% import 'macros.html' as macros%}
 
 {% block body %}
 <div class="row content">
-    <div class="col-sm-12">
+    <div class="recipes-main col-sm-12">
         <div class="row content">
             <div class="col-sm">
                 {% for recipe in recipes %}
-                <div class="col-sm-3" style="overflow: hidden;white-space: nowrap;">
+                <div class="col-sm-3">
                     {{ macros.recipe_card(recipe,'s') }}
                 </div>
                 {% endfor %}

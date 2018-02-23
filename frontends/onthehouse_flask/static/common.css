@@ -50,3 +50,8 @@ Organization:
     #nav-links a {
         color:5c3333;
     }
+
+    .recipe-box img{
+      max-width: 100%;
+      height: auto;
+    }
