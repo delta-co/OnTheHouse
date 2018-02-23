@@ -21,6 +21,22 @@
     {
         width: 100%;
     }
+    #searchform_strict_label
+    {
+        display: inline-flex;
+        align-items: center;
+    }
+    #searchform_strict
+    {
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+    }
+    #searchform_submit
+    {
+        display: block;
+        width: 100%;
+    }
     </style>
 </head>
 
@@ -49,8 +65,10 @@
                         <input type="text" id="searchform_name" class="form-control" placeholder="Recipe Name..."/>
                         <input type="text" id="searchform_ingredients" class="form-control" placeholder="Search Ingredients..."/>
                         <input type="text" id="searchform_exclude" class="form-control" placeholder="Exclude Ingredients..."/>
-                        <label><input type="checkbox" id="searchform_strict" class="form-control" placeholder/>Strict Search</label>
-                        <button class="btn btn-default" onclick="submit_search()"><span class="glyphicon glyphicon-search"></span></button>
+                        <label id="searchform_strict_label">
+                            <input type="checkbox" id="searchform_strict" class="form-control" placeholder/>Strict Search
+                        </label>
+                        <button id="searchform_submit" class="btn btn-default" onclick="submit_search()">Search! <span class="glyphicon glyphicon-search"></span></button>
                     </div>
 
                     <!--
