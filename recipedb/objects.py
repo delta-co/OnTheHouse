@@ -320,6 +320,12 @@ class User(UserMixin, ObjectBase):
         self.date_joined = db_row['DateJoined']
         self.profile_image_id = db_row['ProfileImageID']
 
+        if not self.display_name:
+            self.display_name = self.username
+
+        if not self.bio_text:
+            self.bio_text = ''
+
     def set_bio_text(self, bio_text):
         if not isinstance(bio_text, (NoneType, str)):
             raise TypeError('bio_text should be None/str instead of %s.' % type(bio_text))
@@ -338,7 +344,7 @@ class User(UserMixin, ObjectBase):
         self.recipedb.sql.commit()
         self.display_name = display_name
 
-    def set_profile_image_id(self, image):
+    def set_profile_image(self, image):
         cur = self.recipedb.sql.cursor()
         cur.execute('UPDATE User SET ProfileImageID = ? WHERE UserID = ?', [image.id, self.id])
         self.recipedb.sql.commit()

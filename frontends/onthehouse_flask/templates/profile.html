@@ -42,7 +42,7 @@
             <div class="col-sm-6">
                 <h2>{{ user.display_name }}</h2>
                 <h4 id="join-date">Member Since {{ user.date_joined|unix_to_human }}</h4>
-                <p id="bio" class="well well-lg">{{ user.bio_text }}</p>
+                {% if user.bio_text %}<p id="bio" class="well well-lg">{{ user.bio_text }}</p>{% endif %}
             </div>
             <div class="col-sm-2"></div>
         <div class="col-sm-12"></div>
