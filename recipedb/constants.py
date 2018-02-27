@@ -159,6 +159,7 @@ SQL_RECIPE_COLUMNS = _extract_column_names('Recipe')
 SQL_RECIPEINGREDIENT_COLUMNS = _extract_column_names('Recipe_Ingredient_Map')
 SQL_REVIEW_COLUMNS = _extract_column_names('Review')
 SQL_USER_COLUMNS = _extract_column_names('User')
+SQL_USERFOLLOW_COLUMNS = _extract_column_names('User_Following_Map')
 
 _sql_dictify = lambda columns: {key:index for (index, key) in enumerate(columns)}
 SQL_USER = _sql_dictify(SQL_USER_COLUMNS)

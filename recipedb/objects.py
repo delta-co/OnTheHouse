@@ -326,6 +326,42 @@ class User(UserMixin, ObjectBase):
         if not self.bio_text:
             self.bio_text = ''
 
+    def follow(self, other):
+        if other == self:
+            return
+
+        cur = self.recipedb.sql.cursor()
+        cur.execute('SELECT * FROM User_Following_Map WHERE UserID = ? AND TargetID = ?', [self.id, other.id])
+        if cur.fetchone() is not None:
+            return
+
+        data = {
+            'UserID': self.id,
+            'TargetID': other.id,
+        }
+        (qmarks, bindings) = sqlhelpers.insert_filler(constants.SQL_USERFOLLOW_COLUMNS, data)
+        query = 'INSERT INTO User_Following_Map VALUES(%s)' % qmarks
+        cur.execute(query, bindings)
+        self.recipedb.sql.commit()
+
+    def _get_following_followers(self, mycolumn):
+        if mycolumn == 'UserID':
+            query = 'SELECT TargetID FROM User_Following_Map WHERE UserID = ?'
+        else:
+            query = 'SELECT UserID FROM User_Following_Map WHERE TargetID = ?'
+
+        cur = self.recipedb.sql.cursor()
+        cur.execute(query, [self.id])
+        user_ids = [f[0] for f in cur.fetchall()]
+        users = [self.recipedb.get_user(id=i) for i in user_ids]
+        return users
+
+    def get_followers(self):
+        return self._get_following_followers(mycolumn='TargetID')
+
+    def get_following(self):
+        return self._get_following_followers(mycolumn='UserID')
+
     def set_bio_text(self, bio_text):
         if not isinstance(bio_text, (NoneType, str)):
             raise TypeError('bio_text should be None/str instead of %s.' % type(bio_text))
@@ -350,3 +386,11 @@ class User(UserMixin, ObjectBase):
         self.recipedb.sql.commit()
         self.profile_image_id = image.id
 
+    def unfollow(self, other):
+        if other == self:
+            return
+
+        # No need to check before deleting. If the row doesn't exist then who cares.
+        cur = self.recipedb.sql.cursor()
+        cur.execute('DELETE FROM User_Following_Map WHERE UserID = ? AND TargetID = ?', [self.id, other.id])
+        self.recipedb.sql.commit()
