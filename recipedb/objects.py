@@ -7,6 +7,10 @@ from . import helpers
 from voussoirkit import sqlhelpers
 
 
+# Can be used in isinstance checks.
+NoneType = type(None)
+
+
 class ObjectBase:
     def __init__(self, recipedb):
         super().__init__()
@@ -316,12 +320,27 @@ class User(UserMixin, ObjectBase):
         self.date_joined = db_row['DateJoined']
         self.profile_image_id = db_row['ProfileImageID']
 
-    def set_display_name(self, display_name):
-        raise NotImplementedError
+    def set_bio_text(self, bio_text):
+        if not isinstance(bio_text, (NoneType, str)):
+            raise TypeError('bio_text should be None/str instead of %s.' % type(bio_text))
 
-    def set_profile_pic(self, image):
-        raise NotImplementedError
+        cur = self.recipedb.sql.cursor()
+        cur.execute('UPDATE User SET BioText = ? WHERE UserID = ?', [bio_text, self.id])
+        self.recipedb.sql.commit()
+        self.bio_text = bio_text
+
+    def set_display_name(self, display_name):
+        if not isinstance(display_name, (NoneType, str)):
+            raise TypeError('display_name should be None/str instead of %s.' % type(display_name))
+
+        cur = self.recipedb.sql.cursor()
+        cur.execute('UPDATE User SET DisplayName = ? WHERE UserID = ?', [display_name, self.id])
+        self.recipedb.sql.commit()
+        self.display_name = display_name
+
+    def set_profile_image_id(self, image):
+        cur = self.recipedb.sql.cursor()
+        cur.execute('UPDATE User SET ProfileImageID = ? WHERE UserID = ?', [image.id, self.id])
+        self.recipedb.sql.commit()
         self.profile_image_id = image.id
 
-    def set_bio(self, bio_text):
-        raise NotImplementedError
