@@ -7,6 +7,10 @@ from . import helpers
 from voussoirkit import sqlhelpers
 
 
+# Can be used in isinstance checks.
+NoneType = type(None)
+
+
 class ObjectBase:
     def __init__(self, recipedb):
         super().__init__()
@@ -315,17 +319,78 @@ class User(UserMixin, ObjectBase):
         self.bio_text = db_row['BioText']
         self.date_joined = db_row['DateJoined']
         self.profile_image_id = db_row['ProfileImageID']
-        if self.profile_image_id is not None:
-            self.profile_pic = self.recipedb.get_image(self.profile_image_id)
+
+        if not self.display_name:
+            self.display_name = self.username
+
+        if not self.bio_text:
+            self.bio_text = ''
+
+    def follow(self, other):
+        if other == self:
+            return
+
+        cur = self.recipedb.sql.cursor()
+        cur.execute('SELECT * FROM User_Following_Map WHERE UserID = ? AND TargetID = ?', [self.id, other.id])
+        if cur.fetchone() is not None:
+            return
+
+        data = {
+            'UserID': self.id,
+            'TargetID': other.id,
+        }
+        (qmarks, bindings) = sqlhelpers.insert_filler(constants.SQL_USERFOLLOW_COLUMNS, data)
+        query = 'INSERT INTO User_Following_Map VALUES(%s)' % qmarks
+        cur.execute(query, bindings)
+        self.recipedb.sql.commit()
+
+    def _get_following_followers(self, mycolumn):
+        if mycolumn == 'UserID':
+            query = 'SELECT TargetID FROM User_Following_Map WHERE UserID = ?'
         else:
-            self.profile_pic = None
+            query = 'SELECT UserID FROM User_Following_Map WHERE TargetID = ?'
+
+        cur = self.recipedb.sql.cursor()
+        cur.execute(query, [self.id])
+        user_ids = [f[0] for f in cur.fetchall()]
+        users = [self.recipedb.get_user(id=i) for i in user_ids]
+        return users
+
+    def get_followers(self):
+        return self._get_following_followers(mycolumn='TargetID')
+
+    def get_following(self):
+        return self._get_following_followers(mycolumn='UserID')
+
+    def set_bio_text(self, bio_text):
+        if not isinstance(bio_text, (NoneType, str)):
+            raise TypeError('bio_text should be None/str instead of %s.' % type(bio_text))
+
+        cur = self.recipedb.sql.cursor()
+        cur.execute('UPDATE User SET BioText = ? WHERE UserID = ?', [bio_text, self.id])
+        self.recipedb.sql.commit()
+        self.bio_text = bio_text
 
     def set_display_name(self, display_name):
-        raise NotImplementedError
+        if not isinstance(display_name, (NoneType, str)):
+            raise TypeError('display_name should be None/str instead of %s.' % type(display_name))
 
-    def set_profile_pic(self, image):
-        raise NotImplementedError
+        cur = self.recipedb.sql.cursor()
+        cur.execute('UPDATE User SET DisplayName = ? WHERE UserID = ?', [display_name, self.id])
+        self.recipedb.sql.commit()
+        self.display_name = display_name
+
+    def set_profile_image(self, image):
+        cur = self.recipedb.sql.cursor()
+        cur.execute('UPDATE User SET ProfileImageID = ? WHERE UserID = ?', [image.id, self.id])
+        self.recipedb.sql.commit()
         self.profile_image_id = image.id
 
-    def set_bio(self, bio_text):
-        raise NotImplementedError
+    def unfollow(self, other):
+        if other == self:
+            return
+
+        # No need to check before deleting. If the row doesn't exist then who cares.
+        cur = self.recipedb.sql.cursor()
+        cur.execute('DELETE FROM User_Following_Map WHERE UserID = ? AND TargetID = ?', [self.id, other.id])
+        self.recipedb.sql.commit()
