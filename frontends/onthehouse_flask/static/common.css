@@ -51,7 +51,12 @@ Organization:
         color:5c3333;
     }
 
+    .recipe-box
+    {
+      height: 280px;
+      margin-bottom: 20px;
+    }
     .recipe-box img{
       max-width: 100%;
-      height: auto;
+      max-height: 180px;
     }

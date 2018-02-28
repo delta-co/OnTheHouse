@@ -17,8 +17,9 @@ def get_user(username):
 @site.route('/user/<username>/profilepic.<ext>')
 def get_profile_pic(username, ext=None):
     user = common.rdb.get_user(username=username)
-    if user.profile_pic:
-        return flask.send_file(user.profile_pic.file_path)
+    if user.profile_image_id:
+        image = common.rdb.get_image(id=user.profile_image_id)
+        return flask.send_file(image.file_path)
     else:
         path = common.STATIC_DIR.with_child('default_profile_pic.jpg').absolute_path
         return flask.send_file(path)
