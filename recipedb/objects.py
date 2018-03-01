@@ -291,6 +291,7 @@ class Review(ObjectBase):
         self.id = db_row['ReviewID']
         self.author_id = db_row['AuthorID']
         self.recipe_id = db_row['RecipeID']
+        self.date_added = db_row['DateAdded']
         self.score = db_row['Score']
         self.text = db_row['Text']
 
@@ -356,11 +357,38 @@ class User(UserMixin, ObjectBase):
         users = [self.recipedb.get_user(id=i) for i in user_ids]
         return users
 
+    def get_feed(self):
+        '''
+        Return a list containing the recipes and reviews published by the
+        people I follow, sorted with most recent on top.
+        '''
+        feed_items = []
+        for follow in self.get_following():
+            feed_items.extend(follow.get_recipes())
+            feed_items.extend(follow.get_reviews())
+
+        feed_items.sort(key=lambda x: x.date_added, reverse=True)
+        return feed_items
+
     def get_followers(self):
         return self._get_following_followers(mycolumn='TargetID')
 
     def get_following(self):
         return self._get_following_followers(mycolumn='UserID')
+
+    def get_recipes(self):
+        cur = self.recipedb.sql.cursor()
+        cur.execute('SELECT * FROM Recipe WHERE AuthorID = ?', [self.id])
+        rows = cur.fetchall()
+        recipes = [Recipe(self.recipedb, row) for row in rows]
+        return recipes
+
+    def get_reviews(self):
+        cur = self.recipedb.sql.cursor()
+        cur.execute('SELECT * FROM Review WHERE AuthorID = ?', [self.id])
+        rows = cur.fetchall()
+        recipes = [Review(self.recipedb, row) for row in rows]
+        return recipes
 
     def set_bio_text(self, bio_text):
         if not isinstance(bio_text, (NoneType, str)):
