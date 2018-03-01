@@ -357,6 +357,19 @@ class User(UserMixin, ObjectBase):
         users = [self.recipedb.get_user(id=i) for i in user_ids]
         return users
 
+    def get_feed(self):
+        '''
+        Return a list containing the recipes and reviews published by the
+        people I follow, sorted with most recent on top.
+        '''
+        feed_items = []
+        for follow in self.get_following():
+            feed_items.extend(follow.get_recipes())
+            feed_items.extend(follow.get_reviews())
+
+        feed_items.sort(key=lambda x: x.date_added, reverse=True)
+        return feed_items
+
     def get_followers(self):
         return self._get_following_followers(mycolumn='TargetID')
 
