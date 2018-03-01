@@ -291,6 +291,7 @@ class Review(ObjectBase):
         self.id = db_row['ReviewID']
         self.author_id = db_row['AuthorID']
         self.recipe_id = db_row['RecipeID']
+        self.date_added = db_row['DateAdded']
         self.score = db_row['Score']
         self.text = db_row['Text']
 
