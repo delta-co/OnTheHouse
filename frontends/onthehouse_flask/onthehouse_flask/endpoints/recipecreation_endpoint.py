@@ -1,6 +1,8 @@
 import flask; from flask import request, render_template
 import recipedb
 
+from PIL import Image
+
 from voussoirkit import pathclass
 image_dir = pathclass.Path(__file__).parent.with_child('sample_images')
 
@@ -26,12 +28,19 @@ def post_recipe():
         servingsize = request.form['serving size']
         ingredients = request.form['ingredients'].strip().split('\n')
         instructions = request.form['instructions'].strip()
-        #image = request.form['image']
+        image = request.form['recipe image']
     except KeyError:
         flask.abort(400)
 
     user = common.get_session(request)
-   
+
+    if image != None:
+        img = Image.open(image)
+        img = img.resize((600,400))
+        rimage = common.rdb.new_image(img)
+    else:
+        rimage = None
+
     if user==None:
         flask.abort(403)     
 
@@ -54,7 +63,7 @@ def post_recipe():
         name= recipename,
         prep_time= preptime,
         serving_size= servingsize,
-        recipe_image= None,
+        recipe_image= rimage,
     )
 
     response = jsonify.make_json_response({'recipeid': recipe.id})
