@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row content">
+    <div class = "row content">
         <div class="col-sm-5">
             <h1>New Recipe:</h1>
             <input type="text" id="recipe-name" class="form-control" placeholder="Recipe Name">
@@ -24,17 +24,45 @@
             <p></p>
             <input type="text" id="serving-size" class="form-control" placeholder="Serving Size">
             <p></p>
-            <p>Enter ingredients, one per line.</p>
-            <textarea id="ingredients" rows="15" cols="70" class = "form-control" placeholder="Ingredients"></textarea>
+            <p>Enter ingredients using the forms.</p>
+        </div>
+            <div class = "row"></div>
+            <div id="ingredient_forms">
+                <p>Ingredient 1</p>
+                <form class = "form-inline">
+                    <input type="text" id="ingredient1_quant" class="form-control" placeholder="Quantity">
+                    <input type="text" id="ingredient1_prefix" class="form-control" placeholder="Prefix">
+                    <input type="text" id="ingredient1_name" class="form-control" placeholder="Ingredient Name">
+                    <input type="text" id="ingredient1_suffix" class="form-control" placeholder="Suffix">
+                </form>
+                <p>Ingredient 2</p>
+                <form class = "form-inline">
+                        <input type="text" id="ingredient2_quant" class="form-control" placeholder="Quantity">
+                        <input type="text" id="ingredient2_prefix" class="form-control" placeholder="Prefix">
+                        <input type="text" id="ingredient2_name" class="form-control" placeholder="Ingredient Name">
+                        <input type="text" id="ingredient2_suffix" class="form-control" placeholder="Suffix">
+                </form>
+                <p>Ingredient 3</p>
+                <form class = "form-inline">
+                        <input type="text" id="ingredient3_quant" class="form-control" placeholder="Quantity">
+                        <input type="text" id="ingredient3_prefix" class="form-control" placeholder="Prefix">
+                        <input type="text" id="ingredient3_name" class="form-control" placeholder="Ingredient Name">
+                        <input type="text" id="ingredient3_suffix" class="form-control" placeholder="Suffix">
+                </form>
+            </div>
+            <button class="btn btn-danger" type="button" onclick="add_fields('ingredient_forms')">Add Ingredient</button>
+            <div class="col-sm-5">
+            
+            <P></P>
             <p>Enter instructions. Separate steps with a full blank line between paragraphs.</p>
             <textarea id="instructions" rows="15" cols="70" class = "form-control" placeholder="Instructions"></textarea>
             <!--<input type="image" id="recipeimage" class="form-control" placeholder="Recipe Image">-->
-
             <button class="btn btn-default" type="button" onclick="submit_recipe()">Create</button>
+            </div>
         </div>
     </div>
-
     <script>
+    var counter = 3;
     function submit_recipe()
     {
         var recipename = document.getElementById("recipe-name").value;
@@ -71,6 +99,15 @@
         {
             window.location.href = "/recipe/" + response['recipeid'];
         }
+    }
+
+    function add_fields(divName)
+    {
+        counter++;
+        var newForm = document.createElement('form');
+        newForm.className = 'form-inline';
+        newForm.innerHTML = "<p>Ingredient " + counter + "</p> <input type='text' id='ingredient'" + counter + "'_quant' class='form-control' placeholder='Quantity'> <input type='text' id='ingredient'" + counter + "'_prefix' class='form-control' placeholder='Prefix'> <input type='text' id='ingredient'" + counter + "'_name' class='form-control' placeholder='Ingredient Name'> <input type='text' id='ingredient'" + counter + "'_suffix' class='form-control' placeholder='Suffix'>";
+        document.getElementById(divName).appendChild(newForm);
     }
     </script>
 {% endblock %}
