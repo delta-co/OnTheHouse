@@ -362,6 +362,20 @@ class User(UserMixin, ObjectBase):
     def get_following(self):
         return self._get_following_followers(mycolumn='UserID')
 
+    def get_recipes(self):
+        cur = self.recipedb.sql.cursor()
+        cur.execute('SELECT * FROM Recipe WHERE AuthorID = ?', [self.id])
+        rows = cur.fetchall()
+        recipes = [Recipe(self.recipedb, row) for row in rows]
+        return recipes
+
+    def get_reviews(self):
+        cur = self.recipedb.sql.cursor()
+        cur.execute('SELECT * FROM Review WHERE AuthorID = ?', [self.id])
+        rows = cur.fetchall()
+        recipes = [Review(self.recipedb, row) for row in rows]
+        return recipes
+
     def set_bio_text(self, bio_text):
         if not isinstance(bio_text, (NoneType, str)):
             raise TypeError('bio_text should be None/str instead of %s.' % type(bio_text))
