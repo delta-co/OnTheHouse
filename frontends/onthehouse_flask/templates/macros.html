@@ -15,4 +15,18 @@
     </div>
 {% endmacro %}
 
+{% macro review_card(review) %}
+    <div class="col-sm-3 user-review">
+        <div style="text-align:center; " class="review-box">
+            {% set author = review.get_author() %}
+            {% set recipe = review.get_recipe() %}
+            <div class="well" style="height:280px; color:b30000">
+                <h4><a href="/user/{{author.username}}">{{ author.display_name }}</a> reviewed <a href="/recipe/{{recipe.id}}/{{recipe.slug}}">{{ recipe.name }}</a></h4>
+                <h5>on {{ review.date_added|unix_to_human }}</h5>
+                <p class="review-text">{{review.text}}</p>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
 </html>
