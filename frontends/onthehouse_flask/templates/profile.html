@@ -52,6 +52,13 @@
             <div class="col-sm-2"></div>
         <div class="col-sm-12"></div>
 
+        {% if session_user and session_user != user %}
+            {% set is_following = user in session_user.get_following() %}
+            <div class="row"></div>
+            <button class="col-sm-4 btn btn-default"
+            onclick="{% if is_following %}submit_unfollow(){% else %}submit_follow(){% endif %}"
+            >{% if is_following %}Unfollow{% else %}Follow!{% endif %}</button>
+        {% endif %}
         <div class="row">
             <div class="col-sm-12 user-recipes">
                 <h2 style="text-align:center;">{{user.display_name}}'s Recipes</h2>
@@ -64,6 +71,32 @@
         </div>
         </div>
     </div>
+
+    <script>
+    function receive_callback(response)
+    {
+        if ("error_type" in response)
+        {
+
+        }
+        else
+        {
+            window.location.reload();
+        }
+    }
+    function submit_follow()
+    {
+        var url = "/user/{{user.username}}/follow";
+        var data = new FormData();
+        post(url, data, receive_callback);
+    }
+    function submit_unfollow()
+    {
+        var url = "/user/{{user.username}}/unfollow";
+        var data = new FormData();
+        post(url, data, receive_callback);
+    }
+    </script>
 {% endblock %}
 
 {% block footer %} {{ super() }} {% endblock %}
