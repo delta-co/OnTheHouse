@@ -71,34 +71,56 @@ anonymous = rdb.new_user(
 
 rdb.new_ingredient('egg', description='Laid by a chicken.')
 
-ingredient_tags = {
-    'dairy': [
-        'milk',
-        'cheese',
-        'whipping cream',
-        'butter',
-    ],
-    'sugar': [
-        'brown sugar',
-        'cane sugar',
-        'powdered sugar',
-        'sugar',
-    ],
-    'rice': [
-        'brown rice',
-        'sushi rice',
-        'white rice',
-    ],
-}
+def _child(parent, child):
+    parent = rdb.get_or_create_ingredient_tag(parent)
+    child = rdb.get_or_create_ingredient_tag(child)
+    parent.add_child(child)
 
-for (tag_name, ingredient_names) in ingredient_tags.items():
-    tag = rdb.get_or_create_ingredient_tag(name=tag_name)
-    for ingredient_name in ingredient_names:
-        ingredient = rdb.get_or_create_ingredient(name=ingredient_name)
-        ingredient.add_tag(tag)
+_child('meat', 'beef')
+_child('meat', 'pork')
+_child('meat', 'poultry')
+_child('meat', 'fish')
 
-rdb.get_or_create_ingredient('potato').add_autocorrect('potatoes')
-rdb.get_or_create_ingredient('egg').add_autocorrect('eggs')
+def _tag(tagname, ingname):
+    ing = rdb.get_or_create_ingredient(name=ingname)
+    tag = rdb.get_or_create_ingredient_tag(tagname)
+    ing.add_tag(tag)
+
+_tag('chicken', 'roast chicken')
+_tag('chicken', 'chicken broth')
+_tag('chicken', 'chicken breast')
+
+_tag('dairy', 'milk')
+_tag('dairy', 'cheese')
+_tag('dairy', 'cream cheese')
+_tag('dairy', 'whipping cream')
+_tag('dairy', 'butter')
+
+_tag('flour', 'all-purpose flour')
+_tag('flour', 'white flour')
+_tag('flour', 'whole wheat flour')
+
+_tag('rice', 'brown rice')
+_tag('rice', 'sushi rice')
+_tag('rice', 'white rice')
+
+_tag('salt', 'sea salt')
+_tag('salt', 'salt')
+
+_tag('sugar', 'brown sugar')
+_tag('sugar', 'cane sugar')
+_tag('sugar', 'powdered sugar')
+_tag('sugar', 'sugar')
+
+
+def _autocorrect(tagname, alternate):
+    tag = rdb.get_or_create_ingredient_tag(name=tagname)
+    tag.add_autocorrect(alternate)
+
+_autocorrect('potato', 'potatoes')
+_autocorrect('egg', 'eggs')
+
+
 
 # 1
 instructions = '''
