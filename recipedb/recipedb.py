@@ -258,6 +258,17 @@ class RecipeDB:
         ingredient = objects.Ingredient(self, ingredient_row)
         return ingredient
 
+    def get_ingredients(self):
+        '''
+        Returns all ingredients.
+        '''
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM Ingredient')
+        ingredient_rows = cur.fetchall()
+        ingredient_objects = [objects.Ingredient(self, row) for row in ingredient_rows]
+        ingredient_objects.sort(key=lambda r: r.name, reverse=True)
+        return ingredient_objects
+
     def get_ingredient_tag(self, *, id=None, name=None):
         '''
         Fetch a single IngredientTag by its ID or name.
