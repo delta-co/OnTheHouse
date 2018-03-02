@@ -72,7 +72,25 @@
         var mealtype = document.getElementById("meal-type").value;
         var preptime = document.getElementById("prep-time").value;
         var servingsize = document.getElementById("serving-size").value;
-        var ingredients = document.getElementById("ingredients").value;
+
+        var ingredient_collection = document.getElementsByClassName("form-inline");
+        var ingredient_array = [];
+        for (var i = 0; i < ingredient_collection.length; i++)
+        {
+            ingredient_array.push([]);
+            if(ingredient_collection[i].hasChildNodes())
+            {
+                var children = ingredient_collection[i].childNodes;
+                for (var j = 0; j < children.length; j++)
+                {
+                    ingredient_array[i].push(new Array(children.length));
+                    if(children[j].value)
+                    {
+                        ingredient_array[i][j] = JSON.stringify(children[j].value);
+                    }
+                }
+            }
+        }
         var instructions = document.getElementById("instructions").value;
         var data = new FormData();
         
@@ -83,7 +101,7 @@
         data.append("meal type", mealtype);
         data.append("prep time", preptime);
         data.append("serving size", servingsize);
-        data.append("ingredients", ingredients);
+        data.append("ingredients[]", ingredient_array);
         data.append("instructions", instructions);
         var url = "/newrecipe";
         return post(url, data, receive_callback);
