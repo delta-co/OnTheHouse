@@ -26,7 +26,7 @@ def post_recipe():
         mealtype = request.form['meal type']
         preptime = request.form['prep time']
         servingsize = request.form['serving size']
-        ingredients = request.form['ingredients'].strip().split('\n')
+        ingredients = request.form.getlist('ingredients[]')
         instructions = request.form['instructions'].strip()
         image = request.form['recipe image']
     except:
