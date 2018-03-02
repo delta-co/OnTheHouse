@@ -305,6 +305,12 @@ class Review(ObjectBase):
         # SQL UPDATE
         raise NotImplementedError
 
+    def get_author(self):
+        return self.recipedb.get_user(id=self.author_id)
+
+    def get_recipe(self):
+        return self.recipedb.get_recipe(id=self.recipe_id)
+
 
 #class User(ObjectBase):
 class User(UserMixin, ObjectBase):
