@@ -35,10 +35,11 @@ def post_update():
         user.set_display_name(displayname)
 
     if blurb != "":
-        user.set_bio_text(user,blurb)
+        user.set_bio_text(blurb)
 
     if uimage != None:
-        user.set_profile_image(uimage)
+        #user.set_profile_image(uimage)
+        pass
     
     response = jsonify.make_json_response({'username': user.username})
 

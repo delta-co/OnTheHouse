@@ -29,17 +29,19 @@ def post_recipe():
         ingredients = request.form['ingredients'].strip().split('\n')
         instructions = request.form['instructions'].strip()
         image = request.form['recipe image']
-    except KeyError:
-        flask.abort(400)
+    except:
+        pass
 
     user = common.get_session(request)
 
+    '''
     if image != None:
         f = open('img', 'w+')
         f.write(image)
         rimage = common.rdb.new_image('img')
     else:
         rimage = None
+    '''
 
     if user==None:
         flask.abort(403)     
@@ -63,8 +65,13 @@ def post_recipe():
         name= recipename,
         prep_time= preptime,
         serving_size= servingsize,
-        recipe_image= rimage,
+        recipe_image= None,
     )
+
+    if image != None:
+        #recipe.set_recipe_pic(image)
+        pass
+
 
     response = jsonify.make_json_response({'recipeid': recipe.id})
 
