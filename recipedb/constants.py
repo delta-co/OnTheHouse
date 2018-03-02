@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS Review(
     RecipeID TEXT,
     Score INT,
     Text TEXT,
+    DateAdded INT,
     FOREIGN KEY(AuthorID) REFERENCES User(UserID),
     FOREIGN KEY(RecipeID) REFERENCES Recipe(RecipeID)
 );
