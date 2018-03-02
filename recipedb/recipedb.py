@@ -147,7 +147,7 @@ class RecipeDB:
             elif len(ingredient) == 3:
                 (quantity, prefix, ingredient) = ingredient
             elif len(ingredient) == 4:
-                (quanitty, prefix, ingredient, suffix) = ingredient
+                (quantity, prefix, ingredient, suffix) = ingredient
 
         if isinstance(ingredient, dict):
             ingr = ingredient
