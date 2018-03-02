@@ -266,7 +266,7 @@ class RecipeDB:
         cur.execute('SELECT * FROM Ingredient')
         ingredient_rows = cur.fetchall()
         ingredient_objects = [objects.Ingredient(self, row) for row in ingredient_rows]
-        ingredient_objects.sort(key=lambda r: r.name, reverse=True)
+        ingredient_objects.sort(key=lambda r: r.name)
         return ingredient_objects
 
     def get_ingredient_tag(self, *, id=None, name=None):

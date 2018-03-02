@@ -112,7 +112,6 @@ _tag('sugar', 'cane sugar')
 _tag('sugar', 'powdered sugar')
 _tag('sugar', 'sugar')
 
-
 def _autocorrect(tagname, alternate):
     tag = rdb.get_or_create_ingredient_tag(name=tagname)
     tag.add_autocorrect(alternate)
@@ -306,18 +305,18 @@ rdb.new_recipe(
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
-        ('1','cup','water'),
-        ('1/2','cup','butter'),
-        ('1/4','teaspoon','salt'),
-        ('1','cup','all-purpose flour'),
-        ('3','','egg','s, beaten'),
-        ('','','vegetable oil',', for frying'),
-        ('1/4','cup','sugar'),
-        ('1/4','teaspoon ground','cinnamon'),
-        ('1','tablespoon','cornstarch'),
-        ('2','cups','milk'),
-        ('4','ounces','dark chocolate',', chopped'),
-        ('1/4','cup','sugar')
+        ('1', 'cup', 'water'),
+        ('1/2', 'cup', 'butter'),
+        ('1/4', 'teaspoon', 'salt'),
+        ('1', 'cup', 'all-purpose flour'),
+        ('3', '', 'egg', 's, beaten'),
+        ('', '', 'vegetable oil', ', for frying'),
+        ('1/4', 'cup', 'sugar'),
+        ('1/4', 'teaspoon ground', 'cinnamon'),
+        ('1', 'tablespoon', 'cornstarch'),
+        ('2', 'cups', 'milk'),
+        ('4', 'ounces', 'dark chocolate',', chopped'),
+        ('1/4', 'cup', 'sugar')
     ],
     instructions=instructions,
     meal_type="Dessert",
@@ -330,14 +329,14 @@ rdb.new_recipe(
 # 5
 instructions = '''
 Place a nori sheet lengthwise on a bamboo rolling mat, shiny-side down.
-Position the sheet about 1-inch from the edge of the mat closest to you and 
+Position the sheet about 1-inch from the edge of the mat closest to you and
 eave some of the bamboo mat exposed on either side of the nori sheet. Wet your
 hands in cool water and take a handful of sushi rice. Place the rice in the
 center of the nori and use your fingers to spread the rice evenly over the nori.
 Be sure to leave a 3/4-inch strip of nori uncovered on the far side. Place tuna
 strips and some julienne vegetable, cucumber or avocado along the center of the
 rice. Be careful not to overfill the nori. Place your fingertips over the fillings
-to hold them in place. Then, use your thumbs to lift up the edge of the bamboo 
+to hold them in place. Then, use your thumbs to lift up the edge of the bamboo
 rolling mat closest to you. Begin rolling the mat away from you, while applying
 pressure to the fillings to keep the roll firm. Roll the mat over slowly until
 it covers the rice and the near and far sides of rice join, still leaving the
@@ -770,7 +769,7 @@ rdb.new_recipe(
 instructions = '''
 Cut pork into strips. Heat sesame oil on medium heat.
 
-Cook pork until brown, add can of coconut milk and bring to a boil. 
+Cook pork until brown, add can of coconut milk and bring to a boil.
 
 Stir in red curry paste, hot chili oil, and brown sugar and simmer for 5 minutes
 
@@ -805,23 +804,23 @@ rdb.new_recipe(
 
 #v2
 instructions = '''
-Mince mushrooms, cabbage, garlic and scallions. 
+Mince mushrooms, cabbage, garlic and scallions.
 
-Combine pork, mushrooms, cabbage, garlic, scallions soy sauce and mix by hand. 
-Grate in ginger and mix well. 
+Combine pork, mushrooms, cabbage, garlic, scallions soy sauce and mix by hand.
+Grate in ginger and mix well.
 
 In one hand hold gyoza skin and wet edges with water. Add 2 tsps of meat mixture
 in center. As you fold over skins, pleat the edges to seal the gyoza.
 
 Add sesame oil to pan and heat of medium high heat. Add gyoza to pan but
-do not overcrowd them. Cook gyoza until bottoms start to brown, about 5 minutes. 
+do not overcrowd them. Cook gyoza until bottoms start to brown, about 5 minutes.
 Add 1/4 cup of water and place lid on pan. Steam for about 4 minutes
 
 When gyoza are done, remove and serve with ponzu sauce and rice or enjoy as is.
 '''
 rdb.new_recipe(
-    author=panmomma, 
-    blurb="Gyoza are also known as Japanese potstickers.",
+    author=panmomma,
+        blurb="Gyoza are also known as Japanese potstickers.",
     country_of_origin="Unknown",
     cuisine="Unknown",
     ingredients=[
@@ -846,22 +845,26 @@ rdb.new_recipe(
 
 #v3
 instructions = '''
-Add oil, peppercorns, bayleaves, cinnamon stick, and star anis in a 
+Add oil, peppercorns, bayleaves, cinnamon stick, and star anis in a
 small pot over medium high heat.
 
-Mince garlic and add to a heat resistant container(No plastic!!). Add in the crushed red chilis,
+Mince garlic and add to a heat resistant container(No plastic!!). Add in the
+crushed red chilis,
 salt, sesame oil, and black vinegar.
 
-When the oil starts to bubble, place a wooden chopstick in oil, if bubbles form around the chopstick
+When the oil starts to bubble, place a wooden chopstick in oil, if bubbles form
+around the chopstick
 the oil is ready, if not, test chopstick every minute.
 
-Gradually strain oil in container (very carefully!) and let sit for at least two hours, 24 hours for best results.
+Gradually strain oil in container (very carefully!) and let sit for at least two
+hours, 24 hours for best results.
 Keep refridgerated for several months.
 
-You can cook with this oil, add it to intant noodles, or use it as a sauce on many dishes.
+You can cook with this oil, add it to intant noodles, or use it as a sauce on
+many dishes.
 '''
 rdb.new_recipe(
-    author=panmomma, 
+    author=panmomma,
     blurb="This recipe uses Chinese peppercorns which, in addition to being very spicy, can numb your mouth!",
     country_of_origin="China",
     cuisine="Unknown",
@@ -876,7 +879,7 @@ rdb.new_recipe(
       ('4','star anis'),
       ('1 tsp','sesame oil' ),
       ('1 tsp','chinese black vinegar')
-    ],         
+    ],
     instructions=instructions,
     meal_type="Sauce",
     name="Hot Chili Oil",
@@ -888,10 +891,12 @@ rdb.new_recipe(
 #v4
 instructions = '''
 In a large bowl, sift together the flour, baking powder, salt and sugar.
-Make a well in the center and pour in the milk, egg and melted butter; mix until smooth.
+Make a well in the center and pour in the milk, egg and melted butter; mix
+until smooth.
 
-Heat a lightly oiled griddle or frying pan over medium high heat. Pour or scoop the batter 
-onto the griddle, using approximately 1/4 cup for each pancake. Brown on both sides and serve hot.
+Heat a lightly oiled griddle or frying pan over medium high heat. Pour or
+scoop the batter onto the griddle, using approximately 1/4 cup for each pancake.
+Brown on both sides and serve hot.
 '''
 rdb.new_recipe(
     name='Fluffy Pancakes',
@@ -917,14 +922,16 @@ rdb.new_recipe(
 
 #v5
 instructions = '''
-Preheat oven to 350 degrees F (175 degrees C). Grease and flour one 9x5 inch pan.
+Preheat oven to 350 degrees F (175 degrees C). Grease and flour a 9x5 inch pan.
 Mash bananas.
 
-Cream margarine and sugar until smooth. Beat in eggs, then bananas. Add flour and soda, 
+Cream margarine and sugar until smooth. Beat in eggs, then bananas. Add flour
+and soda,
 stirring just until combined.
 
-Pour into prepared pan and bake at 350 degrees F (175 degrees C) for about 1 hour 
-(or till toothpick comes out clean). Remove from pan and let cool, store in refrigerator or freeze.
+Pour into prepared pan and bake at 350 degrees F (175 degrees C) for about 1 hour
+(or till toothpick comes out clean). Remove from pan and let cool, store in
+refrigerator or freeze.
 '''
 rdb.new_recipe(
     name='Banana bread',
@@ -951,16 +958,18 @@ rdb.new_recipe(
 instructions = '''
 Preheat oven to 350 degrees F (175 degrees C). Grease and flour a 9x13 inch pan.
 
-In a large bowl, beat together eggs, oil, white sugar and 2 teaspoons vanilla. 
-Mix in flour, baking soda, baking powder, salt and cinnamon. Stir in carrots. Fold in pecans. 
-Pour into prepared pan.
+In a large bowl, beat together eggs, oil, white sugar and 2 teaspoons vanilla.
+Mix in flour, baking soda, baking powder, salt and cinnamon. Stir in carrots.
+Fold in pecans. Pour into prepared pan.
 
-Bake in the preheated oven for 40 to 50 minutes, or until a toothpick inserted into the center 
-of the cake comes out clean. Let cool in pan for 10 minutes, then turn out onto a wire rack and cool 
-completely.
+Bake in the preheated oven for 40 to 50 minutes, or until a toothpick inserted
+into the center of the cake comes out clean. Let cool in pan for 10 minutes,
+then turn out onto a wire rack and cool completely.
 
-To Make Frosting: In a medium bowl, combine butter, cream cheese, powdered sugar and 1 teaspoon vanilla. 
-Beat until the mixture is smooth and creamy. Stir in chopped pecans. Frost the cooled cake.
+To Make Frosting: In a medium bowl, combine butter, cream cheese, powdered
+sugar and 1 teaspoon vanilla.
+Beat until the mixture is smooth and creamy. Stir in chopped pecans. Frost
+the cooled cake.
 '''
 rdb.new_recipe(
     name='Carrot Cake',
@@ -995,13 +1004,13 @@ rdb.new_recipe(
 instructions = '''
 Preheat oven to 375 degrees F (175 degrees C). Grease an 8 inch square pan.
 
-Melt butter in large skillet. Remove from heat and stir in sugar. Quickly add 
-eggs and beat until well blended. Combine buttermilk with baking soda and stir 
-into mixture in pan. Stir in cornmeal, flour, and salt until well blended and few 
-lumps remain. Pour batter into the prepared pan.
+Melt butter in large skillet. Remove from heat and stir in sugar. Quickly add
+eggs and beat until well blended. Combine buttermilk with baking soda and stir
+into mixture in pan. Stir in cornmeal, flour, and salt until well blended and
+few lumps remain. Pour batter into the prepared pan.
 
-Bake in the preheated oven for 30 to 40 minutes, or until a toothpick inserted in the 
-center comes out clean.
+Bake in the preheated oven for 30 to 40 minutes, or until a toothpick inserted
+in the center comes out clean.
 '''
 rdb.new_recipe(
     name='Corn Bread',
@@ -1030,13 +1039,16 @@ rdb.new_recipe(
 instructions = '''
 Preheat the oven to 325 degrees F (165 degrees C).
 
-In a large bowl, cream together the butter, brown sugar, and white sugar until smooth. 
-Beat in eggs one at a time, then stir in vanilla. Combine the flour, baking soda, and 
-salt; stir into the creamed mixture until just blended. Mix in the quick oats, walnuts,
-and chocolate chips. Drop by heaping spoonfuls onto ungreased baking sheets.
+In a large bowl, cream together the butter, brown sugar, and white sugar until
+smooth.
 
-Bake for 12 minutes in the preheated oven. Allow cookies to cool on baking sheet for 5 
-minutes before transferring to a wire rack to cool completely.
+Beat in eggs one at a time, then stir in vanilla. Combine the flour, baking
+soda, and salt; stir into the creamed mixture until just blended. Mix in the
+quick oats, walnuts, and chocolate chips. Drop by heaping spoonfuls onto
+ungreased baking sheets.
+
+Bake for 12 minutes in the preheated oven. Allow cookies to cool on baking
+sheet for 5  minutes before transferring to a wire rack to cool completely.
 '''
 rdb.new_recipe(
     name='Oatmeal Chocolate Chip Cookies',
@@ -1068,11 +1080,13 @@ rdb.new_recipe(
 instructions = '''
 Preheat oven to 400 degrees F (205 degrees C).
 
-In a large bowl, beat eggs until foamy, and stir in melted butter. Stir in the brown sugar, 
-white sugar and the flour; mix well. Last add the milk, vanilla and nuts.
+In a large bowl, beat eggs until foamy, and stir in melted butter. Stir in the
+brown sugar,  white sugar and the flour; mix well. Last add the milk, vanilla
+and nuts.
 
-Pour into an unbaked 9-in pie shell. Bake in preheated oven for 10 minutes at 400 degrees, 
-then reduce temperature to 350 degrees and bake for 30 to 40 minutes, or until done.
+Pour into an unbaked 9-in pie shell. Bake in preheated oven for 10 minutes at
+400 degrees, then reduce temperature to 350 degrees and bake for 30 to 40
+minutes, or until done.
 '''
 rdb.new_recipe(
     name='Pecan Pie',
@@ -1099,17 +1113,20 @@ rdb.new_recipe(
 
 #v10
 instructions = '''
-Preheat oven to 350 degrees F (175 degrees C). Grease one 9 or 10 inch tube/Bundt(R) pan.
+Preheat oven to 350 degrees F (175 degrees C). Grease one 9 or 10 inch
+tube/Bundt(R) pan.
 
-Mix white sugar and cinnamon in a plastic bag. Cut biscuits into quarters. Shake 6 to 8 biscuit 
-pieces in the sugar cinnamon mix. Arrange pieces in the bottom of the prepared pan. Continue until 
-all biscuits are coated and placed in pan. If using nuts, arrange them in and among the 
-biscuit pieces as you go along.
+Mix white sugar and cinnamon in a plastic bag. Cut biscuits into quarters.
+Shake 6 to 8 biscuit
+pieces in the sugar cinnamon mix. Arrange pieces in the bottom of the prepared
+pan. Continue until  all biscuits are coated and placed in pan. If using nuts,
+arrange them in and among the  biscuit pieces as you go along.
 
-In a small saucepan, melt the margarine with the brown sugar over medium heat. Boil for 1 minute. 
-Pour over the biscuits.
+In a small saucepan, melt the margarine with the brown sugar over medium heat.
+Boil for 1 minute.  Pour over the biscuits.
 
-Bake at 350 degrees F (175 degrees C) for 35 minutes. Let bread cool in pan for 10 minutes, then turn 
+Bake at 350 degrees F (175 degrees C) for 35 minutes. Let bread cool in pan for
+10 minutes, then turn
 out onto a plate. Do not cut! The bread just pulls apart.
 '''
 rdb.new_recipe(
@@ -1525,20 +1542,23 @@ rdb.new_recipe(
 
 #ian 1
 instructions = '''
-Use paper towels to thoroughly dry excess moisture from fish fillets - this step is crucial for fish to brown nicely in pan. 
-Set aside.
+Use paper towels to thoroughly dry excess moisture from fish fillets - this
+step is crucial for fish to brown nicely in pan. Set aside.
 
-In a bowl, combine melted butter, lemon juice and zest, and 1½ tsp kosher salt. Stir to combine well.
-In a separate bowl, combine the remaining ½ tsp kosher salt, paprika, garlic powder, onion powder, and black pepper. 
+In a bowl, combine melted butter, lemon juice and zest, and 1½ tsp kosher salt.
+Stir to combine well. In a separate bowl, combine the remaining ½ tsp kosher
+salt, paprika, garlic powder, onion powder, and black pepper.
 Evenly press spice mixture onto both sides of fish fillets.
 
 In a large, heavy pan over medium high heat, heat up the olive oil until hot.
 Cook 2 fish fillets at a time to avoid overcrowding (allows for browning.)
-Cook each side just until fish becomes opaque, feels somewhat firm in the center, 
-and is browned - lightly drizzle some of the lemon butter sauce as you cook, reserving the rest for serving.
+Cook each side just until fish becomes opaque, feels somewhat firm in the center,
+and is browned - lightly drizzle some of the lemon butter sauce as you cook,
+reserving the rest for serving.
 Take care not to over-cook, as that will result in a tougher texture.
 
-Serve fish with with remaining lemon butter sauce, basil or parsley, and lemon wedges.
+Serve fish with with remaining lemon butter sauce, basil or parsley, and lemon
+wedges.
 '''
 rdb.new_recipe(
     name='Easy Lemon Butter Fish',
@@ -1568,13 +1588,18 @@ rdb.new_recipe(
 instructions = '''
 Let steaks stand 30 minutes at room temperature.
 
-Sprinkle salt and pepper evenly over steaks. Heat a large cast-iron skillet over high heat.
-Add oil to pan; swirl to coat. Add steaks to pan; cook 3 minutes on each side or until browned.
-Reduce heat to medium-low; add butter, thyme, and garlic to pan. Carefully grasp pan handle using an oven mitt or folded dish towel. 
-Tilt pan toward you so butter pools; cook 1 1/2 minutes, basting steaks with butter constantly. Remove steaks from pan; cover loosely with foil. 
+Sprinkle salt and pepper evenly over steaks. Heat a large cast-iron skillet
+over high heat.
+Add oil to pan; swirl to coat. Add steaks to pan; cook 3 minutes on each side
+or until browned.
+Reduce heat to medium-low; add butter, thyme, and garlic to pan. Carefully
+grasp pan handle using an oven mitt or folded dish towel.
+Tilt pan toward you so butter pools; cook 1 1/2 minutes, basting steaks with
+butter constantly. Remove steaks from pan; cover loosely with foil.
 Let stand 10 minutes. Reserve butter mixture.
 
-Cut steak diagonally across grain into thin slices. Discard thyme and garlic; spoon reserved butter mixture over steak.
+Cut steak diagonally across grain into thin slices. Discard thyme and garlic;
+spoon reserved butter mixture over steak.
 '''
 rdb.new_recipe(
     name='Pan Seared Strip Steak',
@@ -1605,9 +1630,12 @@ Preheat oven to 350 degrees F (175 degrees C).
 
 
 In a large bowl, combine the beef, egg, onion, milk and bread OR cracker crumbs.
-Season with salt and pepper to taste and place in a lightly greased 5x9 inch loaf pan, OR form into a loaf and place in a lightly greased 9x13 inch baking dish.
+Season with salt and pepper to taste and place in a lightly greased 5x9 inch
+loaf pan, OR form into a loaf and place in a lightly greased 9x13 inch baking
+dish.
 
-In a separate small bowl, combine the brown sugar, mustard and ketchup. Mix well and pour over the meatloaf.
+In a separate small bowl, combine the brown sugar, mustard and ketchup.
+Mix well and pour over the meatloaf.
 
 Bake at 350 degrees F (175 degrees C) for 1 hour.
 '''
@@ -1767,14 +1795,18 @@ rdb.new_recipe(
 
 #ian 7
 instructions = '''
-Prepare lime, orange and 1 package of strawberry Jello as directed on the packages.
+Prepare lime, orange and 1 package of strawberry Jello as directed on the
+packages.
 
 Pour each flavor into separate 8-inch square pans.
-Refrigerate 4 hours or until firm. Cut into 1/2 inch cubes; measure 1 1/2 cups of each flavor.
+Refrigerate 4 hours or until firm. Cut into 1/2 inch cubes; measure 1 1/2 cups
+of each flavor.
 (You can use the remaining cubes for garnish if desired, or for snacking).
 
-Stir 1 cup boiling water into remaining package of lemon Jello in a medium bowl until dissolved completely.
-Stir in 1/2 cup cold water. Refrigerate 45 minutes or until slightly thickened (consistency of unbeaten egg whites).
+Stir 1 cup boiling water into remaining package of lemon Jello in a medium bowl
+until dissolved completely.
+Stir in 1/2 cup cold water. Refrigerate 45 minutes or until slightly thickened
+(consistency of unbeaten egg whites).
 
 Stir in 1/2 of the Cool Whip. Gently stir in measured gelatin cubes.
 
@@ -1808,24 +1840,33 @@ rdb.new_recipe(
 instructions = '''
 Melt the butter in a medium frying pan over medium heat.
 Add the flour and mix to form a paste, cooking it for 2 minutes.
-Remove from the heat and let cool for 2 minutes, then gradually add the milk, whisking continuously.
+Remove from the heat and let cool for 2 minutes, then gradually add the milk,
+whisking continuously.
 
-Place the pan back over medium heat; add the onion, clove, and bay leaf; and simmer gently for 10 minutes, whisking frequently.
-If the sauce becomes too thick, whisk in a little more milk 1 tablespoon at a time until saucy.
+Place the pan back over medium heat; add the onion, clove, and bay leaf; and
+simmer gently for 10 minutes, whisking frequently.
+If the sauce becomes too thick, whisk in a little more milk 1 tablespoon at a
+time until saucy.
 
 Preheat the oven to 350°F.
 
-Bring a stockpot of salted water to a boil. 
-Put the pasta in the water and cook for 2 minutes less than the package instructions say.
+Bring a stockpot of salted water to a boil.
+Put the pasta in the water and cook for 2 minutes less than the package
+instructions say.
 
-Finish the sauce by removing the onion, clove, and bay leaf, then adding the nutmeg and seasoning with salt and white pepper. 
+Finish the sauce by removing the onion, clove, and bay leaf, then adding the
+nutmeg and seasoning with salt and white pepper.
 Stir in the mustard and half the cheese.
 
-Drain the pasta and arrange the rigatoni pieces upright tightly in four ovenproof dishes; they will look a bit like honeycomb. 
-Pour the sauce over the pasta. Tap the base of the baking dishes to allow the sauce to get between the holes, spooning more on if necessary. 
-Place the mushroom stalks into the rigatoni holes, leaving the caps poking out. Sprinkle with the remaining cheese.
+Drain the pasta and arrange the rigatoni pieces upright tightly in four
+ovenproof dishes; they will look a bit like honeycomb.
+Pour the sauce over the pasta. Tap the base of the baking dishes to allow the
+sauce to get between the holes, spooning more on if necessary.
+Place the mushroom stalks into the rigatoni holes, leaving the caps poking out.
+Sprinkle with the remaining cheese.
 
-Bake for 20 to 25 minutes, or until the cheese is golden and bubbling. Serve with a sprinkle of finely chopped parsley on top.
+Bake for 20 to 25 minutes, or until the cheese is golden and bubbling. Serve
+with a sprinkle of finely chopped parsley on top.
 '''
 rdb.new_recipe(
     name='Cup Mushroom Pasta',
@@ -1857,13 +1898,15 @@ rdb.new_recipe(
 
 #ian 9
 instructions = '''
-Measure the tequila, lime juice, sweetened lime juice and triple sec into a cocktail shaker and add a generous scoop of ice. 
+Measure the tequila, lime juice, sweetened lime juice and triple sec into a
+cocktail shaker and add a generous scoop of ice.
 
 Cover and shake until the shaker is frosty, about 30 seconds.
 
-Rub a lime wedge around the rim of a margarita glass and dip in salt. 
+Rub a lime wedge around the rim of a margarita glass and dip in salt.
 
-Fill each glass with ice. Strain equal amounts of the cocktail into the glasses to serve. Garnish with a lime wedge.
+Fill each glass with ice. Strain equal amounts of the cocktail into the glasses
+to serve. Garnish with a lime wedge.
 '''
 rdb.new_recipe(
     name='Tasty Margarita',
@@ -1890,18 +1933,29 @@ rdb.new_recipe(
 instructions = '''
 Preheat an oven to 350 degrees F (175 degrees C).
 
-Line a turkey roaster with long sheets of aluminum foil that will be long enough to wrap over the turkey.
+Line a turkey roaster with long sheets of aluminum foil that will be long enough
+to wrap over the turkey.
 
-Stir together the parsley, rosemary, sage, thyme, lemon pepper, and salt in a small bowl.
+Stir together the parsley, rosemary, sage, thyme, lemon pepper, and salt in a
+small bowl.
 
-Rub the herb mixture into the cavity of the turkey, then stuff with the celery, orange, onion, and carrot. 
-Truss if desired, and place the turkey into the roasting pan. Pour the chicken broth and champagne over the turkey, making sure to get some champagne in the cavity.
-Bring the aluminum foil over the top of the turkey, and seal. Try to keep the foil from touching the skin of the turkey breast or legs.
+Rub the herb mixture into the cavity of the turkey, then stuff with the celery,
+orange, onion, and carrot.
+Truss if desired, and place the turkey into the roasting pan. Pour the chicken
+broth and champagne over the turkey, making sure to get some champagne in the
+cavity.
 
-Bake the turkey in the preheated oven for 2 1/2 to 3 hours until no longer pink at the bone and the juices run clear. 
-Uncover the turkey, and continue baking until the skin turns golden brown, 30 minutes to 1 hour longer. 
-An instant-read thermometer inserted into the thickest part of the thigh, near the bone should read 180 degrees F (82 degrees C). 
-Remove the turkey from the oven, cover with a doubled sheet of aluminum foil, and allow to rest in a warm area 10 to 15 minutes before slicing.
+Bring the aluminum foil over the top of the turkey, and seal. Try to keep the
+foil from touching the skin of the turkey breast or legs.
+
+Bake the turkey in the preheated oven for 2 1/2 to 3 hours until no longer pink
+at the bone and the juices run clear.
+Uncover the turkey, and continue baking until the skin turns golden brown, 30
+minutes to 1 hour longer.
+An instant-read thermometer inserted into the thickest part of the thigh, near
+the bone should read 180 degrees F (82 degrees C).
+Remove the turkey from the oven, cover with a doubled sheet of aluminum foil,
+and allow to rest in a warm area 10 to 15 minutes before slicing.
 '''
 rdb.new_recipe(
     name='Juicy Thanksgiving Turkey',
