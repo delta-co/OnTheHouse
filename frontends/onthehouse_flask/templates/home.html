@@ -48,7 +48,7 @@
                     <h3>Your recipes:</h3>
                     <div>
                         {% for recipe in user_recipes %}
-                            {{ macros.recipe_card(recipe,'s') }}
+                            {{ macros.recipe_card(recipe) }}
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -56,7 +56,7 @@
                 <h3>Community Recipes</h3>
                 <div>
                     {% for recipe in other_recipes %}
-                        {{ macros.recipe_card(recipe,'s') }}
+                        {{ macros.recipe_card(recipe) }}
                     {% endfor %}
                 </div>
             </div>
