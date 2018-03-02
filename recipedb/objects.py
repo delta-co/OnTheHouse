@@ -399,10 +399,11 @@ class User(UserMixin, ObjectBase):
         self.recipedb.sql.commit()
         self.bio_text = bio_text
 
-    def set_password(self, password_hash):
-        if not isinstance(password_hash, (NoneType, str)):
-            raise TypeError('password_hash should be None/str instead of %s.' % type(password_hash))
+    def set_password(self, password):
+        if not isinstance(password, (NoneType, str)):
+            raise TypeError('password should be None/str instead of %s.' % type(password))
 
+        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         cur = self.recipedb.sql.cursor()
         cur.execute('UPDATE User SET PasswordHash = ? WHERE UserID = ?', [password_hash, self.id])
         self.recipedb.sql.commit()
