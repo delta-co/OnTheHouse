@@ -319,6 +319,7 @@ class RecipeDB:
         cur.execute('SELECT * FROM Recipe')
         recipe_rows = cur.fetchall()
         recipe_objects = [objects.Recipe(self, row) for row in recipe_rows]
+        recipe_objects.sort(key=lambda r: r.date_added, reverse=True)
         return recipe_objects
 
     def get_user(self, *, id=None, username=None):
@@ -724,6 +725,6 @@ class RecipeDB:
             if limit is not None and len(match_counts) >= limit:
                 break
 
-        results = sorted(match_counts.keys(), key=match_counts.get, reverse=True)
+        results = sorted(match_counts.keys(), key=lambda r: (match_counts.get(r), r.date_added), reverse=True)
 
         return results
