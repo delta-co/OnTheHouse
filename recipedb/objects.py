@@ -274,6 +274,13 @@ class Recipe(ObjectBase):
             everything.update(tags)
         return everything
 
+    def get_reviews(self):
+        cur = self.recipedb.sql.cursor()
+        cur.execute('SELECT * FROM Review WHERE RecipeID = ?', [self.id])
+        rows = cur.fetchall()
+        recipes = [Review(self.recipedb, row) for row in rows]
+        return recipes
+
     def set_recipe_pic(self, image):
         raise NotImplementedError
         self.recipe_image_id = image.id
