@@ -1,7 +1,7 @@
 import flask; from flask import request, render_template
 import recipedb
 
-from PIL import Image
+#from PIL import Image
 
 from voussoirkit import pathclass
 image_dir = pathclass.Path(__file__).parent.with_child('sample_images')
@@ -35,9 +35,9 @@ def post_recipe():
     user = common.get_session(request)
 
     if image != None:
-        img = Image.open(image)
-        img = img.resize((600,400))
-        rimage = common.rdb.new_image(img)
+        f = open('img', 'w+')
+        f.write(image)
+        rimage = common.rdb.new_image('img')
     else:
         rimage = None
 

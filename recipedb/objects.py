@@ -371,6 +371,15 @@ class User(UserMixin, ObjectBase):
         self.recipedb.sql.commit()
         self.bio_text = bio_text
 
+    def set_password(self, password_hash):
+        if not isinstance(password_hash, (NoneType, str)):
+            raise TypeError('password_hash should be None/str instead of %s.' % type(password_hash))
+
+        cur = self.recipedb.sql.cursor()
+        cur.execute('UPDATE User SET PasswordHash = ? WHERE UserID = ?', [password_hash, self.id])
+        self.recipedb.sql.commit()
+        self.password_hash = password_hash
+
     def set_display_name(self, display_name):
         if not isinstance(display_name, (NoneType, str)):
             raise TypeError('display_name should be None/str instead of %s.' % type(display_name))
