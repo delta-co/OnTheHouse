@@ -18,19 +18,16 @@ def create_recipe_page():
 
 @site.route('/newrecipe', methods=['POST'])
 def post_recipe():
-    try:
-        recipename = request.form['recipe name']
-        blurb = request.form['recipe blurb']
-        countryoforigin = request.form['country of origin']
-        cuisine = request.form['cuisine']
-        mealtype = request.form['meal type']
-        preptime = request.form['prep time']
-        servingsize = request.form['serving size']
-        ingredients = request.form['ingredients'].strip().split('\n')
-        instructions = request.form['instructions'].strip()
-        image = request.form['recipe image']
-    except:
-        pass
+    recipename = request.form['recipe name']
+    blurb = request.form['recipe blurb']
+    countryoforigin = request.form['country of origin']
+    cuisine = request.form['cuisine']
+    mealtype = request.form['meal type']
+    preptime = request.form['prep time']
+    servingsize = request.form['serving size']
+    ingredients = request.form.getlist('ingredients[]')
+    instructions = request.form['instructions'].strip()
+    #image = request.form['recipe image']
 
     user = common.get_session(request)
 
@@ -46,20 +43,25 @@ def post_recipe():
     if user==None:
         flask.abort(403)     
 
-    if instructions == "":
-        flash('Instructions cannot be blank')
-        flask.abort(403)
+    #if instructions == "":
+    #   flash('Instructions cannot be blank')
+    #    flask.abort(403)
 
-    if ingredients == "":
-        flash('Must have at least 1 ingredient')
-        flask.abort(403)
+    #if ingredients == "":
+    #   flash('Must have at least 1 ingredient')
+    #   flask.abort(403)
+
+    ingredient_list = []
+    for ingredient in ingredients:
+        templist = ingredient.split(',')
+        ingredient_list.append(templist)
 
     recipe = common.rdb.new_recipe(
         author= user,
         blurb= blurb,
         country_of_origin= countryoforigin,
         cuisine= cuisine,
-        ingredients= ingredients,
+        ingredients= ingredient_list,
         instructions= instructions,
         meal_type= mealtype,
         name= recipename,
@@ -68,9 +70,9 @@ def post_recipe():
         recipe_image= None,
     )
 
-    if image != None:
+    #if image != None:
         #recipe.set_recipe_pic(image)
-        pass
+    #    pass
 
 
     response = jsonify.make_json_response({'recipeid': recipe.id})
