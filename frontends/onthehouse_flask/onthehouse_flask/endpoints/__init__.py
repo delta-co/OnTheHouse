@@ -9,6 +9,7 @@ from . import ingredient_endpoint
 from . import profile_endpoint
 from . import recipe_endpoint
 from . import register_endpoint
+from . import following_endpoint
 from . import recipecreation_endpoint
 from . import updateuser_endpoint
 

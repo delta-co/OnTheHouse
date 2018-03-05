@@ -60,7 +60,7 @@
         </div>
         <div class="col-sm-12"><h3>Recipes that contain {{ingredient.name}}</h3></div>
         {% for recipe in recipes %}
-            {{ macros.recipe_card(recipe, 's') }}
+            {{ macros.recipe_card(recipe) }}
         {% endfor %}
     </div>
 {% endblock %}

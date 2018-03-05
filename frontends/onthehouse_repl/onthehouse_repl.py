@@ -5,3 +5,9 @@ import sys
 import recipedb
 
 rdb = recipedb.RecipeDB()
+
+def get_untagged_ingredients():
+	ingredients = rdb.get_ingredients()
+	for ingredient in ingredients:
+		if len(ingredient.get_tags()) == 0:
+			print(ingredient)
