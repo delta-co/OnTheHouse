@@ -69,7 +69,7 @@ anonymous = rdb.new_user(
     profile_image=None,
 )
 
-rdb.new_ingredient('egg', description='Laid by a chicken.')
+rdb.new_ingredient('eggs', description='Laid by a chicken.')
 rdb.new_ingredient('water', description='Keeping things wet since forever.')
 rdb.new_ingredient('parmesan cheese', description='''
 Parmesan is hard, granular cheese.
@@ -95,8 +95,9 @@ def _tag(tagname, ingname):
     tag = rdb.get_or_create_ingredient_tag(tagname)
     ing.add_tag(tag)
 
-_tag('beef', 'strip steaks')
 _tag('beef', 'beef frankfurters')
+_tag('beef', 'ground beef')
+_tag('beef', 'strip steaks')
 
 _tag('chicken', 'roast chicken')
 _tag('chicken', 'chicken broth')
@@ -122,6 +123,8 @@ _tag('oil', 'vegetable oil')
 _tag('pepper', 'black pepper')
 _tag('pepper', 'pepper')
 _tag('pepper', 'white pepper')
+
+_tag('pork', 'ground pork')
 
 _tag('rice', 'brown rice')
 _tag('rice', 'sushi rice')
