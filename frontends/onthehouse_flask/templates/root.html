@@ -59,6 +59,17 @@
     body {
         background-color: #ffe6e6;
     }
+    .ingredient-autosuggest-list
+    {
+        background-color: white;
+        position: absolute;
+        border: 1px solid black;
+        margin-left: 5px;
+        margin-right: 5px;
+        padding: 4px;
+        top: 34px;
+        z-index: 3;
+    }
     </style>
 </head>
 
@@ -79,11 +90,15 @@
                 {% endif %}
                 </ul><br>
 
-                <div class="input-group" style="background-color:#ee3333;border:8px solid #ee3333;border-radius:5px">
+                <div class="input-group" style="background-color:#ee3333;border:8px solid #ee3333;border-radius:5px; width: 100%">
                     <div id="basic_searchform">
                         <input type="text" id="searchform_name" class="form-control" placeholder="Recipe Name..."/>
-                        <input type="text" id="searchform_ingredients" class="form-control" placeholder="Search Ingredients..."/>
-                        <input type="text" id="searchform_exclude" class="form-control" placeholder="Exclude Ingredients..."/>
+                        <div class="autosuggest-container">
+                            <input type="text" id="searchform_ingredients" class="ingredient-autosuggest-form form-control" placeholder="Search Ingredients..."/>
+                        </div>
+                        <div class="autosuggest-container">
+                            <input type="text" id="searchform_exclude" class="ingredient-autosuggest-form form-control" placeholder="Exclude Ingredients..."/>
+                        </div>
                         <label id="searchform_strict_label">
                             <input type="checkbox" id="searchform_strict" class="form-control" placeholder/><span style="color:#efefef">Strict Search</span>
                         </label>
@@ -121,6 +136,73 @@ function el(id){return document.getElementById(id)};
 bind_enter(el("searchform_name"), el("searchform_submit"));
 bind_enter(el("searchform_ingredients"), el("searchform_submit"));
 bind_enter(el("searchform_exclude"), el("searchform_submit"));
+
+var ALL_INGREDIENTS = [];
+function set_all_ingredients_callback(response)
+{
+    console.log("Downloaded ingredients");
+    ALL_INGREDIENTS = response;
+}
+get("/all_ingredients", set_all_ingredients_callback);
+
+function apply_ingredient_autosuggest(element)
+{
+    console.log("Test");
+    var autosuggest_div = document.createElement("div");
+    autosuggest_div.classList.add("ingredient-autosuggest-list");
+    autosuggest_div.classList.add("hidden");
+    //autosuggest_div.innerText = "HO HO HO";
+    element.__autosuggest_div = autosuggest_div;
+    function hide_div(){
+        //console.log("hiding autosuggest");
+        autosuggest_div.classList.add("hidden")
+    };
+    function show_div(){
+        //console.log("showing autosuggest");
+        autosuggest_div.classList.remove("hidden")
+    };
+    function update_suggestions()
+    {
+        var value = element.value;
+        value = value.split(/,/g);
+        value = value[value.length - 1];
+        value = value.trim();
+        value = value.toLocaleLowerCase();
+
+        var suggestions = [];
+        if (value !== "")
+        {
+            for (var index = 0; index < ALL_INGREDIENTS.length; index += 1)
+            {
+                var ingredient = ALL_INGREDIENTS[index];
+                if (ingredient.toLocaleLowerCase().indexOf(value) != -1)
+                {
+                    suggestions.push(ingredient);
+                }
+            }
+        }
+        if (suggestions.length > 0)
+        {
+            autosuggest_div.innerHTML = suggestions.join("<br>");
+            show_div();
+        }
+        else
+        {
+            hide_div();
+        }
+    }
+    element.addEventListener("focus", show_div);
+    element.addEventListener("focus", update_suggestions);
+    element.addEventListener("blur", hide_div);
+    element.addEventListener("keyup", update_suggestions);
+    var cont_rect = element.parentElement.getBoundingClientRect();
+    var elem_rect = element.getBoundingClientRect();
+    var top = elem_rect.bottom - cont_rect.bottom;
+    autosuggest_div.style.top = top;
+    element.parentElement.appendChild(autosuggest_div);
+}
+
+Array.from(document.getElementsByClassName("ingredient-autosuggest-form")).forEach(apply_ingredient_autosuggest);
 
 function join_parameters(parameters)
 {
