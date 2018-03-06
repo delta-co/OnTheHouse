@@ -47,9 +47,9 @@
                     <div class="row"></div>
                     {% set your_feed = session_user.get_feed() %}
                     {% if your_feed %}
-                    <h3>Your feed:</h3>
+                    <h3>Your <a href="/feed">feed</a>:</h3>
                     <div>
-                        {% for feed_item in your_feed %}
+                        {% for feed_item in your_feed[:12] %}
                             {% if feed_item.score %}
                                 {{ macros.review_card(feed_item) }}
                             {% else %}
