@@ -113,7 +113,7 @@ _tag('sugar', 'powdered sugar')
 _tag('sugar', 'sugar')
 
 def _autocorrect(tagname, alternate):
-    tag = rdb.get_or_create_ingredient_tag(name=tagname)
+    tag = rdb.get_or_create_ingredient(name=tagname)
     tag.add_autocorrect(alternate)
 
 _autocorrect('potato', 'potatoes')
