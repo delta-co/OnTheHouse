@@ -26,6 +26,8 @@ def post_recipe():
     preptime = request.form['prep time']
     servingsize = request.form['serving size']
     ingredients = request.form.getlist('ingredients[]')
+    ingredients = [i.strip() for i in ingredients]
+    ingredients = [i for i in ingredients if i]
     instructions = request.form['instructions'].strip()
     #image = request.form['recipe image']
 
