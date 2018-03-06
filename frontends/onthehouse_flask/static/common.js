@@ -1,3 +1,15 @@
+function bind_enter(box, button)
+{
+    var hook = function(event)
+    {
+        if (event.key === "Enter")
+        {
+            button.click();
+        }
+    }
+    box.addEventListener("keyup", hook);
+}
+
 function post(url, data, callback)
 {
     var request = new XMLHttpRequest();
