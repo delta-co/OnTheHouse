@@ -121,6 +121,11 @@
 
 
 <script type="text/javascript">
+function el(id){return document.getElementById(id)};
+bind_enter(el("searchform_name"), el("searchform_submit"));
+bind_enter(el("searchform_ingredients"), el("searchform_submit"));
+bind_enter(el("searchform_exclude"), el("searchform_submit"));
+
 function join_parameters(parameters)
 {
     if (parameters.length == 0)
