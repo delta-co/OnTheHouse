@@ -19,7 +19,7 @@ def post_update():
         password = request.form['new password']
         password2 = request.form['re-enter password']
         blurb = request.form['blurb']
-        uimage = request.form['user image']
+        uimage = request.files['user image']
     except:
         pass
 
@@ -37,10 +37,11 @@ def post_update():
     if blurb != "":
         user.set_bio_text(blurb)
 
-    if uimage != None:
-        #user.set_profile_image(uimage)
-        pass
-    
+    if uimage.filename != None:
+        uimage.save = secure_filename(uimage.filename)
+        userimage = common.rdb.new_image(uimage)
+        user.set_profile_image(userimage)
+
     response = jsonify.make_json_response({'username': user.username})
 
     return response
