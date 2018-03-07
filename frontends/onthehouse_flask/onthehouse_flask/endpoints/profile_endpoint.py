@@ -28,3 +28,8 @@ def get_profile_pic(username, ext=None):
 def user():
     response = render_template("profile-test.html", session_user=common.get_session(request))
     return response
+
+@site.route('/feed')
+def get_feed():
+    response = render_template('feed.html', session_user=common.get_session(request))
+    return response

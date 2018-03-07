@@ -69,7 +69,13 @@ anonymous = rdb.new_user(
     profile_image=None,
 )
 
-rdb.new_ingredient('egg', description='Laid by a chicken.')
+rdb.new_ingredient('eggs', description='Laid by a chicken.')
+rdb.new_ingredient('water', description='Keeping things wet since forever.')
+rdb.new_ingredient('parmesan cheese', description='''
+Parmesan is hard, granular cheese.
+
+Some say it originates from Egypt.
+''')
 
 def _child(parent, child):
     parent = rdb.get_or_create_ingredient_tag(parent)
@@ -81,16 +87,24 @@ _child('meat', 'pork')
 _child('meat', 'poultry')
 _child('meat', 'fish')
 
+_child('poultry', 'chicken')
+_child('poultry', 'turkey')
+
 def _tag(tagname, ingname):
     ing = rdb.get_or_create_ingredient(name=ingname)
     tag = rdb.get_or_create_ingredient_tag(tagname)
     ing.add_tag(tag)
+
+_tag('beef', 'beef frankfurters')
+_tag('beef', 'ground beef')
+_tag('beef', 'strip steaks')
 
 _tag('chicken', 'roast chicken')
 _tag('chicken', 'chicken broth')
 _tag('chicken', 'chicken breast')
 
 _tag('dairy', 'milk')
+_tag('dairy', 'buttermilk')
 _tag('dairy', 'cheese')
 _tag('dairy', 'cream cheese')
 _tag('dairy', 'whipping cream')
@@ -99,6 +113,18 @@ _tag('dairy', 'butter')
 _tag('flour', 'all-purpose flour')
 _tag('flour', 'white flour')
 _tag('flour', 'whole wheat flour')
+
+_tag('oil', 'canola oil')
+_tag('oil', 'frying oil')
+_tag('oil', 'peanut oil')
+_tag('oil', 'sesame oil')
+_tag('oil', 'vegetable oil')
+
+_tag('pepper', 'black pepper')
+_tag('pepper', 'pepper')
+_tag('pepper', 'white pepper')
+
+_tag('pork', 'ground pork')
 
 _tag('rice', 'brown rice')
 _tag('rice', 'sushi rice')
@@ -112,12 +138,21 @@ _tag('sugar', 'cane sugar')
 _tag('sugar', 'powdered sugar')
 _tag('sugar', 'sugar')
 
+_tag('vinegar', 'vinegar')
+_tag('vinegar', 'white vinegar')
+_tag('vinegar', 'cider vinegar')
+
 def _autocorrect(tagname, alternate):
-    tag = rdb.get_or_create_ingredient_tag(name=tagname)
+    tag = rdb.get_or_create_ingredient(name=tagname)
     tag.add_autocorrect(alternate)
 
-_autocorrect('potato', 'potatoes')
-_autocorrect('egg', 'eggs')
+_autocorrect('almonds', 'almond')
+_autocorrect('bananas', 'banana')
+_autocorrect('bayleaves', 'bay leaf')
+_autocorrect('eggs', 'egg')
+_autocorrect('Kool-aid mix', 'Koolaid mix')
+_autocorrect('potatoes', 'potato')
+_autocorrect('potatoes', 'potatos')
 
 
 
@@ -1568,7 +1603,7 @@ rdb.new_recipe(
     cuisine=None,
     ingredients=[
         ('4', 'white fish fillets'),
-        ('3 TB', 'melted butter'),
+        ('3 TB', 'melted',  'butter'),
         ('1', 'lemon'),
         ('2 tsp', 'salt'),
         ('1 tsp', 'garlic powder'),
@@ -1821,10 +1856,10 @@ rdb.new_recipe(
     country_of_origin=None,
     cuisine=None,
     ingredients=[
-        ('1 package', 'lime Jell-O'),
-        ('1 package', 'orange Jell-O'),
-        ('1 package', 'strawberry Jell-O'),
-        ('1 package', 'lemon Jell-O'),
+        ('1 package', 'lime', 'Jell-O'),
+        ('1 package', 'orange', 'Jell-O'),
+        ('1 package', 'strawberry', 'Jell-O'),
+        ('1 package', 'lemon', 'Jell-O'),
         ('4 cups', 'boiling', 'water'),
         ('2 1/2 cups', 'cold', 'water'),
         ('1 container', 'Cool Whip'),

@@ -188,6 +188,12 @@ class RecipeDB:
         password = password.encode('utf-8')
         return bcrypt.checkpw(password, user.password_hash)
 
+    def get_all_ingredients_and_tags(self):
+        items = []
+        items.extend(self.get_ingredients())
+        items.extend(self.get_ingredient_tags())
+        return items
+
     def get_image(self, id):
         '''
         Fetch an image by its ID
@@ -306,6 +312,17 @@ class RecipeDB:
 
         tag = objects.IngredientTag(self, tag_row)
         return tag
+
+    def get_ingredient_tags(self):
+        '''
+        Returns all ingredient tags.
+        '''
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM IngredientTag')
+        ingredient_rows = cur.fetchall()
+        ingredient_objects = [objects.IngredientTag(self, row) for row in ingredient_rows]
+        ingredient_objects.sort(key=lambda r: r.name)
+        return ingredient_objects
 
     def get_recipe(self, id):
         '''

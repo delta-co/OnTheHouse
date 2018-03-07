@@ -29,29 +29,9 @@
         </div>
             <div class = "row"></div>
             <div id="ingredient_forms">
-                <p>Ingredient 1</p>
-                <form class = "form-inline">
-                    <input type="text" id="ingredient1_quant" class="form-control" placeholder="Quantity">
-                    <input type="text" id="ingredient1_prefix" class="form-control" placeholder="Prefix">
-                    <input type="text" id="ingredient1_name" class="form-control" placeholder="Ingredient Name">
-                    <input type="text" id="ingredient1_suffix" class="form-control" placeholder="Suffix">
-                </form>
-                <p>Ingredient 2</p>
-                <form class = "form-inline">
-                        <input type="text" id="ingredient2_quant" class="form-control" placeholder="Quantity">
-                        <input type="text" id="ingredient2_prefix" class="form-control" placeholder="Prefix">
-                        <input type="text" id="ingredient2_name" class="form-control" placeholder="Ingredient Name">
-                        <input type="text" id="ingredient2_suffix" class="form-control" placeholder="Suffix">
-                </form>
-                <p>Ingredient 3</p>
-                <form class = "form-inline">
-                        <input type="text" id="ingredient3_quant" class="form-control" placeholder="Quantity">
-                        <input type="text" id="ingredient3_prefix" class="form-control" placeholder="Prefix">
-                        <input type="text" id="ingredient3_name" class="form-control" placeholder="Ingredient Name">
-                        <input type="text" id="ingredient3_suffix" class="form-control" placeholder="Suffix">
-                </form>
             </div>
             <button class="btn btn-danger" type="button" onclick="add_fields('ingredient_forms')">Add Ingredient</button>
+            <div class="row"></div>
             <div class="col-sm-5">
             
             <P></P>
@@ -63,7 +43,6 @@
         </div>
     </div>
     <script>
-    var counter = 3;
     function submit_recipe()
     {
         var recipename = document.getElementById("recipe-name").value;
@@ -120,13 +99,46 @@
         }
     }
 
-    function add_fields(divName)
+    var ingredient_counter = 1;
+    function add_fields()
     {
-        counter++;
-        var newForm = document.createElement('form');
-        newForm.className = 'form-inline';
-        newForm.innerHTML = "<p>Ingredient " + counter + "</p> <input type='text' id='ingredient'" + counter + "'_quant' class='form-control' placeholder='Quantity'> <input type='text' id='ingredient'" + counter + "'_prefix' class='form-control' placeholder='Prefix'> <input type='text' id='ingredient'" + counter + "'_name' class='form-control' placeholder='Ingredient Name'> <input type='text' id='ingredient'" + counter + "'_suffix' class='form-control' placeholder='Suffix'>";
-        document.getElementById(divName).appendChild(newForm);
+        var form_container = document.getElementById("ingredient_forms");
+        var form = document.createElement("form");
+        form.classList.add("form-inline");
+        form.style.position = "relative";
+
+        var input_quant = document.createElement("input");
+        input_quant.type = "text";
+        input_quant.classList.add("form-control");
+        input_quant.placeholder = "Quantity";
+        form.appendChild(input_quant);
+
+        var input_prefix = document.createElement("input");
+        input_prefix.type = "text";
+        input_prefix.classList.add("form-control");
+        input_prefix.placeholder = "Prefix";
+        form.appendChild(input_prefix);
+
+        var input_name = document.createElement("input");
+        input_name.type = "text";
+        input_name.classList.add("form-control");
+        input_name.placeholder = "Ingredient Name";
+        input_name.classList.add("ingredient-autosuggest-form");
+        form.appendChild(input_name);
+        apply_ingredient_autosuggest(input_name);
+
+        var input_suffix = document.createElement("input");
+        input_suffix.type = "text";
+        input_suffix.classList.add("form-control");
+        input_suffix.placeholder = "Suffix";
+        form.appendChild(input_suffix);
+
+        ingredient_counter++;
+        form_container.appendChild(form);
+    }
+    for (var index = 0; index < 3; index += 1)
+    {
+        add_fields();
     }
     </script>
 {% endblock %}

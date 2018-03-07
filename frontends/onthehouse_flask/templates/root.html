@@ -11,7 +11,6 @@
         <script src="/static/common.js"></script>
 
         <link rel="stylesheet" href="/static/common.css">
-        <link rel="stylesheet" href="/static/profile.css">
         <link rel="stylesheet" href="/static/recipes.css">
 
     {% endblock %}
@@ -60,6 +59,19 @@
     body {
         background-color: #ffe6e6;
     }
+    .ingredient-autosuggest-list
+    {
+        position: absolute;
+        background-color: white;
+        border: 1px solid black;
+        margin-left: 5px;
+        margin-right: 5px;
+        padding: 4px;
+        top: 34px;
+        z-index: 3;
+        max-height: 150px;
+        overflow-y: auto;
+    }
     </style>
 </head>
 
@@ -69,25 +81,26 @@
         <div class="row content">
             <div class="col-sm-3 sidenav" style="background-image:url('/static/tilablepicnic.png');background-size:50px 50px;font-family:Verdana">
                 <h4><a href="/"><img id="logo" src="/static/onthehouselogo.png" alt="On the House"/></a></h4>
-                {% if session_user %}
-                    <h5>Welcome, <a href="/user/{{session_user.username}}">{{session_user.display_name}}</a></h5>
-                {% endif %}
                 <ul id="nav-list" class="nav nav-pills nav-stacked">
                     <li><a href="/">Home</a></li>
                     <li><a href="/recipe">Explore</a></li>
-                    <li><a href="https://delta-co.github.io/">The Team</a></li>
                 {% if session_user %}
+                    <li><a href="/user/{{session_user.username}}">Welcome, {{session_user.display_name}}</a></h5>
                     <li><a href="/logout"> Logout</a></li>
                 {% else %}
                     <li><a href="/register">New? Register Here!</a></li>
                 {% endif %}
                 </ul><br>
 
-                <div class="input-group" style="background-color:#ee3333;border:8px solid #ee3333;border-radius:5px">
+                <div class="input-group" style="background-color:#ee3333;border:8px solid #ee3333;border-radius:5px; width: 100%">
                     <div id="basic_searchform">
                         <input type="text" id="searchform_name" class="form-control" placeholder="Recipe Name..."/>
-                        <input type="text" id="searchform_ingredients" class="form-control" placeholder="Search Ingredients..."/>
-                        <input type="text" id="searchform_exclude" class="form-control" placeholder="Exclude Ingredients..."/>
+                        <div class="autosuggest-container">
+                            <input type="text" id="searchform_ingredients" class="ingredient-autosuggest-form form-control" placeholder="Search Ingredients..."/>
+                        </div>
+                        <div class="autosuggest-container">
+                            <input type="text" id="searchform_exclude" class="ingredient-autosuggest-form form-control" placeholder="Exclude Ingredients..."/>
+                        </div>
                         <label id="searchform_strict_label">
                             <input type="checkbox" id="searchform_strict" class="form-control" placeholder/><span style="color:#efefef">Strict Search</span>
                         </label>
@@ -121,6 +134,21 @@
 
 
 <script type="text/javascript">
+function el(id){return document.getElementById(id)};
+bind_enter(el("searchform_name"), el("searchform_submit"));
+bind_enter(el("searchform_ingredients"), el("searchform_submit"));
+bind_enter(el("searchform_exclude"), el("searchform_submit"));
+
+var ALL_INGREDIENTS = [];
+function set_all_ingredients_callback(response)
+{
+    console.log("Downloaded ingredients");
+    ALL_INGREDIENTS = response;
+}
+get("/all_ingredients", set_all_ingredients_callback);
+
+Array.from(document.getElementsByClassName("ingredient-autosuggest-form")).forEach(apply_ingredient_autosuggest);
+
 function join_parameters(parameters)
 {
     if (parameters.length == 0)

@@ -1,0 +1,54 @@
+{% extends "root.html" %}
+{% block title %}  {% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <title>Your Feed | OnTheHouse</title>
+    <style>
+    #create_recipe_splash
+    {
+        display: flex;
+        flex-direction: column;
+        margin: 16px;
+        padding: 16px;
+        border: 2px solid #dddd00;
+        background-color: #ffffaa;
+        border-radius: 6px;
+    }
+    #create_recipe_splash *
+    {
+        align-self: center;
+        justify-self: center;
+    }
+    #recipe_area
+    {
+        margin: 16px;
+    }
+    </style>
+{% endblock %}
+
+{% import 'macros.html' as macros%}
+
+{% block body %}
+<div class="row content">
+    <div class="col-sm-12">
+        <div class="row content">
+            <div id="recipe_area">
+                <div class="row"></div>
+                <h3>Your feed:</h3>
+                <div>
+                    {% for feed_item in session_user.get_feed() %}
+                        {% if feed_item.score %}
+                            {{ macros.review_card(feed_item) }}
+                        {% else %}
+                            {{ macros.recipe_card(feed_item) }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %} {{ super() }} {% endblock %}
