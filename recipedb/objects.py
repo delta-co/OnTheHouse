@@ -254,6 +254,69 @@ class Recipe(ObjectBase):
     def __repr__(self):
         return 'Recipe:%s:%s' % (self.id, self.slug)
 
+    def edit(
+            self,
+            *,
+            blurb=None,
+            country=None,
+            cuisine=None,
+            instructions=None,
+            meal_type=None,
+            name=None,
+            prep_time=None,
+            recipe_image_id=None,
+            serving_size=None,
+        ):
+        if blurb is not None:
+            self.blurb = blurb
+        if country is not None:
+            self.country = country
+        if cuisine is not None:
+            self.cuisine = cuisine
+        if instructions is not None:
+            self.instructions = instructions
+        if meal_type is not None:
+            self.meal_type = meal_type
+        if name is not None:
+            self.name = name
+            self.slug = helpers.slugify(self.name)
+        if prep_time is not None:
+            self.prep_time = prep_time
+        if recipe_image_id is not None:
+            self.recipe_image_id = recipe_image_id
+        if serving_size is not None:
+            self.serving_size = serving_size
+        query = '''
+        UPDATE Recipe SET
+            Blurb=?,
+            CountryOfOrigin=?,
+            Cuisine=?,
+            DateModified=?,
+            Instructions=?,
+            MealType=?,
+            Name=?,
+            PrepTime=?,
+            RecipeImageID=?,
+            ServingSize=?
+        WHERE RecipeID=?
+        '''
+        bindings = [
+            self.blurb,
+            self.country,
+            self.cuisine,
+            helpers.now(),
+            self.instructions,
+            self.meal_type,
+            self.name,
+            self.prep_time,
+            self.recipe_image_id,
+            self.serving_size,
+            self.id
+        ]
+        cur = self.recipedb.sql.cursor()
+        cur.execute(query, bindings)
+        self.recipedb.sql.commit()
+
     def get_ingredients(self):
         cur = self.recipedb.sql.cursor()
         cur.execute('SELECT * FROM Recipe_Ingredient_Map WHERE RecipeID = ?', [self.id])
@@ -280,29 +343,6 @@ class Recipe(ObjectBase):
         rows = cur.fetchall()
         recipes = [Review(self.recipedb, row) for row in rows]
         return recipes
-
-    def set_recipe_pic(self, image):
-        raise NotImplementedError
-        self.recipe_image_id = image.id
-
-    def edit(
-            self,
-            *,
-            ingredients=None,
-            blurb=None,
-        ):
-        '''
-        Let's add the rest of the arguments that we want to be able to edit.
-        '''
-        if blurb is not None:
-            self.blurb = blurb
-
-        # if NEW_ATTRIBUTE is not None:
-        #    self.ATTRIBUTE = NEW_ATTRIBUTE
-
-        self.date_mod = helpers.now()
-        # SQL UPDATE statement to apply new properties.
-        raise NotImplementedError
 
 
 class Review(ObjectBase):
