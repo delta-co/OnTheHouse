@@ -625,7 +625,8 @@ class RecipeDB:
         self.sql.commit()
 
         review = objects.Review(self, review_data)
-        self.log.debug('Created recipe %s', recipe.name)
+        self.log.debug('Created review %s', review.name)
+        return review
 
     def new_user(
             self,
