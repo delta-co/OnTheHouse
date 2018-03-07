@@ -15,6 +15,10 @@
     </div>
 {% endmacro %}
 
+{% macro stars(count) %}
+<span class="review-score" title="{{count}} stars">{{('&bigstar;' * count)|safe}}</span>
+{% endmacro %}
+
 {% macro review_card(review) %}
     <div class="col-sm-3 user-review">
         <div style="text-align:center; " class="review-box">
@@ -25,7 +29,7 @@
                 <h5>on {{ review.date_added|unix_to_human }}</h5>
                 <hr>
                 {% if review.score %}
-                <span class="review-score" title="{{review.score}} stars">{{('&bigstar;' * review.score)|safe}}</span>
+                    {{stars(review.score)}}
                 {% endif %}
                 <p class="review-text">{{review.text}}</p>
             </div>
