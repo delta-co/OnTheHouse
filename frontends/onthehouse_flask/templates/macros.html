@@ -23,6 +23,10 @@
             <div class="well" style="height:280px; color:b30000">
                 <h4><a href="/user/{{author.username}}">{{ author.display_name }}</a> reviewed <a href="/recipe/{{recipe.id}}/{{recipe.slug}}">{{ recipe.name }}</a></h4>
                 <h5>on {{ review.date_added|unix_to_human }}</h5>
+                <hr>
+                {% if review.score %}
+                <span class="review-score" title="{{review.score}} stars">{{('&bigstar;' * review.score)|safe}}</span>
+                {% endif %}
                 <p class="review-text">{{review.text}}</p>
             </div>
         </div>
