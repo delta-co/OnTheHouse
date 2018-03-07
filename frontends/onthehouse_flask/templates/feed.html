@@ -38,7 +38,7 @@
                 <h3>Your feed:</h3>
                 <div>
                     {% for feed_item in session_user.get_feed() %}
-                        {% if feed_item.score %}
+                        {% if feed_item.__class__.__name__ == "Review" %}
                             {{ macros.review_card(feed_item) }}
                         {% else %}
                             {{ macros.recipe_card(feed_item) }}

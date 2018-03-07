@@ -114,6 +114,10 @@ class RecipeDB:
         if len(password) < constants.PASSWORD_MINLENGTH:
             raise exceptions.PasswordTooShort(minlength=constants.PASSWORD_MINLENGTH)
 
+    def _assert_valid_review_score(self, score):
+        if score < 1 or score > 5:
+            raise ValueError('Score should be in [1, 5].')
+
     def _assert_valid_username(self, name):
         '''
         If something is wrong, raise an exception.
@@ -335,7 +339,7 @@ class RecipeDB:
         if recipe_row is not None:
             recipe = objects.Recipe(self, recipe_row)
         else:
-            raise ValueError('Recipe %s does not exist' % id)
+            raise exceptions.NoSuchRecipe(id)
 
         return recipe
 
@@ -349,6 +353,20 @@ class RecipeDB:
         recipe_objects = [objects.Recipe(self, row) for row in recipe_rows]
         recipe_objects.sort(key=lambda r: r.date_added, reverse=True)
         return recipe_objects
+
+    def get_review(self, id):
+        '''
+        Fetch a single Review by its ID.
+        '''
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM Review WHERE ReviewID = ?', [id])
+        review_row = cur.fetchone()
+        if review_row is not None:
+            review = objects.Review(self, review_row)
+        else:
+            raise exceptions.NoSuchReview(id)
+
+        return review
 
     def get_user(self, *, id=None, username=None):
         '''
@@ -572,6 +590,43 @@ class RecipeDB:
         recipe = objects.Recipe(self, recipe_data)
         self.log.debug('Created recipe %s', recipe.name)
         return recipe
+
+    def new_review(
+            self,
+            recipe,
+            user,
+            score=None,
+            text='',
+        ):
+        if score is not None:
+            score = int(score)
+            self._assert_valid_review_score(score)
+        text = text or ''
+        if not text and not score:
+            raise ValueError('Text and score cannot both be blank')
+
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM Review WHERE RecipeID = ? AND AuthorID = ?', [recipe.id, user.id])
+        if cur.fetchone() is not None:
+            raise ValueError('%s has already reviewed %s' % (user, recipe))
+
+        review_id = helpers.random_hex()
+        review_data = {
+            'ReviewID': review_id,
+            'RecipeID': recipe.id,
+            'AuthorID': user.id,
+            'Score': score,
+            'Text': text,
+            'DateAdded': helpers.now(),
+        }
+        (qmarks, bindings) = sqlhelpers.insert_filler(constants.SQL_REVIEW_COLUMNS, review_data)
+        query = 'INSERT INTO Review VALUES(%s)' % qmarks
+        cur.execute(query, bindings)
+        self.sql.commit()
+
+        review = objects.Review(self, review_data)
+        self.log.debug('Created review %s', review.name)
+        return review
 
     def new_user(
             self,
