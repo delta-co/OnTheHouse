@@ -1,3 +1,3 @@
-▢ Things that are not done.
+- [ ] Things that are not done.
 
-✓ Things that are done.
+- [x] Things that are done.

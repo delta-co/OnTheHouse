@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row content">
+    <div class = "row content">
         <div class="col-sm-5">
             <h1>New Recipe:</h1>
                 <input type="text" id="recipe-name" class="form-control" placeholder="Recipe Name">
@@ -24,20 +24,24 @@
             <p></p>
                 <input type="text" id="serving-size" class="form-control" placeholder="Serving Size">
             <p></p>
-            <p>Enter ingredients, one per line.</p>
-                <textarea id="ingredients" rows="15" cols="70" class = "form-control" placeholder="Ingredients"></textarea>
-            <p>Enter instructions. Separate steps with a full blank line between paragraphs.</p>
-                <textarea id="instructions" rows="15" cols="70" class = "form-control" placeholder="Instructions"></textarea>
-            <p><p/>
-            <div>
-                <label for="image_uploads">Choose image to upload (PNG, JPG)</label>
-                <input type="file" id="recipe-image" name="recipe image" accept=".jpg, .jpeg, .png" >
-            </div>
 
+            <p>Enter ingredients using the forms.</p>
+        </div>
+            <div class = "row"></div>
+            <div id="ingredient_forms">
+            </div>
+            <button class="btn btn-danger" type="button" onclick="add_fields('ingredient_forms')">Add Ingredient</button>
+            <div class="row"></div>
+            <div class="col-sm-5">
+            
+            <P></P>
+            <p>Enter instructions. Separate steps with a full blank line between paragraphs.</p>
+            <textarea id="instructions" rows="15" cols="70" class = "form-control" placeholder="Instructions"></textarea>
+            <!--<input type="image" id="recipeimage" class="form-control" placeholder="Recipe Image">-->
             <button class="btn btn-default" type="button" onclick="submit_recipe()">Create</button>
+            </div>
         </div>
     </div>
-
     <script>
     function submit_recipe()
     {
@@ -48,10 +52,27 @@
         var mealtype = document.getElementById("meal-type").value;
         var preptime = document.getElementById("prep-time").value;
         var servingsize = document.getElementById("serving-size").value;
-        var ingredients = document.getElementById("ingredients").value;
-        var instructions = document.getElementById("instructions").value;
-        var image = document.getElementById("recipe-image").value
+
+        var ingredient_collection = document.getElementsByClassName("form-inline");
         var data = new FormData();
+        for (var i = 0; i < ingredient_collection.length; i++)
+        {
+            var ingredient_array = [];
+            if(ingredient_collection[i].hasChildNodes())
+            {
+                var children = ingredient_collection[i].childNodes;
+                for (var j = 0; j < children.length; j++)
+                {
+                    if(children[j].value)
+                    {
+                        ingredient_array.push(children[j].value);
+                    }
+                }
+            }
+            data.append("ingredients[]", ingredient_array);
+        }
+        var instructions = document.getElementById("instructions").value;
+        //var image = document.getElementById("recipe-image").value
         
         data.append("recipe name", recipename);
         data.append("recipe blurb", blurb);
@@ -60,9 +81,8 @@
         data.append("meal type", mealtype);
         data.append("prep time", preptime);
         data.append("serving size", servingsize);
-        data.append("ingredients", ingredients);
         data.append("instructions", instructions);
-        data.append("recipe image", image)
+        //data.append("recipe image", image)
         var url = "/newrecipe";
         return post(url, data, receive_callback);
     }
@@ -77,6 +97,48 @@
         {
             window.location.href = "/recipe/" + response['recipeid'];
         }
+    }
+
+    var ingredient_counter = 1;
+    function add_fields()
+    {
+        var form_container = document.getElementById("ingredient_forms");
+        var form = document.createElement("form");
+        form.classList.add("form-inline");
+        form.style.position = "relative";
+
+        var input_quant = document.createElement("input");
+        input_quant.type = "text";
+        input_quant.classList.add("form-control");
+        input_quant.placeholder = "Quantity";
+        form.appendChild(input_quant);
+
+        var input_prefix = document.createElement("input");
+        input_prefix.type = "text";
+        input_prefix.classList.add("form-control");
+        input_prefix.placeholder = "Prefix";
+        form.appendChild(input_prefix);
+
+        var input_name = document.createElement("input");
+        input_name.type = "text";
+        input_name.classList.add("form-control");
+        input_name.placeholder = "Ingredient Name";
+        input_name.classList.add("ingredient-autosuggest-form");
+        form.appendChild(input_name);
+        apply_ingredient_autosuggest(input_name);
+
+        var input_suffix = document.createElement("input");
+        input_suffix.type = "text";
+        input_suffix.classList.add("form-control");
+        input_suffix.placeholder = "Suffix";
+        form.appendChild(input_suffix);
+
+        ingredient_counter++;
+        form_container.appendChild(form);
+    }
+    for (var index = 0; index < 3; index += 1)
+    {
+        add_fields();
     }
     </script>
 {% endblock %}

@@ -1,3 +1,4 @@
+import bcrypt
 from flask_login import UserMixin
 
 from . import constants
@@ -42,6 +43,9 @@ class Image(ObjectBase):
         self.id = db_row['ImageID']
         self.file_path = db_row['ImageFilePath']
 
+    def __repr__(self):
+        return 'Image:%s' % self.id
+
 
 class Ingredient(ObjectBase):
     def __init__(self, recipedb, db_row):
@@ -53,6 +57,9 @@ class Ingredient(ObjectBase):
         self.name = db_row['Name']
         self.description = db_row['Description']
         self.ingredient_image_id = db_row['IngredientImageID']
+
+    def __repr__(self):
+        return 'Ingredient:%s:%s' % (self.id, self.name)
 
     def add_autocorrect(self, alternate_name):
         alternate_name = self.recipedb._normalize_ingredient_name(alternate_name)
@@ -127,6 +134,9 @@ class IngredientTag(ObjectBase):
         self.name = db_row['TagName']
         self.parent_id = db_row['ParentTagID']
 
+    def __repr__(self):
+        return 'IngredientTag:%s:%s' % (self.id, self.name)
+
     def add_child(self, tag):
         cur = self.recipedb.sql.cursor()
         cur.execute('SELECT ParentTagID FROM IngredientTag WHERE IngredientTagID = ?', [tag.id])
@@ -199,6 +209,9 @@ class QuantitiedIngredient(ObjectBase):
     def __hash__(self):
         return hash(self._identity)
 
+    def __repr__(self):
+        return '%s of %s' % (self.quantity, self.ingredient)
+
     @property
     def _identity(self):
         return (self.ingredient.id, self.quantity, self.prefix, self.suffix)
@@ -238,6 +251,9 @@ class Recipe(ObjectBase):
         self.instructions = db_row['Instructions']
         self.recipe_image_id = db_row['RecipeImageID']
 
+    def __repr__(self):
+        return 'Recipe:%s:%s' % (self.id, self.slug)
+
     def get_ingredients(self):
         cur = self.recipedb.sql.cursor()
         cur.execute('SELECT * FROM Recipe_Ingredient_Map WHERE RecipeID = ?', [self.id])
@@ -257,6 +273,13 @@ class Recipe(ObjectBase):
             tags = {tag for tag in tags if tag is not None}
             everything.update(tags)
         return everything
+
+    def get_reviews(self):
+        cur = self.recipedb.sql.cursor()
+        cur.execute('SELECT * FROM Review WHERE RecipeID = ?', [self.id])
+        rows = cur.fetchall()
+        recipes = [Review(self.recipedb, row) for row in rows]
+        return recipes
 
     def set_recipe_pic(self, image):
         raise NotImplementedError
@@ -295,6 +318,9 @@ class Review(ObjectBase):
         self.score = db_row['Score']
         self.text = db_row['Text']
 
+    def __repr__(self):
+        return 'Review:%s on %s' % (self.id, self.recipe_id)
+
     def edit(self, score=None, text=None):
         if score is not None:
             self.score = score
@@ -304,6 +330,12 @@ class Review(ObjectBase):
 
         # SQL UPDATE
         raise NotImplementedError
+
+    def get_author(self):
+        return self.recipedb.get_user(id=self.author_id)
+
+    def get_recipe(self):
+        return self.recipedb.get_recipe(id=self.recipe_id)
 
 
 #class User(ObjectBase):
@@ -326,6 +358,9 @@ class User(UserMixin, ObjectBase):
 
         if not self.bio_text:
             self.bio_text = ''
+
+    def __repr__(self):
+        return 'User:%s:%s' % (self.id, self.username)
 
     def follow(self, other):
         if other == self:

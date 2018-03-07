@@ -1,44 +1,32 @@
 <!DOCTYPE html>
 <html>
 
-{% macro recipe_card(recipe, size ='m') %}
-    {% if size == 's' %}
+{% macro recipe_card(recipe) %}
     <div class="col-sm-3 user-recipe">
         <div style="text-align:center; " class="recipe-box">
             <a style="text-decoration: none;" href="/recipe/{{recipe.id}}/{{recipe.slug}}">
                 <div class="well" style="height:280px; color:b30000">
                     <img class="img-rounded" alt="Recipe Image" src="{{'/static/default_recipe_pic.jpg' if recipe.recipe_image_id is none else '/image/' + recipe.recipe_image_id }}">
                     <h4>{{ recipe.name }}</h4>
-                    <h5>Added: {{ recipe.date_added|unix_to_human }}</h5>
+                    <h5>Added {{ recipe.date_added|unix_to_human }} by {{ recipe.author.display_name }}</h5>
                 </div>
             </a>
         </div>
     </div>
-    {% elif size == 'm' %}
-    <div class="col-sm-3 user-recipe">
-        <div style="text-align:center; " class="recipe-box">
-            <a style="text-decoration: none;" href="/recipe/{{recipe.id}}/{{recipe.slug}}">
-                <div class="well">
-                    <img class="img-rounded" alt="Recipe Image" src="{{'/static/default_recipe_pic.jpg' if recipe.recipe_image_id is none else '/image/' + recipe.recipe_image_id }}">
-                    <h3>{{ recipe.name }}</h3>
-                    <h4>Added: {{ recipe.date_added|unix_to_human }}</h4>
-                </div>
-            </a>
+{% endmacro %}
+
+{% macro review_card(review) %}
+    <div class="col-sm-3 user-review">
+        <div style="text-align:center; " class="review-box">
+            {% set author = review.get_author() %}
+            {% set recipe = review.get_recipe() %}
+            <div class="well" style="height:280px; color:b30000">
+                <h4><a href="/user/{{author.username}}">{{ author.display_name }}</a> reviewed <a href="/recipe/{{recipe.id}}/{{recipe.slug}}">{{ recipe.name }}</a></h4>
+                <h5>on {{ review.date_added|unix_to_human }}</h5>
+                <p class="review-text">{{review.text}}</p>
+            </div>
         </div>
     </div>
-    {% elif size == 'l' %}
-    <div class="col-sm-3 user-recipe">
-        <div style="text-align:center; " class="recipe-box">
-            <a style="text-decoration: none;" href="/recipe/{{recipe.id}}/{{recipe.slug}}">
-                <div class="well">
-                    <img class="img-rounded" alt="Recipe Image" src="{{'/static/default_recipe_pic.jpg' if recipe.recipe_image_id is none else '/image/' + recipe.recipe_image_id }}">
-                    <h2>{{ recipe.name }}</h2>
-                    <h3>Added: {{ recipe.date_added|unix_to_human }}</h3>
-                </div>
-            </a>
-        </div>
-    </div>
-    {% endif %}
 {% endmacro %}
 
 </html>

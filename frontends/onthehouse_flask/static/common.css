@@ -17,6 +17,11 @@ Organization:
     --color_3d_highlight: rgba(255, 255, 255, 0.5);
 }
 
+.hidden
+{
+    display: none;
+}
+
 /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
 
@@ -58,5 +63,11 @@ Organization:
     }
     .recipe-box img{
       max-width: 100%;
+      max-height: 180px;
+    }
+
+    .review-text{
+      overflow: hidden;
+      text-overflow: ellipsis;
       max-height: 180px;
     }

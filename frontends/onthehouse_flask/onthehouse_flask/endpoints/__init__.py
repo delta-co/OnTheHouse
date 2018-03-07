@@ -3,12 +3,14 @@ from flask_login import LoginManager
 import random
 
 
+from .. import jsonify
 from . import common
 from . import image_endpoint
 from . import ingredient_endpoint
 from . import profile_endpoint
 from . import recipe_endpoint
 from . import register_endpoint
+from . import following_endpoint
 from . import recipecreation_endpoint
 from . import updateuser_endpoint
 
@@ -41,6 +43,15 @@ def user_logout():
     common.remove_cookie(cookie_check)
     return flask.redirect('/')
 
+
+@site.route('/all_ingredients')
+def get_all_ingredients():
+    items = common.rdb.get_all_ingredients_and_tags()
+    items = [item.name for item in items]
+    items = list(set(items))
+    items.sort(key=lambda x: x.lower())
+    response = jsonify.make_json_response(items)
+    return response
 
 @site.route('/img/<imgid>')
 def get_img(imgid):

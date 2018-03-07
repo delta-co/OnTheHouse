@@ -45,18 +45,37 @@
             <div id="recipe_area">
                 {% if session_user %}
                     <div class="row"></div>
+                    {% set your_feed = session_user.get_feed() %}
+                    {% if your_feed %}
+                    <h3>Your <a href="/feed">feed</a>:</h3>
+                    <div>
+                        {% for feed_item in your_feed[:12] %}
+                            {% if feed_item.score %}
+                                {{ macros.review_card(feed_item) }}
+                            {% else %}
+                                {{ macros.recipe_card(feed_item) }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+
+                    <div class="row"></div>
+                    {% if user_recipes %}
                     <h3>Your recipes:</h3>
                     <div>
                         {% for recipe in user_recipes %}
-                            {{ macros.recipe_card(recipe,'s') }}
+                            {{ macros.recipe_card(recipe) }}
                         {% endfor %}
                     </div>
+                    {% endif %}
                 {% endif %}
+
                 <div class="row"></div>
-                <h3>Community Recipes</h3>
+                <h3>Community recipes:</h3>
                 <div>
                     {% for recipe in other_recipes %}
-                        {{ macros.recipe_card(recipe,'s') }}
+                        {{ macros.recipe_card(recipe) }}
                     {% endfor %}
                 </div>
             </div>

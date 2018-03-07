@@ -147,7 +147,7 @@ class RecipeDB:
             elif len(ingredient) == 3:
                 (quantity, prefix, ingredient) = ingredient
             elif len(ingredient) == 4:
-                (quanitty, prefix, ingredient, suffix) = ingredient
+                (quantity, prefix, ingredient, suffix) = ingredient
 
         if isinstance(ingredient, dict):
             ingr = ingredient
@@ -187,6 +187,12 @@ class RecipeDB:
         '''
         password = password.encode('utf-8')
         return bcrypt.checkpw(password, user.password_hash)
+
+    def get_all_ingredients_and_tags(self):
+        items = []
+        items.extend(self.get_ingredients())
+        items.extend(self.get_ingredient_tags())
+        return items
 
     def get_image(self, id):
         '''
@@ -258,6 +264,17 @@ class RecipeDB:
         ingredient = objects.Ingredient(self, ingredient_row)
         return ingredient
 
+    def get_ingredients(self):
+        '''
+        Returns all ingredients.
+        '''
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM Ingredient')
+        ingredient_rows = cur.fetchall()
+        ingredient_objects = [objects.Ingredient(self, row) for row in ingredient_rows]
+        ingredient_objects.sort(key=lambda r: r.name)
+        return ingredient_objects
+
     def get_ingredient_tag(self, *, id=None, name=None):
         '''
         Fetch a single IngredientTag by its ID or name.
@@ -296,6 +313,17 @@ class RecipeDB:
         tag = objects.IngredientTag(self, tag_row)
         return tag
 
+    def get_ingredient_tags(self):
+        '''
+        Returns all ingredient tags.
+        '''
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM IngredientTag')
+        ingredient_rows = cur.fetchall()
+        ingredient_objects = [objects.IngredientTag(self, row) for row in ingredient_rows]
+        ingredient_objects.sort(key=lambda r: r.name)
+        return ingredient_objects
+
     def get_recipe(self, id):
         '''
         Fetch a single Recipe by its ID.
@@ -319,6 +347,7 @@ class RecipeDB:
         cur.execute('SELECT * FROM Recipe')
         recipe_rows = cur.fetchall()
         recipe_objects = [objects.Recipe(self, row) for row in recipe_rows]
+        recipe_objects.sort(key=lambda r: r.date_added, reverse=True)
         return recipe_objects
 
     def get_user(self, *, id=None, username=None):
@@ -724,6 +753,6 @@ class RecipeDB:
             if limit is not None and len(match_counts) >= limit:
                 break
 
-        results = sorted(match_counts.keys(), key=match_counts.get, reverse=True)
+        results = sorted(match_counts.keys(), key=lambda r: (match_counts.get(r), r.date_added), reverse=True)
 
         return results

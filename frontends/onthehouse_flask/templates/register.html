@@ -12,7 +12,7 @@
             <h1>Login</h1>
             <input type="text" id="login-username" class="form-control" placeholder="Username">
             <input type="password" id="login-password" class="form-control" placeholder="Password">
-            <button class="btn btn-default" type="button" onclick="submit_login()">Login</button>
+            <button id="login-button" class="btn btn-default" type="button" onclick="submit_login()">Login</button>
         </div>
         <div class="col-sm-5">
             <h1>Register</h1>
@@ -20,11 +20,18 @@
             <input type="text" id="reg-displayname" class="form-control" placeholder="Display Name (appears on your profile)">
             <input type="password" id="reg-password1" class="form-control" placeholder="Password">
             <input type="password" id="reg-password2" class="form-control" placeholder="Re-enter Password">
-            <button class="btn btn-default" type="button" onclick="submit_register()">Register</button>
+            <button id="reg-button" class="btn btn-default" type="button" onclick="submit_register()">Register</button>
         </div>
     </div>
 
     <script>
+    function el(id){return document.getElementById(id)};
+    bind_enter(el("login-username"), el("login-button"));
+    bind_enter(el("login-password"), el("login-button"));
+    bind_enter(el("reg-username"), el("reg-button"));
+    bind_enter(el("reg-password1"), el("reg-button"));
+    bind_enter(el("reg-password2"), el("reg-button"));
+
     function submit_login()
     {
         var username = document.getElementById("login-username").value;
