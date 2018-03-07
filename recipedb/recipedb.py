@@ -114,6 +114,10 @@ class RecipeDB:
         if len(password) < constants.PASSWORD_MINLENGTH:
             raise exceptions.PasswordTooShort(minlength=constants.PASSWORD_MINLENGTH)
 
+    def _assert_valid_review_score(self, score):
+        if score < 1 or score > 5:
+            raise ValueError('Score should be in [1, 5].')
+
     def _assert_valid_username(self, name):
         '''
         If something is wrong, raise an exception.
@@ -335,7 +339,7 @@ class RecipeDB:
         if recipe_row is not None:
             recipe = objects.Recipe(self, recipe_row)
         else:
-            raise ValueError('Recipe %s does not exist' % id)
+            raise exceptions.NoSuchRecipe(id)
 
         return recipe
 
@@ -349,6 +353,20 @@ class RecipeDB:
         recipe_objects = [objects.Recipe(self, row) for row in recipe_rows]
         recipe_objects.sort(key=lambda r: r.date_added, reverse=True)
         return recipe_objects
+
+    def get_review(self, id):
+        '''
+        Fetch a single Review by its ID.
+        '''
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM Review WHERE ReviewID = ?', [id])
+        review_row = cur.fetchone()
+        if review_row is not None:
+            review = objects.Review(self, review_row)
+        else:
+            raise exceptions.NoSuchReview(id)
+
+        return review
 
     def get_user(self, *, id=None, username=None):
         '''
@@ -582,8 +600,7 @@ class RecipeDB:
         ):
         if score is not None:
             score = int(score)
-            if score < 1 or score > 5:
-                raise ValueError('Score should be in [1, 5].')
+            self._assert_valid_review_score(score)
         text = text or ''
         if not text and not score:
             raise ValueError('Text and score cannot both be blank')

@@ -363,13 +363,20 @@ class Review(ObjectBase):
 
     def edit(self, score=None, text=None):
         if score is not None:
+            self.recipedb._assert_valid_review_score(score)
             self.score = score
 
         if text is not None:
             self.text = text
 
-        # SQL UPDATE
-        raise NotImplementedError
+        query = '''
+        UPDATE Review SET Score = ?, Text = ?
+        WHERE ReviewID = ?
+        '''
+        bindings = [self.score, self.text, self.id]
+        cur = self.recipedb.sql.cursor()
+        cur.execute(query, bindings)
+        self.recipedb.sql.commit()
 
     def get_author(self):
         return self.recipedb.get_user(id=self.author_id)
