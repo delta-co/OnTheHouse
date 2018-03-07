@@ -573,6 +573,43 @@ class RecipeDB:
         self.log.debug('Created recipe %s', recipe.name)
         return recipe
 
+    def new_review(
+            self,
+            recipe,
+            user,
+            score=None,
+            text='',
+        ):
+        if score is not None:
+            score = int(score)
+            if score < 1 or score > 5:
+                raise ValueError('Score should be in [1, 5].')
+        text = text or ''
+        if not text and not score:
+            raise ValueError('Text and score cannot both be blank')
+
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM Review WHERE RecipeID = ? AND AuthorID = ?', [recipe.id, user.id])
+        if cur.fetchone() is not None:
+            raise ValueError('%s has already reviewed %s' % (user, recipe))
+
+        review_id = helpers.random_hex()
+        review_data = {
+            'ReviewID': review_id,
+            'RecipeID': recipe.id,
+            'AuthorID': user.id,
+            'Score': score,
+            'Text': text,
+            'DateAdded': helpers.now(),
+        }
+        (qmarks, bindings) = sqlhelpers.insert_filler(constants.SQL_REVIEW_COLUMNS, review_data)
+        query = 'INSERT INTO Review VALUES(%s)' % qmarks
+        cur.execute(query, bindings)
+        self.sql.commit()
+
+        review = objects.Review(self, review_data)
+        self.log.debug('Created recipe %s', recipe.name)
+
     def new_user(
             self,
             username: str,
