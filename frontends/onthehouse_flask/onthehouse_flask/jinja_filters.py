@@ -7,6 +7,7 @@ import datetime
 def split_paragraphs(text):
     paragraphs = text.strip().split('\n\n')
     paragraphs = [p.replace('\n', ' ') for p in paragraphs]
+    paragraphs = [p for p in paragraphs if p]
     return paragraphs
 
 def unix_to_human(timestamp):
