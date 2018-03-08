@@ -14,16 +14,17 @@ def update_page():
 
 @site.route('/updateuser', methods=['POST'])
 def post_update():
-    try:
-        displayname = request.form['displayname']
-        password = request.form['new password']
-        password2 = request.form['re-enter password']
-        blurb = request.form['blurb']
-        uimage = request.files['user image']
-    except:
-        pass
+    displayname = request.form.get('displayname', '')
+    password = request.form.get('new password', '')
+    password2 = request.form.get('re-enter password', '')
+    blurb = request.form.get('blurb', '')
+    print(request.files)
+    uimage = request.files.get('user image', None)
+    print(uimage)
 
     user = common.get_session(request)
+    if user is None:
+        flask.abort(403)
 
     if password != "":
         if password != password2:
@@ -37,9 +38,8 @@ def post_update():
     if blurb != "":
         user.set_bio_text(blurb)
 
-    if uimage.filename != None:
-        uimage.save = secure_filename(uimage.filename)
-        userimage = common.rdb.new_image(uimage)
+    if uimage != None:
+        userimage = common.process_uploaded_image(uimage)
         user.set_profile_image(userimage)
 
     response = jsonify.make_json_response({'username': user.username})

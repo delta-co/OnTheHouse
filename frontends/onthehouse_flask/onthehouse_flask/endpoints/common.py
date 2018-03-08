@@ -24,6 +24,7 @@ site = flask.Flask(
 site.config.update(
     SEND_FILE_MAX_AGE_DEFAULT=180,
     TEMPLATES_AUTO_RELOAD=True,
+    MAX_CONTENT_LENGTH = 3 * (2**20),
 )
 site.jinja_env.add_extension('jinja2.ext.do')
 site.jinja_env.trim_blocks = True
@@ -54,6 +55,13 @@ def remove_cookie(cookie_value):
 def get_session(request):
     cookie_check = request.cookies.get(COOKIE_NAME, None)
     return get_user_from_cookie(cookie_check)
+
+def process_uploaded_image(uploaded_image):
+    # generate a temporary filename and save the file.
+    # call rdb.new_image with that temp name.
+    # delete the temp file.
+    # return the rdb image that was created.
+    pass
 
 def send_file(filepath, override_mimetype=None):
     '''
