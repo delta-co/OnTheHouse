@@ -260,6 +260,7 @@ class Recipe(ObjectBase):
             blurb=None,
             country=None,
             cuisine=None,
+            ingredients=None,
             instructions=None,
             meal_type=None,
             name=None,
@@ -273,7 +274,10 @@ class Recipe(ObjectBase):
             self.country = country
         if cuisine is not None:
             self.cuisine = cuisine
+        if ingredients is not None:
+            self.set_ingredients(ingredients)
         if instructions is not None:
+            instructions = instructions.replace('\r', '')
             self.instructions = instructions
         if meal_type is not None:
             self.meal_type = meal_type
@@ -324,14 +328,6 @@ class Recipe(ObjectBase):
         ingredients = {QuantitiedIngredient(self.recipedb, line) for line in lines}
 
         return ingredients
-    
-    def edit_ingredients(
-        self,
-        ingredients=None,
-        ):
-        #cur = self.recipedb.sql.cursor()
-        pass
-
 
     def get_ingredients_and_tags(self):
         everything = {qi.ingredient for qi in self.get_ingredients()}
@@ -352,6 +348,27 @@ class Recipe(ObjectBase):
         recipes = [Review(self.recipedb, row) for row in rows]
         return recipes
 
+    def set_ingredients(self, ingredients):
+        ingredients = [self.recipedb._coerce_quantitied_ingredient(i) for i in ingredients]
+        cur = self.recipedb.sql.cursor()
+        cur.execute('DELETE FROM Recipe_Ingredient_Map')
+
+        for quant_ingredient in ingredients:
+            recipe_ingredient_data = {
+                'RecipeID': self.id,
+                'IngredientID': quant_ingredient.ingredient.id,
+                'IngredientQuantity': quant_ingredient.quantity,
+                'IngredientPrefix': quant_ingredient.prefix,
+                'IngredientSuffix': quant_ingredient.suffix,
+            }
+            (qmarks, bindings) = sqlhelpers.insert_filler(
+                constants.SQL_RECIPEINGREDIENT_COLUMNS,
+                recipe_ingredient_data
+            )
+            query = 'INSERT INTO Recipe_Ingredient_Map VALUES(%s)' % qmarks
+            cur.execute(query, bindings)
+
+        self.recipedb.sql.commit()
 
 class Review(ObjectBase):
     def __init__(self, recipedb, db_row):
