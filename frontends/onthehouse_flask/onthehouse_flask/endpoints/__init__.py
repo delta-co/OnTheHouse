@@ -13,6 +13,7 @@ from . import register_endpoint
 from . import following_endpoint
 from . import recipecreation_endpoint
 from . import updateuser_endpoint
+from . import editrecipe_endpoint
 
 
 site = common.site

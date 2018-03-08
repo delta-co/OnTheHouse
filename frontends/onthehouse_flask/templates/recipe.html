@@ -74,6 +74,9 @@
             {% if recipe.author is not none %}
             <p class="recipe-author">Recipe by <a href="/user/{{recipe.author.username}}">{{recipe.author.display_name}}</a></p>
             {% endif %}
+            {% if recipe.author == session_user %}
+            <a href="/editrecipe/{{recipe.id}}">Edit</a>
+            {% endif %}
             <hr>
             <div class="boxed">
             <p id="infobar">

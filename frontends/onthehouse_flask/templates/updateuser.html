@@ -22,7 +22,7 @@
             <textarea id="user-blurb" rows="5" cols="70" class = "form-control" placeholder="Blurb"></textarea>
             <div>
                 <label for="image_uploads">Choose image to upload (PNG, JPG)</label>
-                <input type="file" id="user-image" name="user image" accept=".jpg, .jpeg, .png" >
+                <input type="file" id="user-image" name="user image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" >
             </div>
             <p></p>
             <button class="btn btn-default" type="button" onclick="submit_update()">Update</button>
@@ -37,7 +37,7 @@
         var password1 = document.getElementById("new-password1").value;
         var password2 = document.getElementById("new-password2").value;
         var blurb = document.getElementById("user-blurb").value;
-        var uimage = document.getElementById("user-image").value
+        var uimage = document.getElementById("user-image").files[0];
         var data = new FormData();
        
         data.append("displayname", displayname);
