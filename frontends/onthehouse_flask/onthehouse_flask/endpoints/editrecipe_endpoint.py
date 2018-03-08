@@ -3,6 +3,7 @@ import json
 
 import recipedb
 
+from .. import jsonify
 from . import common
 
 site = common.site
@@ -64,27 +65,19 @@ def edit_recipe(recipeid):
     #   flash('Must have at least 1 ingredient')
     #   flask.abort(403)
 
-    ingredient_list = []
-    for ingredient in ingredients:
-        templist = ingredient.split(',')
-        ingredient_list.append(templist)
-
-    common.rdb.get_recipe(recipeid).edit(
+    recipe = common.rdb.get_recipe(recipeid)
+    recipe.edit(
         blurb= blurb,
         country= countryoforigin,
         cuisine= cuisine,
-        ingredients= ingredient_list,
+        ingredients= ingredients,
         instructions= instructions,
         meal_type= mealtype,
         name= recipename,
         prep_time= preptime,
-        recipe_image= recipe_image,
+        #recipe_image= recipe_image,
         serving_size= servingsize,
     )
-
-    #if image != None:
-      #recipe.set_recipe_pic(image)
-    #    pass
 
     response = jsonify.make_json_response({'recipeid': recipe.id})
     return response

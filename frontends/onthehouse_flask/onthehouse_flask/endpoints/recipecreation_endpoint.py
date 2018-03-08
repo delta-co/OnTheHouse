@@ -7,7 +7,7 @@ import recipedb
 from voussoirkit import pathclass
 image_dir = pathclass.Path(__file__).parent.with_child('sample_images')
 
-from .. import jsonify   
+from .. import jsonify
 
 from . import common
 
@@ -61,17 +61,12 @@ def post_recipe():
     #   flash('Must have at least 1 ingredient')
     #   flask.abort(403)
 
-    ingredient_list = []
-    for ingredient in ingredients:
-        templist = ingredient.split(',')
-        ingredient_list.append(templist)
-
     recipe = common.rdb.new_recipe(
         author= user,
         blurb= blurb,
         country_of_origin= countryoforigin,
         cuisine= cuisine,
-        ingredients= ingredient_list,
+        ingredients= ingredients,
         instructions= instructions,
         meal_type= mealtype,
         name= recipename,
