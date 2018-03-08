@@ -1,0 +1,219 @@
+{% extends "root.html" %}
+{% block title %} Edit Recipe : {{recipe.name}} {% endblock %}
+
+{% block head %}
+    {{ super() }}
+
+{% endblock %}
+
+{% block body %}
+    <div class = "row content">
+        <div class="col-sm-5">
+            <h1>Editing Recipe: {{recipe.name}}</h1>
+                <input type="text" id="recipe-name" class="form-control" value="{{recipe.name}}" placeholder="Recipe Name">
+            <p></p>
+                <input type="text" id="recipe-blurb" class="form-control" value="{{recipe.blurb}}"  placeholder="Recipe Blurb">
+            <p></p>
+                <input type="text" id="country-of-origin" class="form-control" value="{{recipe.country_of_origin}}" placeholder="Country of Origin">
+            <p></p>
+                <input type="text" id="cuisine" class="form-control" value="{{recipe.cuisine}}" placeholder="Cuisine">
+            <p></p>
+                <input type="text" id="meal-type" class="form-control" value="{{recipe.meal_type}}" placeholder="Meal Type">
+            <p></p>
+                <input type="text" id="prep-time" class="form-control" value="{{recipe.prep_time}}" placeholder="Prep Time">
+            <p></p>
+                <input type="text" id="serving-size" class="form-control" value="{{recipe.serving_size}}" placeholder="Serving Size">
+            <p></p>
+
+            <p>Enter ingredients using the forms.</p>
+        </div>
+            <div class = "row"></div>
+            <div id="ingredient_forms">
+            </div>
+            <button class="btn btn-danger" type="button" onclick="add_fields()">Add Ingredient</button>
+            <div class="row"></div>
+            <div class="col-sm-5">
+            
+            <P></P>
+            <p>Enter instructions. Separate steps with a full blank line between paragraphs.</p>
+            <textarea id="instructions" rows="15" cols="70" class = "form-control"placeholder="Instructions">{{recipe.instructions}}</textarea>
+            <!--<input type="image" id="recipeimage" class="form-control" placeholder="Recipe Image">-->
+            <button class="btn btn-default" type="button" onclick="complete_edit()">Create</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    function complete_edit()
+    {
+        var recipename = document.getElementById("recipe-name").value;
+        var blurb = document.getElementById("recipe-blurb").value;
+        var countryoforigin = document.getElementById("country-of-origin").value;
+        var cuisine = document.getElementById("cuisine").value;
+        var mealtype = document.getElementById("meal-type").value;
+        var preptime = document.getElementById("prep-time").value;
+        var servingsize = document.getElementById("serving-size").value;
+
+        var ingredient_collection = document.getElementsByClassName("form-inline");
+        var data = new FormData();
+        for (var i = 0; i < ingredient_collection.length; i++)
+        {
+            var ingredient_array = [];
+            if(ingredient_collection[i].hasChildNodes())
+            {
+                var children = ingredient_collection[i].childNodes;
+                for (var j = 0; j < children.length; j++)
+                {
+                    if(children[j].value)
+                    {
+                        ingredient_array.push(children[j].value);
+                    }
+                }
+            }
+            data.append("ingredients[]", ingredient_array);
+        }
+        var instructions = document.getElementById("instructions").value;
+        //var image = document.getElementById("recipe-image").value
+        
+        data.append("recipe name", recipename);
+        data.append("recipe blurb", blurb);
+        data.append("country of origin", countryoforigin);
+        data.append("cuisine", cuisine);
+        data.append("meal type", mealtype);
+        data.append("prep time", preptime);
+        data.append("serving size", servingsize);
+        data.append("instructions", instructions);
+        //data.append("recipe image", image)
+        var url = "/editrecipe/{{recipe.id}}";
+        return post(url, data, receive_callback);
+    }
+
+    function receive_callback(response)
+    {
+        if ("error_type" in response)
+        {
+            
+        }
+        else
+        {
+            window.location.href = "/recipe/" + response['recipeid'];
+        }
+    }
+
+    var ingredient_counter = {{ingredients}}.length();
+    function add_filled_field(ingredient_attribute_list)
+    {
+        if(ingredient_attribute_list.length() == 2)
+        {
+            var quantity = ingredient_attribute_list[0];
+            var name = ingredient_attribute_list[1];
+        }
+        else if(ingredient_attribute_list.length() == 3)
+        {
+            var quantity = ingredient_attribute_list[0];
+            var prefix = ingredient_attribute_list[1];
+            var name = ingredient_attribute_list[2];
+        }
+        else if(ingredient_attribute_list.length() == 4)
+        {
+            var quantity = ingredient_attribute_list[0];
+            var prefix = ingredient_attribute_list[1];
+            var name = ingredient_attribute_list[2];
+            var suffix = ingredient_attribute_list[3];
+        }
+
+        var form_container = document.getElementById("ingredient_forms");
+        var form = document.createElement("form");
+        form.classList.add("form-inline");
+        form.style.position = "relative";
+
+        var input_quant = document.createElement("input");
+        input_quant.type = "text";
+        input_quant.classList.add("form-control");
+        input_quant.placeholder = "Quantity";
+        if(quantity)
+        {
+            input_quant.value = quantity;
+        }
+        form.appendChild(input_quant);
+
+        var input_prefix = document.createElement("input");
+        input_prefix.type = "text";
+        input_prefix.classList.add("form-control");
+        input_prefix.placeholder = "Prefix";
+        if(prefix)
+        {
+            input_prefix.value = prefix;
+        }
+        form.appendChild(input_prefix);
+
+        var input_name = document.createElement("input");
+        input_name.type = "text";
+        input_name.classList.add("form-control");
+        input_name.placeholder = "Ingredient Name";
+        if(name)
+        {
+            input_name.value = name;
+        }
+        input_name.classList.add("ingredient-autosuggest-form");
+        form.appendChild(input_name);
+        apply_ingredient_autosuggest(input_name);
+
+        var input_suffix = document.createElement("input");
+        input_suffix.type = "text";
+        input_suffix.classList.add("form-control");
+        input_suffix.placeholder = "Suffix";
+        if(suffix)
+        {
+            input_suffix.value = suffix;
+        }
+        form.appendChild(input_suffix);
+
+        ingredient_counter++;
+        form_container.appendChild(form);
+    }
+
+    function add_fields()
+    {
+        var form_container = document.getElementById("ingredient_forms");
+        var form = document.createElement("form");
+        form.classList.add("form-inline");
+        form.style.position = "relative";
+
+        var input_quant = document.createElement("input");
+        input_quant.type = "text";
+        input_quant.classList.add("form-control");
+        input_quant.placeholder = "Quantity";
+        form.appendChild(input_quant);
+
+        var input_prefix = document.createElement("input");
+        input_prefix.type = "text";
+        input_prefix.classList.add("form-control");
+        input_prefix.placeholder = "Prefix";
+        form.appendChild(input_prefix);
+
+        var input_name = document.createElement("input");
+        input_name.type = "text";
+        input_name.classList.add("form-control");
+        input_name.placeholder = "Ingredient Name";
+        input_name.classList.add("ingredient-autosuggest-form");
+        form.appendChild(input_name);
+        apply_ingredient_autosuggest(input_name);
+
+        var input_suffix = document.createElement("input");
+        input_suffix.type = "text";
+        input_suffix.classList.add("form-control");
+        input_suffix.placeholder = "Suffix";
+        form.appendChild(input_suffix);
+
+        ingredient_counter++;
+        form_container.appendChild(form);
+    }
+    
+    for (var count = 0; count < ingredients.length(); count +=1)
+    {
+        add_filled_field(ingredients[count]);
+    }
+    </script>
+{% endblock %}
+
+{% block footer %} {{ super() }} {% endblock %}
