@@ -324,6 +324,14 @@ class Recipe(ObjectBase):
         ingredients = {QuantitiedIngredient(self.recipedb, line) for line in lines}
 
         return ingredients
+    
+    def edit_ingredients(
+        self,
+        ingredients=None,
+        ):
+        #cur = self.recipedb.sql.cursor()
+        pass
+
 
     def get_ingredients_and_tags(self):
         everything = {qi.ingredient for qi in self.get_ingredients()}
