@@ -1,4 +1,4 @@
-from flask import request, render_template
+import flask; from flask import request, render_template
 
 import recipedb
 
@@ -12,20 +12,14 @@ def edit_recipe_page(recipeid):
     ingredient_list = recipe.get_ingredients()
     ingredients = []
     for ingredient in ingredient_list:
-        ingredient_attribute_list = []
-    if (ingredient.quantity):
-        ingredient_attribute_list.append(ingredient.quantity)
+        ingredient_attribute_list = [
+            ingredient.quantity or '',
+            ingredient.prefix or '',
+            ingredient.ingredient.name or '',
+            ingredient.suffix or '',
+        ]
+        ingredients.append(ingredient_attribute_list)
 
-    if (ingredient.prefix):
-        ingredient_attribute_list.append(ingredient.prefix)
-
-    if (ingredient.ingredient.name):
-        ingredient_attribute_list.append(ingredient.ingredient.name)
-
-    if (ingredient.suffix):
-        ingredient_attribute_list.append(ingredient.suffix)
-
-    ingredients.append(ingredient_attribute_list)
     response = render_template("editrecipe.html", recipe=recipe, session_user=common.get_session(request), ingredients = ingredients)
     return response
 
