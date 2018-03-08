@@ -351,7 +351,7 @@ class Recipe(ObjectBase):
     def set_ingredients(self, ingredients):
         ingredients = [self.recipedb._coerce_quantitied_ingredient(i) for i in ingredients]
         cur = self.recipedb.sql.cursor()
-        cur.execute('DELETE FROM Recipe_Ingredient_Map')
+        cur.execute('DELETE FROM Recipe_Ingredient_Map WHERE RecipeID = ?', [self.id])
 
         for quant_ingredient in ingredients:
             recipe_ingredient_data = {
