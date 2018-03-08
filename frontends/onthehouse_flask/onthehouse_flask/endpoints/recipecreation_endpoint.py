@@ -1,4 +1,5 @@
 import flask; from flask import request, render_template
+import json
 import recipedb
 
 #from PIL import Image
@@ -25,9 +26,16 @@ def post_recipe():
     mealtype = request.form['meal type']
     preptime = request.form['prep time']
     servingsize = request.form['serving size']
-    ingredients = request.form.getlist('ingredients[]')
-    ingredients = [i.strip() for i in ingredients]
-    ingredients = [i for i in ingredients if i]
+    ingredients = json.loads(request.form.get('ingredients'))
+    keep_ingredients = []
+    for ingredient in ingredients:
+        if len(ingredient) != 4:
+            continue
+        ingredient = [i.strip() for i in ingredient]
+        if ingredient[2] == '':
+            continue
+        keep_ingredients.append(ingredient)
+    ingredients = keep_ingredients
     instructions = request.form['instructions'].strip()
     #image = request.form['recipe image']
 
