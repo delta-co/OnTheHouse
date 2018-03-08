@@ -46,14 +46,10 @@ def edit_recipe(recipeid):
 
     user = common.get_session(request)
 
-    '''
-    if image != None:
-      f = open('img', 'w+')
-      f.write(image)
-      rimage = common.rdb.new_image('img')
-    else:
-      rimage = None
-    '''
+    #if image is not None:
+    #    recipe_image = common.process_uploaded_image(image)
+    #else:
+    #    recipe_image = None
 
     if user==None:
         flask.abort(403)
@@ -80,8 +76,8 @@ def edit_recipe(recipeid):
         meal_type= mealtype,
         name= recipename,
         prep_time= preptime,
+        recipe_image= recipe_image,
         serving_size= servingsize,
-        recipe_image= None,
     )
 
     #if image != None:

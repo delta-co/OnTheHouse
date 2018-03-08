@@ -264,7 +264,7 @@ class Recipe(ObjectBase):
             meal_type=None,
             name=None,
             prep_time=None,
-            recipe_image_id=None,
+            recipe_image=None,
             serving_size=None,
         ):
         if blurb is not None:
@@ -282,8 +282,8 @@ class Recipe(ObjectBase):
             self.slug = helpers.slugify(self.name)
         if prep_time is not None:
             self.prep_time = prep_time
-        if recipe_image_id is not None:
-            self.recipe_image_id = recipe_image_id
+        if recipe_image is not None:
+            self.recipe_image_id = recipe_image.id
         if serving_size is not None:
             self.serving_size = serving_size
         query = '''
