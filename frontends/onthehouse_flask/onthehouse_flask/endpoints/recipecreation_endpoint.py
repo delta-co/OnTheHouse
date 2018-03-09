@@ -41,29 +41,17 @@ def post_recipe():
         keep_ingredients.append(ingredient)
     ingredients = keep_ingredients
     instructions = request.form['instructions'].strip()
-    #image = request.form['recipe image']
+    image = request.files.get('recipe image', None)
 
     user = common.get_session(request)
-
-    '''
-    if image != None:
-        f = open('img', 'w+')
-        f.write(image)
-        rimage = common.rdb.new_image('img')
-    else:
-        rimage = None
-    '''
 
     if user==None:
         flask.abort(403)     
 
-    #if instructions == "":
-    #   flash('Instructions cannot be blank')
-    #    flask.abort(403)
-
-    #if ingredients == "":
-    #   flash('Must have at least 1 ingredient')
-    #   flask.abort(403)
+    if image != None:
+        recipeimage = common.process_uploaded_image(image)
+    else:
+        recipeimage = None
 
     recipe = common.rdb.new_recipe(
         author= user,
@@ -76,7 +64,7 @@ def post_recipe():
         name= recipename,
         prep_time= preptime,
         serving_size= servingsize,
-        recipe_image= None,
+        recipe_image= recipeimage,
     )
 
     #if image != None:

@@ -63,14 +63,6 @@ def edit_recipe(recipeid):
     if user==None:
         flask.abort(403)
 
-    #if instructions == "":
-    #   flash('Instructions cannot be blank')
-    #    flask.abort(403)
-
-    #if ingredients == "":
-    #   flash('Must have at least 1 ingredient')
-    #   flask.abort(403)
-
     recipe = common.rdb.get_recipe(recipeid)
     recipe.edit(
         blurb= blurb,
