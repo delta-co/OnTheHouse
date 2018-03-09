@@ -489,6 +489,7 @@ class User(UserMixin, ObjectBase):
         cur.execute('SELECT * FROM Recipe WHERE AuthorID = ?', [self.id])
         rows = cur.fetchall()
         recipes = [Recipe(self.recipedb, row) for row in rows]
+        recipes.sort(key=lambda x: x.date_added, reverse=True)
         return recipes
 
     def get_reviews(self):
@@ -496,6 +497,7 @@ class User(UserMixin, ObjectBase):
         cur.execute('SELECT * FROM Review WHERE AuthorID = ?', [self.id])
         rows = cur.fetchall()
         recipes = [Review(self.recipedb, row) for row in rows]
+        recipes.sort(key=lambda x: x.date_added, reverse=True)
         return recipes
 
     def set_bio_text(self, bio_text):
