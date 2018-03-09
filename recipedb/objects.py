@@ -260,11 +260,12 @@ class Recipe(ObjectBase):
             blurb=None,
             country=None,
             cuisine=None,
+            ingredients=None,
             instructions=None,
             meal_type=None,
             name=None,
             prep_time=None,
-            recipe_image_id=None,
+            recipe_image=None,
             serving_size=None,
         ):
         if blurb is not None:
@@ -273,7 +274,10 @@ class Recipe(ObjectBase):
             self.country = country
         if cuisine is not None:
             self.cuisine = cuisine
+        if ingredients is not None:
+            self.set_ingredients(ingredients)
         if instructions is not None:
+            instructions = instructions.replace('\r', '')
             self.instructions = instructions
         if meal_type is not None:
             self.meal_type = meal_type
@@ -282,8 +286,8 @@ class Recipe(ObjectBase):
             self.slug = helpers.slugify(self.name)
         if prep_time is not None:
             self.prep_time = prep_time
-        if recipe_image_id is not None:
-            self.recipe_image_id = recipe_image_id
+        if recipe_image is not None:
+            self.recipe_image_id = recipe_image.id
         if serving_size is not None:
             self.serving_size = serving_size
         query = '''
@@ -324,14 +328,6 @@ class Recipe(ObjectBase):
         ingredients = {QuantitiedIngredient(self.recipedb, line) for line in lines}
 
         return ingredients
-    
-    def edit_ingredients(
-        self,
-        ingredients=None,
-        ):
-        #cur = self.recipedb.sql.cursor()
-        pass
-
 
     def get_ingredients_and_tags(self):
         everything = {qi.ingredient for qi in self.get_ingredients()}
@@ -350,8 +346,30 @@ class Recipe(ObjectBase):
         cur.execute('SELECT * FROM Review WHERE RecipeID = ?', [self.id])
         rows = cur.fetchall()
         recipes = [Review(self.recipedb, row) for row in rows]
+        recipes.sort(key=lambda x: x.date_added, reverse=True)
         return recipes
 
+    def set_ingredients(self, ingredients):
+        ingredients = [self.recipedb._coerce_quantitied_ingredient(i) for i in ingredients]
+        cur = self.recipedb.sql.cursor()
+        cur.execute('DELETE FROM Recipe_Ingredient_Map WHERE RecipeID = ?', [self.id])
+
+        for quant_ingredient in ingredients:
+            recipe_ingredient_data = {
+                'RecipeID': self.id,
+                'IngredientID': quant_ingredient.ingredient.id,
+                'IngredientQuantity': quant_ingredient.quantity,
+                'IngredientPrefix': quant_ingredient.prefix,
+                'IngredientSuffix': quant_ingredient.suffix,
+            }
+            (qmarks, bindings) = sqlhelpers.insert_filler(
+                constants.SQL_RECIPEINGREDIENT_COLUMNS,
+                recipe_ingredient_data
+            )
+            query = 'INSERT INTO Recipe_Ingredient_Map VALUES(%s)' % qmarks
+            cur.execute(query, bindings)
+
+        self.recipedb.sql.commit()
 
 class Review(ObjectBase):
     def __init__(self, recipedb, db_row):
@@ -471,6 +489,7 @@ class User(UserMixin, ObjectBase):
         cur.execute('SELECT * FROM Recipe WHERE AuthorID = ?', [self.id])
         rows = cur.fetchall()
         recipes = [Recipe(self.recipedb, row) for row in rows]
+        recipes.sort(key=lambda x: x.date_added, reverse=True)
         return recipes
 
     def get_reviews(self):
@@ -478,6 +497,7 @@ class User(UserMixin, ObjectBase):
         cur.execute('SELECT * FROM Review WHERE AuthorID = ?', [self.id])
         rows = cur.fetchall()
         recipes = [Review(self.recipedb, row) for row in rows]
+        recipes.sort(key=lambda x: x.date_added, reverse=True)
         return recipes
 
     def set_bio_text(self, bio_text):

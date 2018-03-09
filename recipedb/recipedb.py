@@ -567,27 +567,12 @@ class RecipeDB:
         (qmarks, bindings) = sqlhelpers.insert_filler(constants.SQL_RECIPE_COLUMNS, recipe_data)
         query = 'INSERT INTO Recipe VALUES(%s)' % qmarks
         cur.execute(query, bindings)
-
-        ingredients = [self._coerce_quantitied_ingredient(ingredient) for ingredient in ingredients]
-
-        for quant_ingredient in ingredients:
-            recipe_ingredient_data = {
-                'RecipeID': recipe_id,
-                'IngredientID': quant_ingredient.ingredient.id,
-                'IngredientQuantity': quant_ingredient.quantity,
-                'IngredientPrefix': quant_ingredient.prefix,
-                'IngredientSuffix': quant_ingredient.suffix,
-            }
-            (qmarks, bindings) = sqlhelpers.insert_filler(
-                constants.SQL_RECIPEINGREDIENT_COLUMNS,
-                recipe_ingredient_data
-            )
-            query = 'INSERT INTO Recipe_Ingredient_Map VALUES(%s)' % qmarks
-            cur.execute(query, bindings)
-
         self.sql.commit()
 
         recipe = objects.Recipe(self, recipe_data)
+        recipe.set_ingredients(ingredients)
+
+
         self.log.debug('Created recipe %s', recipe.name)
         return recipe
 
@@ -625,7 +610,7 @@ class RecipeDB:
         self.sql.commit()
 
         review = objects.Review(self, review_data)
-        self.log.debug('Created review %s', review.name)
+        self.log.debug('Created review %s', review)
         return review
 
     def new_user(

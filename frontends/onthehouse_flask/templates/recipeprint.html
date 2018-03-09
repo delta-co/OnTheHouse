@@ -1,0 +1,61 @@
+<!DOCTYPE html5>
+
+    <style>
+        @media print {    
+            .no-print, .no-print * {
+                display: none !important;
+            }
+        }
+        h1 {
+            font-family:Verdana;
+        }
+        p {
+            font-family:Verdana;
+        }
+        h3 {
+            font-family:Verdana;
+        }
+    </style>
+
+    <head>
+        <title>{{ recipe.name }} | OnTheHouse</title>
+    </head>
+
+    <body>
+        <div class="no-print">
+           <form action="/recipe/{{recipe.id}}/{{recipe.slug}}">
+                <button class="btn btn-default" type="submit">Back to website</button>
+            </form>
+            <form>
+                <button class="btn btn-default" type="button" onClick="window.print()"><b>Print recipe</b></button>
+            </form>
+            <hr style="border:none;height:3px;background-color:#333">
+        </div>
+        <div>
+            <h1>{{recipe.name}}</h1>
+            <p>Recipe by {{recipe.author.username}}<p>
+            <hr>
+            <p>{% if recipe.meal_type %}
+                {{recipe.meal_type}}<span> | </span>
+                {% endif %}
+                {% set (hours, minutes) = recipe.prep_time|divmod(60) %}
+                <span>{{"%d hr " % hours if hours else ""}}{{"%d min" % minutes if minutes else ""}} | </span>
+                <span>Serves {{recipe.serving_size}}</span><p>
+            <hr>
+            <h3>Ingredients</h3>
+                {% set ingredients = recipe.get_ingredients() %}
+                {% if ingredients|length > 0 %}
+                  {% for quantitied in ingredients %}
+                        <p>{{-quantitied.quantity or ""}} {{quantitied.prefix or ""}} {{quantitied.ingredient.name}} {{quantitied.suffix or ""-}}<br></p>
+                  {% endfor %}
+                {% endif %}
+            </div>
+            <div">
+                <h3>Instructions</h3>
+                {% set paragraphs = recipe.instructions|split_paragraphs %}
+                {% for paragraph in paragraphs %}
+                <p> {{loop.index}}. {{paragraph}}</p>
+                {% endfor %}
+            </div>
+        <div>
+    </body>

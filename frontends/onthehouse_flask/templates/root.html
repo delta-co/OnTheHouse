@@ -28,8 +28,8 @@
     #searchform_strict
     {
         display: inline-block;
-        width: 34px;
-        height: 34px;
+        width: 16px;
+        height: 16px;
     }
     #searchform_submit
     {
@@ -80,6 +80,17 @@
     {
         color: #000;
     }
+    .red_button
+    {
+        background-color: #ee3333;
+        color: #efefef;
+        border: none;
+    }
+    .red_button:hover, .red_button:active, .red_button:active:hover
+    {
+        background-color: #dd2222;
+        color: #efefef;
+    }
     </style>
 </head>
 
@@ -110,7 +121,7 @@
                             <input type="text" id="searchform_exclude" class="ingredient-autosuggest-form form-control" placeholder="Exclude Ingredients..."/>
                         </div>
                         <label id="searchform_strict_label">
-                            <input type="checkbox" id="searchform_strict" class="form-control" placeholder/><span style="color:#efefef">Strict Search</span>
+                            <input type="checkbox" id="searchform_strict" class="form-control" placeholder/><span style="color:#efefef; margin: 4px 0px 2px 5px;">Strict Search</span>
                         </label>
                         <button id="searchform_submit" class="btn btn-default" onclick="submit_search()">Search! <span class="glyphicon glyphicon-search"></span></button>
                     </div>

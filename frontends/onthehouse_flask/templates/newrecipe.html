@@ -55,24 +55,25 @@
 
         var ingredient_collection = document.getElementsByClassName("form-inline");
         var data = new FormData();
+
+        var all_ingredients = [];
         for (var i = 0; i < ingredient_collection.length; i++)
         {
-            var ingredient_array = [];
-            if(ingredient_collection[i].hasChildNodes())
+            var this_ingredient = [];
+            var children = ingredient_collection[i].getElementsByClassName("form-control");
+            for (var j = 0; j < children.length; j++)
             {
-                var children = ingredient_collection[i].childNodes;
-                for (var j = 0; j < children.length; j++)
-                {
-                    if(children[j].value)
-                    {
-                        ingredient_array.push(children[j].value);
-                    }
-                }
+                this_ingredient.push(children[j].value);
             }
-            data.append("ingredients[]", ingredient_array);
+            if (this_ingredient !== [])
+            {
+                all_ingredients.push(this_ingredient);
+            }
         }
+        all_ingredients = JSON.stringify(all_ingredients);
+        data.append("ingredients", all_ingredients);
         var instructions = document.getElementById("instructions").value;
-        //var image = document.getElementById("recipe-image").value
+        //var image = document.getElementById("recipe-image").files[0];
         
         data.append("recipe name", recipename);
         data.append("recipe blurb", blurb);
@@ -91,7 +92,6 @@
     {
         if ("error_type" in response)
         {
-            
         }
         else
         {

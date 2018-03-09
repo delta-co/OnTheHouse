@@ -10,7 +10,7 @@
 
     .user-recipes{
     margin-top:30px;
-    font-family: 'Rubik Mono One', sans-serif;
+    /*font-family: 'Rubik Mono One', sans-serif;*/
 
     }
     .user-recipe{
@@ -37,7 +37,11 @@
     <div class="row content">
         <div class="col-sm-12 profile">
             <div class ="col-sm-4 pic">
-                <img class="img-rounded" width="100%" src="/user/{{user.username}}/profilepic.jpg" alt="Profile picture">
+                {% if user.profile_image_id is not none %}
+                <img class="img-rounded" width="100%" src="/image/{{user.profile_image_id}}" alt="Profile picture">
+                {% else %}
+                <img class="img-rounded" width="100%" src="/static/default_profile_pic.jpg" alt="Profile picture">
+                {% endif %}
             </div>
             <div class="col-sm-6">
                 <h2>{{ user.display_name }}</h2>
@@ -58,8 +62,13 @@
             {% set is_following = user in session_user.get_following() %}
             <div class="row"></div>
             <button class="col-sm-4 btn btn-default"
-            onclick="{% if is_following %}submit_unfollow(){% else %}submit_follow(){% endif %}"
-            >{% if is_following %}Unfollow{% else %}Follow!{% endif %}</button>
+            onclick="{% if is_following %}submit_unfollow(){% else %}submit_follow(){% endif %}">
+                {%- if is_following -%}
+                    Unfollow <span class="glyphicon glyphicon-user"><span class="glyphicon glyphicon-minus">
+                {%- else -%}
+                    Follow! <span class="glyphicon glyphicon-user"><span class="glyphicon glyphicon-plus">
+                {%- endif %}
+            </button>
         {% endif %}
         <div class="row">
             <div class="col-sm-12 user-recipes">
@@ -69,6 +78,16 @@
             <div class="col-sm-12"></div>
             {% for recipe in recipes %}
                 {{ macros.recipe_card(recipe) }}
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-sm-12 user-reviews">
+                <h2 style="text-align:center;">{{user.display_name}}'s Reviews</h2>
+            </div>
+
+            <div class="col-sm-12"></div>
+            {% for review in user.get_reviews() %}
+                {{ macros.review_card(review) }}
             {% endfor %}
         </div>
         </div>

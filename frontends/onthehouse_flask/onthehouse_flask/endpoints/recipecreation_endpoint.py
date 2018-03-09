@@ -1,4 +1,5 @@
 import flask; from flask import request, render_template
+import json
 import recipedb
 
 #from PIL import Image
@@ -6,7 +7,7 @@ import recipedb
 from voussoirkit import pathclass
 image_dir = pathclass.Path(__file__).parent.with_child('sample_images')
 
-from .. import jsonify   
+from .. import jsonify
 
 from . import common
 
@@ -25,9 +26,16 @@ def post_recipe():
     mealtype = request.form['meal type']
     preptime = request.form['prep time']
     servingsize = request.form['serving size']
-    ingredients = request.form.getlist('ingredients[]')
-    ingredients = [i.strip() for i in ingredients]
-    ingredients = [i for i in ingredients if i]
+    ingredients = json.loads(request.form.get('ingredients'))
+    keep_ingredients = []
+    for ingredient in ingredients:
+        if len(ingredient) != 4:
+            continue
+        ingredient = [i.strip() for i in ingredient]
+        if ingredient[2] == '':
+            continue
+        keep_ingredients.append(ingredient)
+    ingredients = keep_ingredients
     instructions = request.form['instructions'].strip()
     #image = request.form['recipe image']
 
@@ -53,17 +61,12 @@ def post_recipe():
     #   flash('Must have at least 1 ingredient')
     #   flask.abort(403)
 
-    ingredient_list = []
-    for ingredient in ingredients:
-        templist = ingredient.split(',')
-        ingredient_list.append(templist)
-
     recipe = common.rdb.new_recipe(
         author= user,
         blurb= blurb,
         country_of_origin= countryoforigin,
         cuisine= cuisine,
-        ingredients= ingredient_list,
+        ingredients= ingredients,
         instructions= instructions,
         meal_type= mealtype,
         name= recipename,

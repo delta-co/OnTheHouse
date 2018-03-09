@@ -17,7 +17,7 @@ def post_update():
     displayname = request.form.get('displayname', '')
     password = request.form.get('new password', '')
     password2 = request.form.get('re-enter password', '')
-    blurb = request.form.get('blurb', '')
+    bio_text = request.form.get('bio text', '')
     print(request.files)
     uimage = request.files.get('user image', None)
     print(uimage)
@@ -35,8 +35,8 @@ def post_update():
     if displayname != "":
         user.set_display_name(displayname)
 
-    if blurb != "":
-        user.set_bio_text(blurb)
+    if bio_text != "":
+        user.set_bio_text(bio_text)
 
     if uimage != None:
         userimage = common.process_uploaded_image(uimage)

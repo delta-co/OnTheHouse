@@ -1,0 +1,106 @@
+{% extends "root.html" %}
+{% block title %} New Review {% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <title>Reviewing {{recipe.name}} | OnTheHouse</title>
+<style>
+input[type*="radio"]
+{
+    display: none;
+}
+.starred, .unstarred
+{
+    font-size: 0;
+}
+.starred::before
+{
+    font-size: 24pt;
+    content: "★";
+}
+.unstarred::before
+{
+    font-size: 24pt;
+    content: "☆";
+}
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+{% if session_user %}
+    <div class="row content">
+        <div class="col-sm-5">
+            <h1 style="padding-top:50px;font-family:Verdana;font-size:32px;color:#555555;text-shadow:2px 2px #dddddd">Reviewing <a style="color:#ee3333" href="/recipe/{{recipe.id}}/{{recipe.slug}}">{{recipe.name}}</a></h1>
+            <p>Rate this recipe:</p>
+            <div id="ratingsForm">
+                <div class="stars">
+                    <input type="radio" name="star" value="1" id="star-1" /> <label class="unstarred" for="star-1">1</label>
+                    <input type="radio" name="star" value="2" id="star-2" /> <label class="unstarred" for="star-2">2</label>
+                    <input type="radio" name="star" value="3" id="star-3" /> <label class="unstarred" for="star-3">3</label>
+                    <input type="radio" name="star" value="4" id="star-4" /> <label class="unstarred" for="star-4">4</label>
+                    <input type="radio" name="star" value="5" id="star-5" /> <label class="unstarred" for="star-5">5</label>
+                </div>
+            <textarea id="review_text" rows="15" cols="70" class = "form-control" placeholder="Give a written review..."></textarea>
+            <button class="btn btn-default red_button" onclick="submit_review()">Post review</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    var radio_buttons = document.querySelectorAll("input[type*='radio']");
+    for (var index = 0; index < radio_buttons.length; index += 1)
+    {
+        function hook(event)
+        {
+            var label = event.target.nextElementSibling;
+            console.log(label);
+            var labels = Array.from(label.parentElement.getElementsByTagName("label"));
+            var myindex = labels.indexOf(label);
+            for (var index = 0; index <= myindex; index += 1)
+            {
+                labels[index].classList.remove("unstarred");
+                labels[index].classList.add("starred");
+            }
+            for (var index = myindex+1; index < labels.length; index += 1)
+            {
+                labels[index].classList.remove("starred");
+                labels[index].classList.add("unstarred");
+            }
+        }
+        radio_buttons[index].addEventListener("change", hook);
+    }
+
+    function submit_review()
+    {
+        var url = "/recipe/{{recipe.id}}/{{recipe.slug}}/newreview";
+        var data = new FormData();
+        var selected_star = document.querySelector("input[name='star']:checked");
+        if (selected_star !== null)
+        {
+            data.append("score", selected_star.value);
+        }
+
+        var text = document.getElementById("review_text").value;
+        data.append("text", text);
+
+        post(url, data, receive_callback);
+    }
+    function receive_callback(response)
+    {
+        if ("error_type" in response)
+        {
+        }
+        else
+        {
+            window.location.href = "/recipe/" + response['recipeid'];
+        }
+    }
+    </script>
+{% else %}
+<meta http-equiv="refresh" content="0; url=/recipe/{{recipe.id}}/{{recipe.slug}}">
+{% endif %}
+{% endblock %}
+
+{% block footer %} {{ super() }} {% endblock %}

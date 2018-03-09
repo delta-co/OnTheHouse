@@ -59,22 +59,23 @@
 
         var ingredient_collection = document.getElementsByClassName("form-inline");
         var data = new FormData();
+
+        var all_ingredients = [];
         for (var i = 0; i < ingredient_collection.length; i++)
         {
-            var ingredient_array = [];
-            if(ingredient_collection[i].hasChildNodes())
+            var this_ingredient = [];
+            var children = ingredient_collection[i].getElementsByClassName("form-control");
+            for (var j = 0; j < children.length; j++)
             {
-                var children = ingredient_collection[i].childNodes;
-                for (var j = 0; j < children.length; j++)
-                {
-                    if(children[j].value)
-                    {
-                        ingredient_array.push(children[j].value);
-                    }
-                }
+                this_ingredient.push(children[j].value);
             }
-            data.append("ingredients[]", ingredient_array);
+            if (this_ingredient !== [])
+            {
+                all_ingredients.push(this_ingredient);
+            }
         }
+        all_ingredients = JSON.stringify(all_ingredients);
+        data.append("ingredients", all_ingredients);
         var instructions = document.getElementById("instructions").value;
         var uimage = document.getElementById("recipe-image").files[0];
         
@@ -103,27 +104,14 @@
         }
     }
 
-    var ingredient_counter = {{ingredients}}.length();
+    var GIVEN_INGREDIENTS = {{ingredients|safe}}
+    var ingredient_counter = GIVEN_INGREDIENTS.length;
     function add_filled_field(ingredient_attribute_list)
     {
-        if(ingredient_attribute_list.length() == 2)
-        {
-            var quantity = ingredient_attribute_list[0];
-            var name = ingredient_attribute_list[1];
-        }
-        else if(ingredient_attribute_list.length() == 3)
-        {
-            var quantity = ingredient_attribute_list[0];
-            var prefix = ingredient_attribute_list[1];
-            var name = ingredient_attribute_list[2];
-        }
-        else if(ingredient_attribute_list.length() == 4)
-        {
-            var quantity = ingredient_attribute_list[0];
-            var prefix = ingredient_attribute_list[1];
-            var name = ingredient_attribute_list[2];
-            var suffix = ingredient_attribute_list[3];
-        }
+        var quantity = ingredient_attribute_list[0];
+        var prefix = ingredient_attribute_list[1];
+        var name = ingredient_attribute_list[2];
+        var suffix = ingredient_attribute_list[3];
 
         var form_container = document.getElementById("ingredient_forms");
         var form = document.createElement("form");
@@ -134,30 +122,21 @@
         input_quant.type = "text";
         input_quant.classList.add("form-control");
         input_quant.placeholder = "Quantity";
-        if(quantity)
-        {
-            input_quant.value = quantity;
-        }
+        input_quant.value = quantity;
         form.appendChild(input_quant);
 
         var input_prefix = document.createElement("input");
         input_prefix.type = "text";
         input_prefix.classList.add("form-control");
         input_prefix.placeholder = "Prefix";
-        if(prefix)
-        {
-            input_prefix.value = prefix;
-        }
+        input_prefix.value = prefix;
         form.appendChild(input_prefix);
 
         var input_name = document.createElement("input");
         input_name.type = "text";
         input_name.classList.add("form-control");
         input_name.placeholder = "Ingredient Name";
-        if(name)
-        {
-            input_name.value = name;
-        }
+        input_name.value = name;
         input_name.classList.add("ingredient-autosuggest-form");
         form.appendChild(input_name);
         apply_ingredient_autosuggest(input_name);
@@ -166,10 +145,7 @@
         input_suffix.type = "text";
         input_suffix.classList.add("form-control");
         input_suffix.placeholder = "Suffix";
-        if(suffix)
-        {
-            input_suffix.value = suffix;
-        }
+        input_suffix.value = suffix;
         form.appendChild(input_suffix);
 
         ingredient_counter++;
@@ -213,9 +189,9 @@
         form_container.appendChild(form);
     }
     
-    for (var count = 0; count < ingredients.length(); count +=1)
+    for (var count = 0; count < GIVEN_INGREDIENTS.length; count +=1)
     {
-        add_filled_field(ingredients[count]);
+        add_filled_field(GIVEN_INGREDIENTS[count]);
     }
     </script>
 {% endblock %}

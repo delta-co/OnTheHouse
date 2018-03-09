@@ -1,7 +1,9 @@
-from flask import request, render_template
+import flask; from flask import request, render_template
+import json
 
 import recipedb
 
+from .. import jsonify
 from . import common
 
 site = common.site
@@ -12,20 +14,14 @@ def edit_recipe_page(recipeid):
     ingredient_list = recipe.get_ingredients()
     ingredients = []
     for ingredient in ingredient_list:
-        ingredient_attribute_list = []
-    if (ingredient.quantity):
-        ingredient_attribute_list.append(ingredient.quantity)
+        ingredient_attribute_list = [
+            ingredient.quantity or '',
+            ingredient.prefix or '',
+            ingredient.ingredient.name or '',
+            ingredient.suffix or '',
+        ]
+        ingredients.append(ingredient_attribute_list)
 
-    if (ingredient.prefix):
-        ingredient_attribute_list.append(ingredient.prefix)
-
-    if (ingredient.ingredient.name):
-        ingredient_attribute_list.append(ingredient.ingredient.name)
-
-    if (ingredient.suffix):
-        ingredient_attribute_list.append(ingredient.suffix)
-
-    ingredients.append(ingredient_attribute_list)
     response = render_template("editrecipe.html", recipe=recipe, session_user=common.get_session(request), ingredients = ingredients)
     return response
 
@@ -38,9 +34,16 @@ def edit_recipe(recipeid):
     mealtype = request.form['meal type']
     preptime = request.form['prep time']
     servingsize = request.form['serving size']
-    ingredients = request.form.getlist('ingredients[]')
-    ingredients = [i.strip() for i in ingredients]
-    ingredients = [i for i in ingredients if i]
+    ingredients = json.loads(request.form.get('ingredients'))
+    keep_ingredients = []
+    for ingredient in ingredients:
+        if len(ingredient) != 4:
+            continue
+        ingredient = [i.strip() for i in ingredient]
+        if ingredient[2] == '':
+            continue
+        keep_ingredients.append(ingredient)
+    ingredients = keep_ingredients
     instructions = request.form['instructions'].strip()
     image = request.files['recipe image']
 
@@ -60,27 +63,20 @@ def edit_recipe(recipeid):
     #   flash('Must have at least 1 ingredient')
     #   flask.abort(403)
 
-    ingredient_list = []
-    for ingredient in ingredients:
-        templist = ingredient.split(',')
-        ingredient_list.append(templist)
-
-    common.rdb.get_recipe(recipeid).edit(
+    recipe = common.rdb.get_recipe(recipeid)
+    recipe.edit(
         blurb= blurb,
         country= countryoforigin,
         cuisine= cuisine,
-        ingredients= ingredient_list,
+        ingredients= ingredients,
         instructions= instructions,
         meal_type= mealtype,
         name= recipename,
         prep_time= preptime,
+        #recipe_image= recipe_image,
         serving_size= servingsize,
         recipe_image= recipeimage,
     )
-
-    #if image != None:
-      #recipe.set_recipe_pic(image)
-    #    pass
 
     response = jsonify.make_json_response({'recipeid': recipe.id})
     return response
