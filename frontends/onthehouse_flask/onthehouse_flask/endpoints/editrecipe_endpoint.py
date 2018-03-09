@@ -75,7 +75,7 @@ def edit_recipe(recipeid):
         name= recipename,
         prep_time= preptime,
         serving_size= servingsize,
-        recipe_image= recipeimage.id,
+        recipe_image= recipeimage,
     )
 
     #if image != None:
