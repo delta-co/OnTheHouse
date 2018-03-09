@@ -10,7 +10,7 @@
 
     .user-recipes{
     margin-top:30px;
-    font-family: 'Rubik Mono One', sans-serif;
+    /*font-family: 'Rubik Mono One', sans-serif;*/
 
     }
     .user-recipe{
@@ -67,6 +67,16 @@
             <div class="col-sm-12"></div>
             {% for recipe in recipes %}
                 {{ macros.recipe_card(recipe) }}
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-sm-12 user-reviews">
+                <h2 style="text-align:center;">{{user.display_name}}'s Reviews</h2>
+            </div>
+
+            <div class="col-sm-12"></div>
+            {% for review in user.get_reviews() %}
+                {{ macros.review_card(review) }}
             {% endfor %}
         </div>
         </div>
