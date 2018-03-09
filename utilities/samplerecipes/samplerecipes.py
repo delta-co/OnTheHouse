@@ -203,6 +203,13 @@ rdb.new_review(
             score=5,
             text='Made this for a small superbowl party, it didnt last long, everyone loved it!',
 )
+rdb.new_review(
+            recipe=r,
+            user=caitlyn,
+            score=3,
+            text='This was good, but its just too heavy in dairy for me',
+)
+
 
 # 2
 blurb = '''
@@ -226,7 +233,7 @@ Place cooked vegetable mixture over half of omelet; top with cheese. With
 spatula, fold other half of omelet over vegetables. Gently slide out of pan onto
 plate. Serve immediately.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     author=bob,
     blurb=blurb,
     country_of_origin="Unknown",
@@ -249,6 +256,12 @@ rdb.new_recipe(
     prep_time=15,
     serving_size=1,
     recipe_image=rdb.new_image(image_dir.with_child('veggie_stuffed_omelette.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=caitlyn,
+            score=5,
+            text='This was great and easy to make, next time I plan to prep the veggies the night before so that i can make a quick breakfast',
 )
 
 # 3
@@ -312,6 +325,12 @@ rdb.new_review(
             score=4,
             text='This is a simple recipe but the flavors come together so nicely!',
 )
+rdb.new_review(
+            recipe=r,
+            user=angela,
+            score=5,
+            text='Made this for the kids, way healthier than takeout and my picky-eaters loved it',
+)
 
 # 4
 instructions = '''
@@ -346,7 +365,7 @@ When the churros are just cool enough to handle, roll them in the cinnamon-sugar
 Pour the chocolate into individual bowls or cups. Serve the warm churros with
 the chocolate dip.
 '''
-rdb.new_recipe(
+r=rdb.new_recipe(
     author=angela,
     blurb="Recipe courtesy of Chocolateria San Gines",
     country_of_origin="Unknown",
@@ -371,6 +390,12 @@ rdb.new_recipe(
     prep_time=40,
     serving_size=10,
     recipe_image=rdb.new_image(image_dir.with_child('churro.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=bob,
+            score=5,
+            text='A classic, these are amazing freshly made',
 )
 
 # 5
@@ -465,7 +490,7 @@ paddle. Sprinkle the rice with the vinegar, sugar, and salt while mixing with a
 spatula or rice paddle until the rice reaches body temperature. Keep the rice
 covered with damp paper towels or napkin until the rice is ready to use.
 '''
-rdb.new_recipe(
+r=rdb.new_recipe(
     author=caitlyn,
     blurb="Recipe courtesy of Jill Davie",
     country_of_origin="Unknown",
@@ -489,6 +514,12 @@ rdb.new_recipe(
     prep_time=55,
     serving_size=30,
     recipe_image=rdb.new_image(image_dir.with_child('sushi_roll.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=bob,
+            score=5,
+            text='Simple and healthy, cold sushi is great for those hot summer days',
 )
 
 # 7
@@ -1897,7 +1928,7 @@ Cook in hot vegetable oil until golden brown (a few minutes, depending on heat).
 
 Cool on paper-towel covered tray for a few minutes, then dig in!
 '''
-rdb.new_recipe(
+r=rdb.new_recipe(
     name='Fried Kool-Aid',
     author=ian,
     blurb='Fried and Kool-Aidy',
@@ -1919,6 +1950,13 @@ rdb.new_recipe(
     prep_time=7,
     recipe_image=rdb.new_image(image_dir.with_child('fried_koolaid.jpg')),
 )
+rdb.new_review(
+            recipe=r,
+            user=bob,
+            score=4,
+            text='Why?',
+)
+
 
 #ian 7
 instructions = '''
