@@ -51,26 +51,27 @@ input[type*="radio"]
 
     <script>
     var radio_buttons = document.querySelectorAll("input[type*='radio']");
-    for (var index = 0; index < radio_buttons.length; index += 1)
+    var labels = document.querySelectorAll(".stars label");
+    function update_stars_css()
     {
-        function hook(event)
+        var to_add = "starred";
+        var to_rem = "unstarred";
+        for (var index = 0; index < radio_buttons.length; index += 1)
         {
-            var label = event.target.nextElementSibling;
-            console.log(label);
-            var labels = Array.from(label.parentElement.getElementsByTagName("label"));
-            var myindex = labels.indexOf(label);
-            for (var index = 0; index <= myindex; index += 1)
+            labels[index].classList.add(to_add);
+            labels[index].classList.remove(to_rem);
+            if (radio_buttons[index].checked)
             {
-                labels[index].classList.remove("unstarred");
-                labels[index].classList.add("starred");
-            }
-            for (var index = myindex+1; index < labels.length; index += 1)
-            {
-                labels[index].classList.remove("starred");
-                labels[index].classList.add("unstarred");
+                to_add = "unstarred";
+                to_rem = "starred";
             }
         }
-        radio_buttons[index].addEventListener("change", hook);
+    }
+    update_stars_css();
+
+    for (var index = 0; index < radio_buttons.length; index += 1)
+    {
+        radio_buttons[index].addEventListener("change", update_stars_css);
     }
 
     function submit_review()
