@@ -37,8 +37,12 @@
             <P></P>
             <p>Enter instructions. Separate steps with a full blank line between paragraphs.</p>
             <textarea id="instructions" rows="15" cols="70" class = "form-control"placeholder="Instructions">{{recipe.instructions}}</textarea>
-            <!--<input type="image" id="recipeimage" class="form-control" placeholder="Recipe Image">-->
-            <button class="btn btn-default" type="button" onclick="complete_edit()">Save</button>
+            <div>
+                <label for="image_uploads">Choose image to upload (PNG, JPG)</label>
+                <input type="file" id="recipe-image" name="recipe image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" >
+            </div>
+            <p></p>
+            <button class="btn btn-default" type="button" onclick="complete_edit()">Update</button>
             </div>
         </div>
     </div>
@@ -73,7 +77,7 @@
         all_ingredients = JSON.stringify(all_ingredients);
         data.append("ingredients", all_ingredients);
         var instructions = document.getElementById("instructions").value;
-        //var image = document.getElementById("recipe-image").files[0];
+        var uimage = document.getElementById("recipe-image").files[0];
         
         data.append("recipe name", recipename);
         data.append("recipe blurb", blurb);
@@ -83,7 +87,7 @@
         data.append("prep time", preptime);
         data.append("serving size", servingsize);
         data.append("instructions", instructions);
-        //data.append("recipe image", image)
+        data.append("recipe image", image)
         var url = "/editrecipe/{{recipe.id}}";
         return post(url, data, receive_callback);
     }

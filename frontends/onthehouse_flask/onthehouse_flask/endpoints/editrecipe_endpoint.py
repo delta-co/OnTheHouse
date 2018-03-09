@@ -45,14 +45,12 @@ def edit_recipe(recipeid):
         keep_ingredients.append(ingredient)
     ingredients = keep_ingredients
     instructions = request.form['instructions'].strip()
-    #image = request.form['recipe image']
+    image = request.files['recipe image']
 
     user = common.get_session(request)
 
-    #if image is not None:
-    #    recipe_image = common.process_uploaded_image(image)
-    #else:
-    #    recipe_image = None
+    if image != None:
+        recipeimage = common.process_uploaded_image(image)
 
     if user==None:
         flask.abort(403)
@@ -77,6 +75,7 @@ def edit_recipe(recipeid):
         prep_time= preptime,
         #recipe_image= recipe_image,
         serving_size= servingsize,
+        recipe_image= recipeimage,
     )
 
     response = jsonify.make_json_response({'recipeid': recipe.id})
