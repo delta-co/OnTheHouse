@@ -15,7 +15,11 @@ site = common.site
 
 @site.route('/newrecipe')
 def create_recipe_page():
-    return flask.render_template('newrecipe.html', session_user=common.get_session(request))
+    return flask.render_template(
+        'editrecipe.html',
+        action="publishing",
+        session_user=common.get_session(request),
+    )
 
 @site.route('/newrecipe', methods=['POST'])
 def post_recipe():
