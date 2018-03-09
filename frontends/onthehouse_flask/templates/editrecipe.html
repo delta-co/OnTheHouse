@@ -42,7 +42,8 @@
                 <input type="file" id="recipe-image" name="recipe image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" >
             </div>
             <p></p>
-            <button class="btn btn-default" type="button" onclick="complete_edit()">Update</button>
+            <a class="btn btn-default" href="/recipe/{{recipe.id}}/{{recipe.slug}}">Cancel</a>
+            <button class="btn btn-default red_button" type="button" onclick="complete_edit()">Update</button>
             </div>
         </div>
     </div>

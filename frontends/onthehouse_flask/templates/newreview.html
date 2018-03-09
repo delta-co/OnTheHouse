@@ -43,6 +43,7 @@ input[type*="radio"]
                     <input type="radio" name="star" value="5" id="star-5" /> <label class="unstarred" for="star-5">5</label>
                 </div>
             <textarea id="review_text" rows="15" cols="70" class = "form-control" placeholder="Give a written review..."></textarea>
+            <a class="btn btn-default" href="/recipe/{{recipe.id}}/{{recipe.slug}}">Cancel</a>
             <button class="btn btn-default red_button" onclick="submit_review()">Post review</button>
             </div>
         </div>
