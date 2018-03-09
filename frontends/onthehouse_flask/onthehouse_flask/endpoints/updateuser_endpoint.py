@@ -28,7 +28,7 @@ def post_update():
 
     if password != "":
         if password != password2:
-            flash('Passwords must match')
+            #flash('Passwords must match')
             flask.abort(403)
         user.set_password(password)
 

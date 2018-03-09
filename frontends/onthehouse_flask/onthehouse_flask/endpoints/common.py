@@ -1,6 +1,8 @@
 import flask; from flask import request
 import os
 import mimetypes
+import tempfile
+import shutil
 
 import recipedb
 
@@ -57,11 +59,20 @@ def get_session(request):
     return get_user_from_cookie(cookie_check)
 
 def process_uploaded_image(uploaded_image):
+    tmp = tempfile.NamedTemporaryFile(delete=False,suffix='.jpg')
+    try:
+        tmp.write(uploaded_image.read())
+        tmp.close()
+        name = tmp.name
+        processed_image = rdb.new_image(tmp.name)
+    finally:
+        os.unlink(tmp.name)
+    return processed_image
     # generate a temporary filename and save the file.
     # call rdb.new_image with that temp name.
     # delete the temp file.
     # return the rdb image that was created.
-    pass
+    #pass
 
 def send_file(filepath, override_mimetype=None):
     '''
