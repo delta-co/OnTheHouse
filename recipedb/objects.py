@@ -395,6 +395,9 @@ class Review(ObjectBase):
         if text is not None:
             self.text = text
 
+        if not self.text and not self.score:
+            raise ValueError('Text and score cannot both be blank')
+
         query = '''
         UPDATE Review SET Score = ?, Text = ?
         WHERE ReviewID = ?
@@ -491,6 +494,21 @@ class User(UserMixin, ObjectBase):
         recipes = [Recipe(self.recipedb, row) for row in rows]
         recipes.sort(key=lambda x: x.date_added, reverse=True)
         return recipes
+
+    def get_review_for_recipe(self, recipe):
+        if isinstance(recipe, Recipe):
+            recipe_id = recipe.id
+        else:
+            recipe_id = recipe
+        cur = self.recipedb.sql.cursor()
+        cur.execute('SELECT * FROM Review WHERE AuthorID = ? AND RecipeID = ?', [self.id, recipe_id])
+        review_row = cur.fetchone()
+
+        if review_row is None:
+            return None
+
+        review = Review(self.recipedb, review_row)
+        return review
 
     def get_reviews(self):
         cur = self.recipedb.sql.cursor()
