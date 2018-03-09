@@ -346,6 +346,7 @@ class Recipe(ObjectBase):
         cur.execute('SELECT * FROM Review WHERE RecipeID = ?', [self.id])
         rows = cur.fetchall()
         recipes = [Review(self.recipedb, row) for row in rows]
+        recipes.sort(key=lambda x: x.date_added, reverse=True)
         return recipes
 
     def set_ingredients(self, ingredients):
