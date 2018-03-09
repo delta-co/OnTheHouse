@@ -72,7 +72,7 @@
         <div class="recipe-main col-sm-12">
             <p class="recipe-name">{{recipe.name}}</p>
             {% if recipe.author is not none %}
-            <p class="recipe-author"><a href="/user/{{recipe.author.username}}"><img style="height:40px;width:40px;border-radius:50%" src="/user/{{recipe.author.username}}/profilepic.jpg" alt="Profile picture"></a> | <a href="/user/{{recipe.author.username}}">{{recipe.author.display_name}}</a></p>
+            <p class="recipe-author"><a href="/user/{{recipe.author.username}}"><img style="width: 40px; height: auto; border-radius:50%" src="/user/{{recipe.author.username}}/profilepic.jpg" alt="Profile picture"></a> | <a href="/user/{{recipe.author.username}}">{{recipe.author.display_name}}</a></p>
             {% endif %}
 
             {% if recipe.recipe_image_id is not none %}
@@ -121,13 +121,13 @@
         </div>
         <div style="margin-left:20px;">
             {% if recipe.author == session_user %}
-                <a href="/editrecipe/{{recipe.id}}">
-                    <button class="btn btn-default red_button" type="submit">Edit this recipe <span class="glyphicon glyphicon-pencil"></span></button>
+                <a href="/editrecipe/{{recipe.id}}" class="btn btn-default red_button">
+                    Edit this recipe <span class="glyphicon glyphicon-pencil"></span>
                 </a>
             {% endif %}
             {% if session_user != recipe.author %}
-                <a href="/recipe/{{recipe.id}}/{{recipe.slug}}/newreview">
-                    <button class="btn btn-default red_button" type="submit">Review this recipe  <span class="glyphicon glyphicon-star"></button>
+                <a href="/recipe/{{recipe.id}}/{{recipe.slug}}/newreview" class="btn btn-default red_button">
+                    Review this recipe  <span class="glyphicon glyphicon-star"></span>
                 </a>
             {% endif %}
         </div>
