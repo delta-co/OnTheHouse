@@ -23,8 +23,9 @@ def create_review_page(recipeid, slug=None):
 def post_review(recipeid, slug=None):
     recipe = common.rdb.get_recipe(recipeid)
     user = common.get_session(request)
-    score = request.form['score']
-    text = request.form['text']
+    score = request.form.get('score', None)
+    text = request.form.get('text', None)
+    print(score)
 
     review = common.rdb.new_review(
         recipe = recipe,
@@ -33,6 +34,6 @@ def post_review(recipeid, slug=None):
         text = text,
     )
 
-    response = jsonify.make_json_response({'reviewid': review.id})
+    response = jsonify.make_json_response({'recipeid': recipe.id, 'reviewid': review.id})
 
     return response

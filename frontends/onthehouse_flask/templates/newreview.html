@@ -111,28 +111,28 @@ form .stars span {
     <script>
     function submit_review()
     {
-        var selected_star = document.querySelector("input[name='star']:checked");
-        var score;
-        if (selected_star == null)
-        {
-            score = null;
-        }
-        else
-        {
-            score = selected_star.value;
-        }
-        var text = document.getElementById("review_text").value;
-        var data = new FormData();
-
-        data.append("score", score);
-        data.append("text", text);
         var url = "/recipe/{{recipe.id}}/{{recipe.slug}}/newreview";
-        console.log("hi");
+        var data = new FormData();
+        var selected_star = document.querySelector("input[name='star']:checked");
+        if (selected_star !== null)
+        {
+            data.append("score", selected_star.value);
+        }
+
+        var text = document.getElementById("review_text").value;
+        data.append("text", text);
+
         post(url, data, receive_callback);
     }
     function receive_callback(response)
     {
-        console.log("h");
+        if ("error_type" in response)
+        {
+        }
+        else
+        {
+            window.location.href = "/recipe/" + response['recipeid'];
+        }
     }
     </script>
 {% else %}
