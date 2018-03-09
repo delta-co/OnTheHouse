@@ -389,6 +389,7 @@ class Review(ObjectBase):
 
     def edit(self, score=None, text=None):
         if score is not None:
+            score = int(score)
             self.recipedb._assert_valid_review_score(score)
             self.score = score
 

@@ -36,13 +36,14 @@ input[type*="radio"]
             <p>Rate this recipe:</p>
             <div id="ratingsForm">
                 <div class="stars">
-                    <input type="radio" name="star" value="1" id="star-1" /> <label class="unstarred" for="star-1">1</label>
-                    <input type="radio" name="star" value="2" id="star-2" /> <label class="unstarred" for="star-2">2</label>
-                    <input type="radio" name="star" value="3" id="star-3" /> <label class="unstarred" for="star-3">3</label>
-                    <input type="radio" name="star" value="4" id="star-4" /> <label class="unstarred" for="star-4">4</label>
-                    <input type="radio" name="star" value="5" id="star-5" /> <label class="unstarred" for="star-5">5</label>
+                    {% set score = existing_review.score if existing_review else none %}
+                    <input type="radio" name="star" value="1" id="star-1" {%if score==1%}checked{%endif%}/> <label class="unstarred" for="star-1">1</label>
+                    <input type="radio" name="star" value="2" id="star-2" {%if score==2%}checked{%endif%}/> <label class="unstarred" for="star-2">2</label>
+                    <input type="radio" name="star" value="3" id="star-3" {%if score==3%}checked{%endif%}/> <label class="unstarred" for="star-3">3</label>
+                    <input type="radio" name="star" value="4" id="star-4" {%if score==4%}checked{%endif%}/> <label class="unstarred" for="star-4">4</label>
+                    <input type="radio" name="star" value="5" id="star-5" {%if score==5%}checked{%endif%}/> <label class="unstarred" for="star-5">5</label>
                 </div>
-            <textarea id="review_text" rows="15" cols="70" class = "form-control" placeholder="Give a written review..."></textarea>
+            <textarea id="review_text" rows="15" cols="70" class = "form-control" placeholder="Give a written review...">{%if existing_review%}{{existing_review.text}}{%endif%}</textarea>
             <a class="btn btn-default" href="/recipe/{{recipe.id}}/{{recipe.slug}}">Cancel</a>
             <button class="btn btn-default red_button" onclick="submit_review()">Post review</button>
             </div>
@@ -54,17 +55,18 @@ input[type*="radio"]
     var labels = document.querySelectorAll(".stars label");
     function update_stars_css()
     {
-        var to_add = "starred";
-        var to_rem = "unstarred";
-        for (var index = 0; index < radio_buttons.length; index += 1)
+        console.log("click");
+        var to_add = "unstarred";
+        var to_rem = "starred";
+        for (var index = radio_buttons.length-1; index >= 0; index -= 1)
         {
-            labels[index].classList.add(to_add);
-            labels[index].classList.remove(to_rem);
             if (radio_buttons[index].checked)
             {
-                to_add = "unstarred";
-                to_rem = "starred";
+                to_add = "starred";
+                to_rem = "unstarred";
             }
+            labels[index].classList.add(to_add);
+            labels[index].classList.remove(to_rem);
         }
     }
     update_stars_css();
