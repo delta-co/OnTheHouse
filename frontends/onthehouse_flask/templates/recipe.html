@@ -84,7 +84,9 @@
             <p><img class="img-rounded" height="200" src="/static/default_recipe_pic.jpg"/></p>
             {% endif %}
 
+            {% if recipe.blurb is not none %}
             <p class="recipe-blurb">&#8220;{{recipe.blurb}}&#8221;</p>
+            {% endif %}
             <div class="boxed">
             <p id="infobar">
                 {% if recipe.meal_type %}
