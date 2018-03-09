@@ -9,18 +9,19 @@
 {% block body %}
         <div style="width:50%">
             <h1 class="shadowed">Editing Recipe: <a class="redtext" href="/recipe/{{recipe.id}}/{{recipe.slug}}">{{recipe.name}}</a></h1>
+            <p></p><span>Recipe name</span>
                 <input type="text" id="recipe-name" class="form-control" value="{{recipe.name}}" placeholder="Recipe Name">
-            <p></p>
+            <p></p><span>Blurb</span>
                 <input type="text" id="recipe-blurb" class="form-control" value="{{recipe.blurb}}"  placeholder="Recipe Blurb">
-            <p></p>
+            <p></p><span>Country of Origin</span>
                 <input type="text" id="country-of-origin" class="form-control" value="{{recipe.country_of_origin}}" placeholder="Country of Origin">
-            <p></p>
+            <p></p><span>Cuisine</span>
                 <input type="text" id="cuisine" class="form-control" value="{{recipe.cuisine}}" placeholder="Cuisine">
-            <p></p>
+            <p></p><span>Meal Type (breakfast, dinner, ...)</span>
                 <input type="text" id="meal-type" class="form-control" value="{{recipe.meal_type}}" placeholder="Meal Type">
-            <p></p>
+            <p></p><span>Prep Time (minutes)</span>
                 <input type="text" id="prep-time" class="form-control" value="{{recipe.prep_time}}" placeholder="Prep Time">
-            <p></p>
+            <p></p><span>Serving Size (servings)</span>
                 <input type="text" id="serving-size" class="form-control" value="{{recipe.serving_size}}" placeholder="Serving Size">
             <p></p>
 
