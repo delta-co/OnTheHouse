@@ -11,7 +11,8 @@
         <div class="col-sm-5">
             <h1>Update Form</h1>
             <p></p>
-            <input type="text" id="new-displayname" class="form-control" placeholder="Display Name (appears on your profile)">
+            {% set display_name = session_user.display_name or "" %}
+            <input type="text" id="new-displayname" class="form-control" placeholder="Display Name (appears on your profile)" value="{{display_name}}">
             <p></p>
             <p></p>
             <input type="password" id="new-password1" class="form-control" placeholder=" New Password">
@@ -19,7 +20,8 @@
             <input type="password" id="new-password2" class="form-control" placeholder="Re-enter Password">
             <p></p>
             <p></p>
-            <textarea id="user-bio-text" rows="5" cols="70" class = "form-control" placeholder="Bio (describe yourself!)"></textarea>
+            {% set bio_text = session_user.bio_text or "" %}
+            <textarea id="user-bio-text" rows="5" cols="70" class = "form-control" placeholder="Bio (describe yourself!)">{{bio_text}}</textarea>
             <div>
                 <label for="image_uploads">Choose image to upload (PNG, JPG)</label>
                 <input type="file" id="user-image" name="user image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" >
