@@ -19,6 +19,22 @@
     #logo
     {
         width: 100%;
+        -webkit-filter: brightness(100%);
+        -o-transition:.2s;
+        -ms-transition:.2s;
+        -moz-transition:.2s;
+  	-webkit-transition:.2s;
+  	transition:.2s;
+    }
+    #logo:hover
+    {
+        width: 100%;
+        -webkit-filter: brightness(110%);
+        -o-transition:.2s;
+        -ms-transition:.2s;
+        -moz-transition:.2s;
+  	-webkit-transition:.2s;
+  	transition:.2s;
     }
     #searchform_strict_label
     {
@@ -56,6 +72,59 @@
   	transition:.5s;
     }
 
+    .collapsible {
+        background-color: #ee3333;
+        color: #efefef;
+        margin-top:5px;
+        margin-bottom:5px;
+        cursor: pointer;
+        width: 100%;
+        border:none;
+        text-align: left;
+        outline: none;
+        -o-transition:.5s;
+        -ms-transition:.5s;
+        -moz-transition:.5s;
+  	-webkit-transition:.5s;
+  	transition:.5s;
+    }
+
+    .active, .collapsible:hover {
+        background-color: #efefef;
+        color: #ee3333;
+        -o-transition:.5s;
+        -ms-transition:.5s;
+        -moz-transition:.5s;
+  	-webkit-transition:.5s;
+  	transition:.5s;
+    }
+
+    .collapsible-content {
+        padding: 0 18px;
+        overflow: hidden;
+        max-height:0;
+        background-color: #ee3333;
+        transition: max-height 0.2s ease-out;
+    }
+
+    .rotate{
+        -moz-transform:rotate(0deg);
+        -webkit-transform:rotate(0deg);
+        transform:rotate(0deg);
+        -moz-transition:.5s;
+  	-webkit-transition:.5s;
+  	transition:.5s;
+    }
+
+    .rotate.down{
+        -moz-transform:rotate(-180deg);
+        -webkit-transform:rotate(-180deg);
+        transform:rotate(-180deg);
+        -moz-transition:.5s;
+  	-webkit-transition:.5s;
+  	transition:.5s;
+    }
+
     body {
         background-color: #ffe6e6;
     }
@@ -85,6 +154,7 @@
         background-color: #ee3333;
         color: #efefef;
         border: none;
+        font-family:Verdana;
     }
     .red_button:hover, .red_button:active, .red_button:active:hover
     {
@@ -94,48 +164,40 @@
     </style>
 </head>
 
-
 <body>
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav" style="background-image:url('/static/tilablepicnic.png');background-size:50px 50px;font-family:Verdana">
                 <h4><a href="/"><img id="logo" src="/static/onthehouselogo.png" alt="On the House"/></a></h4>
                 <ul id="nav-list" class="nav nav-pills nav-stacked">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/recipe">Explore</a></li>
                 {% if session_user %}
-                    <li><a href="/user/{{session_user.username}}">Welcome, {{session_user.display_name}}</a></h5>
+                    <li><a href="/user/{{session_user.username}}">Welcome, {{session_user.display_name}}</a>
+                    <li><a href="/recipe">Explore Recipes</a></li>
+                    <li><a href="/newrecipe">Submit a Recipe</a></li>
                     <li><a href="/logout"> Logout</a></li>
                 {% else %}
-                    <li><a href="/register">New? Register Here!</a></li>
+                    <li><a href="/register">Login / Register</a></li>
+                    <li><a href="/recipe">Explore Recipes</a></li>
                 {% endif %}
                 </ul><br>
 
-                <div class="input-group" style="background-color:#ee3333;border:8px solid #ee3333;border-radius:5px; width: 100%">
+                <div class="input-group" style="background-color:#ee3333;border:8px solid #ee3333;border-radius:5px;width:100%;margin-bottom:20px">
                     <div id="basic_searchform">
-                        <input type="text" id="searchform_name" class="form-control" placeholder="Recipe Name..."/>
-                        <div class="autosuggest-container">
-                            <input type="text" id="searchform_ingredients" class="ingredient-autosuggest-form form-control" placeholder="Search Ingredients..."/>
+                        <p style="font-family:Verdana;color:#efefef;margin-left:5px">Search...</p>
+                        <input type="text" id="searchform_name" class="form-control" style="width:72%"/>
+                        <button id="searchform_submit" class="btn btn-default" onclick="submit_search()" style="width:28%">Search <span class="glyphicon glyphicon-search"></span></button>
+                        <button id="collap" class="collapsible">Advanced Search Options <span class="glyphicon glyphicon-chevron-down rotate"></span></button>
+                        <div class="collapsible-content in">
+                            <div class="autosuggest-container">
+                                <input type="text" id="searchform_ingredients" class="ingredient-autosuggest-form form-control" placeholder="Search for ingredients..."/>
+                            </div>
+                            <div class="autosuggest-container">
+                                <input type="text" id="searchform_exclude" class="ingredient-autosuggest-form form-control" placeholder="Exclude ingredients..."/>
+                            </div>
+                            <label id="searchform_strict_label">
+                            <input type="checkbox" id="searchform_strict" class="form-control" placeholder/><span title="Display only the recipes that contain ALL the ingredients you searched for." style="color:#efefef; margin: 4px 0px 2px 5px;">Strict Search</span>
                         </div>
-                        <div class="autosuggest-container">
-                            <input type="text" id="searchform_exclude" class="ingredient-autosuggest-form form-control" placeholder="Exclude Ingredients..."/>
-                        </div>
-                        <label id="searchform_strict_label">
-                            <input type="checkbox" id="searchform_strict" class="form-control" placeholder/><span style="color:#efefef; margin: 4px 0px 2px 5px;">Strict Search</span>
-                        </label>
-                        <button id="searchform_submit" class="btn btn-default" onclick="submit_search()">Search! <span class="glyphicon glyphicon-search"></span></button>
                     </div>
-
-                    <!--
-                    <form id="searchForm" action="/recipe/search" method="get">
-                        <input type="text" class="form-control" name="ingredients" placeholder="Search Ingredients...">
-                    </form>
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit" form="searchForm">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </span>
-                    -->
                 </div>
 
             </div>
@@ -153,6 +215,25 @@
 
 
 <script type="text/javascript">
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+
+$(".collapsible").click(function(){
+ $(".rotate").toggleClass("down")  ; 
+})
+
 function el(id){return document.getElementById(id)};
 bind_enter(el("searchform_name"), el("searchform_submit"));
 bind_enter(el("searchform_ingredients"), el("searchform_submit"));
@@ -216,7 +297,6 @@ function prefill_searchform_from_url()
     */
     var parameters = new URL(location.href).searchParams;
 
-
     var name = parameters.get("name");
     if (name != null)
         {document.getElementById("searchform_name").value = name.trim();}
@@ -232,6 +312,9 @@ function prefill_searchform_from_url()
     var strict = parameters.get("strict");
     if (strict != null)
         {document.getElementById("searchform_strict").checked = strict;}
+
+    if(ingredients != null || exclude != null || strict)
+        {document.getElementById('collap').click();}
 }
 
 document.addEventListener("DOMContentLoaded", prefill_searchform_from_url);
