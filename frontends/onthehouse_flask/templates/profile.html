@@ -37,7 +37,11 @@
     <div class="row content">
         <div class="col-sm-12 profile">
             <div class ="col-sm-4 pic">
-                <img class="img-rounded" width="100%" src="/user/{{user.username}}/profilepic.jpg" alt="Profile picture">
+                {% if user.profile_image_id is not none %}
+                <img class="img-rounded" width="100%" src="/image/{{user.profile_image_id}}" alt="Profile picture">
+                {% else %}
+                <img class="img-rounded" width="100%" src="/static/default_profile_pic.jpg" alt="Profile picture">
+                {% endif %}
             </div>
             <div class="col-sm-6">
                 <h2>{{ user.display_name }}</h2>
