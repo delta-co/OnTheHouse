@@ -124,19 +124,19 @@
             </div>
         </div>
         <div style="margin-left:20px;">
-            <form action="/recipe/{{recipe.id}}/{{recipe.slug}}/print">
-                <button class="btn btn-default" type="submit" style="background-color:#ee3333;color:#efefef;border:none;">View printable version <span class="glyphicon glyphicon-print"></span></button>
-            </form>
             {% if recipe.author == session_user %}
                 <a href="/editrecipe/{{recipe.id}}" class="btn btn-default red_button">
                     Edit this recipe <span class="glyphicon glyphicon-pencil"></span>
                 </a>
             {% endif %}
-            {% if session_user != recipe.author %}
+            {% if session_user and session_user != recipe.author %}
                 <a href="/recipe/{{recipe.id}}/{{recipe.slug}}/newreview" class="btn btn-default red_button">
                     Review this recipe  <span class="glyphicon glyphicon-star"></span>
                 </a>
             {% endif %}
+            <a href="/recipe/{{recipe.id}}/{{recipe.slug}}/print" class="btn btn-default red_button">
+                View print-friendly version <span class="glyphicon glyphicon-print"></span>
+            </a>
         </div>
 
         <div class="recipe-reviews">
