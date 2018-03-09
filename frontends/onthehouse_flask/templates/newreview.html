@@ -32,7 +32,7 @@ input[type*="radio"]
 {% if session_user %}
     <div class="row content">
         <div class="col-sm-5">
-            <h1 style="padding-top:50px;font-family:Verdana;font-size:32px;color:#555555;text-shadow:2px 2px #dddddd">Reviewing <a style="color:#ee3333" href="/recipe/{{recipe.id}}/{{recipe.slug}}">{{recipe.name}}</a></h1>
+            <h1 class="shadowed" style="padding-top:50px;font-family:Verdana;font-size:32px">Reviewing <a class="redtext" href="/recipe/{{recipe.id}}/{{recipe.slug}}">{{recipe.name}}</a></h1>
             <p>Rate this recipe:</p>
             <div id="ratingsForm">
                 <div class="stars">

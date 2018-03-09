@@ -7,9 +7,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class = "row content">
-        <div class="col-sm-5">
-            <h1>Editing Recipe: {{recipe.name}}</h1>
+        <div style="width:50%">
+            <h1 class="shadowed">Editing Recipe: <a class="redtext" href="/recipe/{{recipe.id}}/{{recipe.slug}}">{{recipe.name}}</a></h1>
                 <input type="text" id="recipe-name" class="form-control" value="{{recipe.name}}" placeholder="Recipe Name">
             <p></p>
                 <input type="text" id="recipe-blurb" class="form-control" value="{{recipe.blurb}}"  placeholder="Recipe Blurb">
@@ -25,15 +24,15 @@
                 <input type="text" id="serving-size" class="form-control" value="{{recipe.serving_size}}" placeholder="Serving Size">
             <p></p>
 
-            <p>Enter ingredients using the forms.</p>
         </div>
             <div class = "row"></div>
+            <p>Enter ingredients using the forms.</p>
             <div id="ingredient_forms">
             </div>
-            <button class="btn btn-danger" type="button" onclick="add_fields()">Add Ingredient</button>
+            <button class="btn btn-default red_button" type="button" onclick="add_fields()">Add Ingredient</button>
             <div class="row"></div>
-            <div class="col-sm-5">
-            
+
+            <div style="width:50%">
             <P></P>
             <p>Enter instructions. Separate steps with a full blank line between paragraphs.</p>
             <textarea id="instructions" rows="15" cols="70" class = "form-control"placeholder="Instructions">{{recipe.instructions}}</textarea>
@@ -46,7 +45,6 @@
             <button class="btn btn-default red_button" type="button" onclick="complete_edit()">Update</button>
             </div>
         </div>
-    </div>
     <script>
     function complete_edit()
     {
