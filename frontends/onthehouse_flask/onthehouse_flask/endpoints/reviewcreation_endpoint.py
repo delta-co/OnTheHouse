@@ -34,6 +34,9 @@ def post_review(recipeid, slug=None):
         flask.abort(403)
 
     recipe = common.rdb.get_recipe(recipeid)
+    if recipe.author == session_user:
+        flask.abort(403)
+
     score = request.form.get('score', None)
     text = request.form.get('text', None)
     existing_review = session_user.get_review_for_recipe(recipe)
