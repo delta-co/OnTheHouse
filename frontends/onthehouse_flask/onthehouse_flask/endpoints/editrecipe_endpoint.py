@@ -42,18 +42,12 @@ def edit_recipe(recipeid):
     ingredients = [i.strip() for i in ingredients]
     ingredients = [i for i in ingredients if i]
     instructions = request.form['instructions'].strip()
-    #image = request.form['recipe image']
+    image = request.files['recipe image']
 
     user = common.get_session(request)
 
-    '''
     if image != None:
-      f = open('img', 'w+')
-      f.write(image)
-      rimage = common.rdb.new_image('img')
-    else:
-      rimage = None
-    '''
+        recipeimage = common.process_uploaded_image(image)
 
     if user==None:
         flask.abort(403)
@@ -81,7 +75,7 @@ def edit_recipe(recipeid):
         name= recipename,
         prep_time= preptime,
         serving_size= servingsize,
-        recipe_image= None,
+        recipe_image= recipeimage.id,
     )
 
     #if image != None:
