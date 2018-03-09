@@ -1,6 +1,5 @@
 function apply_ingredient_autosuggest(element)
 {
-    console.log("Test");
     var autosuggest_div = document.createElement("div");
     autosuggest_div.classList.add("ingredient-autosuggest-list");
     autosuggest_div.classList.add("hidden");
@@ -16,8 +15,8 @@ function apply_ingredient_autosuggest(element)
         var elem_rect = element.getBoundingClientRect();
         //console.log(cont_rect);
         //console.log(elem_rect);
-        autosuggest_div.style.top = elem_rect.bottom - cont_rect.top;
-        autosuggest_div.style.left = elem_rect.left - cont_rect.left;
+        autosuggest_div.style.top = element.offsetTop + element.offsetHeight;
+        autosuggest_div.style.left = element.offsetLeft;
         autosuggest_div.classList.remove("hidden");
     };
     function update_suggestions()
