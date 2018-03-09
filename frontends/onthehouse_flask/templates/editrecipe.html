@@ -47,7 +47,7 @@
             </div>
             <p></p>
             <a class="btn btn-default" href="{%if recipe%}/recipe/{{recipe.id}}/{{recipe.slug}}{%else%}/{%endif%}">Cancel</a>
-            <button class="btn btn-default red_button" type="button" onclick="complete_edit()">Update</button>
+            <button class="btn btn-default red_button" type="button" onclick="complete_edit()">{%if action=="editing"%}Update{%else%}Publish{%endif%}</button>
             </div>
         </div>
     <script>
