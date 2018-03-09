@@ -1,0 +1,14 @@
+{% extends "root.html" %}
+{% block head %}
+    {{ super() }}
+    <title>500 Internal Server Error | OnTheHouse</title>
+{% endblock %}
+
+{% block body %}
+    <div style="text-align:center; margin-top:100px;">
+        <h1>Internal Server Error</h1>
+        <p>Something went horribly wrong</p>
+    </div>
+{% endblock %}
+
+{% block footer %} {{ super() }} {% endblock %}

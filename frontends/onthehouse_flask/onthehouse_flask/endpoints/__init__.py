@@ -15,6 +15,7 @@ from . import recipecreation_endpoint
 from . import updateuser_endpoint
 from . import editrecipe_endpoint
 from . import reviewcreation_endpoint
+from . import error_endpoint
 
 
 site = common.site
