@@ -124,8 +124,13 @@
                 <form action="/recipe/{{recipe.id}}/{{recipe.slug}}/newreview">
                     <button class="btn btn-default" type="submit" style="background-color:#ee3333;color:#efefef;border:none;">Review this recipe</button>
                 </form>
-        {% endif %}
-            </div>
+            {% endif %}
+        </div>
+        <div style="float:left; margin-left:20px;">
+            <form action="/recipe/{{recipe.id}}/{{recipe.slug}}/print">
+                <button class="btn btn-default" type="submit" style="background-color:#ee3333;color:#efefef;border:none;">View printable version</button>
+            </form>
+        </div>
     </div>
 {% endblock %}
 
