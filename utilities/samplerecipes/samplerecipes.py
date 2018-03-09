@@ -174,7 +174,7 @@ cheese mixture. Chill 6 to 24 hours.
 To serve, unmold on plate. Remove plastic wrap. Garnish with fresh basil, if
 desired. Serve with crackers.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     author=angela,
     blurb="This spread goes well with crackers or slided French bread.",
     country_of_origin="Unknown",
@@ -196,6 +196,12 @@ rdb.new_recipe(
     prep_time=10,
     serving_size=24,
     recipe_image=rdb.new_image(image_dir.with_child('cheese_pesto.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=bob,
+            score=5,
+            text='Made this for a small superbowl party, it didnt last long, everyone loved it!',
 )
 
 # 2
@@ -269,7 +275,7 @@ Recipe makes 2 (12 inch) pizzas. Divide dough in half, and spread onto pizza
 pans. Cover with sauce, and desired toppings. Bake at 400 degrees for 20
 minutes, or until crust is golden brown.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     author=caitlyn,
     blurb=blurb,
     country_of_origin="Unknown",
@@ -299,6 +305,12 @@ rdb.new_recipe(
     prep_time=90,
     serving_size=8,
     recipe_image=rdb.new_image(image_dir.with_child('homemade_pizza.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=bob,
+            score=4,
+            text='This is a simple recipe but the flavors come together so nicely!',
 )
 
 # 4
@@ -391,7 +403,7 @@ paddle. Sprinkle the rice with the vinegar, sugar, and salt while mixing with a
 spatula or rice paddle until the rice reaches body temperature. Keep the rice
 covered with damp paper towels or napkin until the rice is ready to use.
 '''
-rdb.new_recipe(
+r=rdb.new_recipe(
     author=bob,
     blurb="Recipe courtesy of Jill Davie",
     country_of_origin="Unknown",
@@ -415,6 +427,12 @@ rdb.new_recipe(
     prep_time=55,
     serving_size=30,
     recipe_image=rdb.new_image(image_dir.with_child('sushi.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=caitlyn,
+            score=4,
+            text='This was kind of expesive to make from scrath, but I was proud of the result. I will definatly make again',
 )
 
 # 6
@@ -499,7 +517,7 @@ release excess pressure.
 Once the sauerkraut is finished, put a tight lid on the jar and move to cold
 storage. The sauerkraut's flavor will continue to develop as it ages.
 '''
-rdb.new_recipe(
+r=rdb.new_recipe(
     author=angela,
     blurb=blurb,
     country_of_origin="Unknown",
@@ -515,6 +533,12 @@ rdb.new_recipe(
     serving_size=8,
     recipe_image=rdb.new_image(image_dir.with_child('sauerkraut.jpg')),
 )
+rdb.new_review(
+            recipe=r,
+            user=caitlyn,
+            score=4,
+            text='I never had sauerkraut before, its definatly different, but in a good way!',
+)
 
 # 8
 instructions = '''
@@ -527,7 +551,7 @@ At serving time, in a bowl whip cream and 2 tablespoons sugar till soft peaks
 form. Transfer chilled egg mixture to a punch bowl. Fold in whipped cream
 mixture. Serve at once. Sprinkle each serving with nutmeg.
 '''
-rdb.new_recipe(
+r=rdb.new_recipe(
     author=bob,
     blurb="Always a hit at our annual staff Christmas party.",
     country_of_origin="Unknown",
@@ -550,6 +574,12 @@ rdb.new_recipe(
     serving_size=10,
     recipe_image=rdb.new_image(image_dir.with_child('eggnog.jpg')),
 )
+rdb.new_review(
+            recipe=r,
+            user=caitlyn,
+            score=5,
+            text='Good ol eggnog, this recipe is far superior to anything you can buy at a store!',
+)
 
 # 9
 instructions = '''
@@ -568,7 +598,7 @@ oven for 40 to 45 minutes or until top springs back when lightly touched.
 Immediately invert cake (leave in pan); cook thoroughly. Loosen sides of cake
 from pan; remove cake.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     author=caitlyn,
     blurb="Eat your cake and diet, too. Angel Cake is low in calories and has no fat.",
     country_of_origin="Unknown",
@@ -588,6 +618,12 @@ rdb.new_recipe(
     serving_size=12,
     recipe_image=rdb.new_image(image_dir.with_child('angel_cake.jpg')),
 )
+rdb.new_review(
+            recipe=r,
+            user=bob,
+            score=5,
+            text='on my first try i made the mistake of not sifting the sugar, the cake came out amazing on my second try, delicious!',
+)
 
 # 10
 blurb = '''
@@ -602,7 +638,7 @@ Stir diced tomatoes, tomato sauce, and tomato paste into the pan.
 Season with oregano, basil, salt, and pepper. Simmer spaghetti sauce for 1 hour,
 stirring occasionally.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     author=angela,
     blurb=blurb,
     country_of_origin="Unknown",
@@ -626,6 +662,12 @@ rdb.new_recipe(
     prep_time=85,
     serving_size=6,
     recipe_image=rdb.new_image(image_dir.with_child('spaghetti_sauce.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=bob,
+            score=5,
+            text='real ingredints are what make this dish, I just cant go back to canned sauce after this',
 )
 
 # 11
@@ -651,7 +693,7 @@ meringue over pie, sealing the edges at the crust.
 
 Bake in preheated oven for 10 minutes, or until meringue is golden brown.
 '''
-rdb.new_recipe(
+r=rdb.new_recipe(
     author=bob,
     blurb=blurb,
     country_of_origin="Unknown",
@@ -674,6 +716,12 @@ rdb.new_recipe(
     prep_time=40,
     serving_size=8,
     recipe_image=rdb.new_image(image_dir.with_child('meringue.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=angela,
+            score=4,
+            text='the lemon zest is what really makes this pie, this particular recipe reminds me of summer',
 )
 
 # 12
@@ -812,7 +860,7 @@ Add vegetables and simmer for 3 minutes, then stir in thai basil and fish sauce.
 
 Serve with jasmine rice if desired.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     author=panmomma,
     blurb="This classic curry is great with any meat choice.",
     country_of_origin="Unknown",
@@ -836,6 +884,12 @@ rdb.new_recipe(
     serving_size=6,
     recipe_image=rdb.new_image(image_dir.with_child('red_curry.jpg')),
 )
+rdb.new_review(
+            recipe=r,
+            user=bob,
+            score=4,
+            text='I made this with shell-on shrimp, and it came out wonderfully, will make again!',
+)
 
 #v2
 instructions = '''
@@ -853,7 +907,7 @@ Add 1/4 cup of water and place lid on pan. Steam for about 4 minutes
 
 When gyoza are done, remove and serve with ponzu sauce and rice or enjoy as is.
 '''
-rdb.new_recipe(
+r=rdb.new_recipe(
     author=panmomma,
         blurb="Gyoza are also known as Japanese potstickers.",
     country_of_origin="Unknown",
@@ -876,6 +930,12 @@ rdb.new_recipe(
     prep_time=30,
     serving_size=6,
     recipe_image=rdb.new_image(image_dir.with_child('gyoza.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=caitlyn,
+            score=4,
+            text='I tried this with ground chicken instead, they were good but i still need practice folding the gyoza skins',
 )
 
 #v3
@@ -933,7 +993,7 @@ Heat a lightly oiled griddle or frying pan over medium high heat. Pour or
 scoop the batter onto the griddle, using approximately 1/4 cup for each pancake.
 Brown on both sides and serve hot.
 '''
-rdb.new_recipe(
+r=rdb.new_recipe(
     name='Fluffy Pancakes',
     author=panmomma,
     blurb='this is a family favorite.',
@@ -954,6 +1014,13 @@ rdb.new_recipe(
     prep_time=20,
     recipe_image=rdb.new_image(image_dir.with_child('pancake.jpg')),
 )
+rdb.new_review(
+            recipe=r,
+            user=angela,
+            score=5,
+            text='So so fluffy, best pancakes I ever had!',
+)
+
 
 #v5
 instructions = '''
@@ -1299,7 +1366,7 @@ the milk and vanilla. Beat to a spreading consistency.
 Split the layers of cooled cake horizontally, cover the top of each layer with
 frosting, then stack them onto a serving plate. Frost the outside of the cake.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     name='Very Chocolate Cake',
     author=ethan,
     blurb='Bye bye, diet.',
@@ -1325,6 +1392,12 @@ rdb.new_recipe(
     prep_time=70,
     recipe_image=rdb.new_image(image_dir.with_child('chocolate_cake.jpg')),
 )
+rdb.new_review(
+            recipe=r,
+            user=panmomma,
+            score=4,
+            text='Great recipe for new bakers, you just cant beat the classics',
+)
 
 instructions = '''
 Put the bones and carcass from a leftover chicken (they can be in pieces) in a
@@ -1346,7 +1419,7 @@ When the rice is done, add the meat to the broth and simmer until warmed
 through, about 1 minute. Stir in the parsley, and season with 1/2 teaspoon salt
 or more to taste. Serve hot.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     name='"Get Well Soon" Chicken Soup',
     author=ethan,
     blurb=None,
@@ -1368,6 +1441,12 @@ rdb.new_recipe(
     meal_type='Dinner',
     prep_time=55,
     recipe_image=rdb.new_image(image_dir.with_child('chicken_soup.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=panmomma,
+            score=5,
+            text='This is a must make for those rough winter quarters where everyone gets ill, goes great with dayquil',
 )
 
 instructions = '''
@@ -1547,7 +1626,7 @@ Remove from oven and top with glaze.
 Make the glaze: Mix the powdered sugar, vanilla and 2 Tablespoons milk together
 until smooth and lump free. Drizzle over warm rolls.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     name='Homemade Cinnamon Rolls',
     author=ethan,
     blurb='Quick homehade cinnamon rolls from scratch.',
@@ -1574,6 +1653,13 @@ rdb.new_recipe(
     prep_time=45,
     recipe_image=rdb.new_image(image_dir.with_child('cinnamon_rolls.jpg')),
 )
+rdb.new_review(
+            recipe=r,
+            user=panmomma,
+            score=5,
+            text='''These were listed as breakfast food so who am I to question stangers on the internet? 
+            I made these for breakfast and I can't say I regret eating them!''',
+)
 
 #ian 1
 instructions = '''
@@ -1595,7 +1681,7 @@ Take care not to over-cook, as that will result in a tougher texture.
 Serve fish with with remaining lemon butter sauce, basil or parsley, and lemon
 wedges.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     name='Easy Lemon Butter Fish',
     author=ian,
     blurb='Delicious and zesty',
@@ -1617,6 +1703,12 @@ rdb.new_recipe(
     meal_type='Dinner',
     prep_time=19,
     recipe_image=rdb.new_image(image_dir.with_child('easy_lemon_butter_fish.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=panmomma,
+            score=5,
+            text='I made these specifically with tilapia fillets and they came out perfect!',
 )
 
 #ian 2
@@ -1849,7 +1941,7 @@ Pour into a 9 x 5-inch loaf pan. Refrigerate overnight.
 
 Unmold and garnish with remaining gelatin cubes and whipped topping, if desired.
 '''
-rdb.new_recipe(
+r= rdb.new_recipe(
     name='1950s Jello Dessert',
     author=ian,
     blurb='This retro dish is a tasty throwback!',
@@ -1869,6 +1961,12 @@ rdb.new_recipe(
     meal_type='Dessert',
     prep_time=1500,
     recipe_image=rdb.new_image(image_dir.with_child('1950s_jello.jpg')),
+)
+rdb.new_review(
+            recipe=r,
+            user=panmomma,
+            score=3,
+            text='the 1950s were a dark time',
 )
 
 #ian 8
@@ -1903,7 +2001,7 @@ Sprinkle with the remaining cheese.
 Bake for 20 to 25 minutes, or until the cheese is golden and bubbling. Serve
 with a sprinkle of finely chopped parsley on top.
 '''
-rdb.new_recipe(
+recipe= rdb.new_recipe(
     name='Cup Mushroom Pasta',
     author=ian,
     blurb='Totally trip out with this earthy dish',
@@ -1929,6 +2027,12 @@ rdb.new_recipe(
     meal_type='Anytime',
     prep_time=30,
     recipe_image=rdb.new_image(image_dir.with_child('cup_mushroom_pasta.jpg')),
+)
+rdb.new_review(
+            recipe=recipe,
+            user=panmomma,
+            score=5,
+            text='Great on a rainy day',
 )
 
 #ian 9
