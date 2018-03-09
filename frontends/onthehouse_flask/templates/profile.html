@@ -44,11 +44,13 @@
                 <h4 id="join-date">Member Since {{ user.date_joined|unix_to_human }}</h4>
                 {% if user.bio_text %}<p id="bio" class="well well-lg">{{ user.bio_text }}</p>{% endif %}
             </div>
+            {% if session_user == user %}
             <div id="update_user_splash" class="col-sm">
                 <span>Did you grow as a person?</span>
                     {% set href='/updateuser' %}
                 <a href="{{href}}"><button class="btn btn-default">Update your profile!</button></a>
             </div>
+            {% endif %}
             <div class="col-sm-2"></div>
         <div class="col-sm-12"></div>
 
