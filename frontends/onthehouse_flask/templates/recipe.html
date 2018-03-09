@@ -125,7 +125,7 @@
         </div>
         <div style="margin-left:20px;">
             <form action="/recipe/{{recipe.id}}/{{recipe.slug}}/print">
-                <button class="btn btn-default" type="submit" style="background-color:#ee3333;color:#efefef;border:none;">View printable version</button>
+                <button class="btn btn-default" type="submit" style="background-color:#ee3333;color:#efefef;border:none;">View printable version <span class="glyphicon glyphicon-print"></span></button>
             </form>
             {% if recipe.author == session_user %}
                 <a href="/editrecipe/{{recipe.id}}" class="btn btn-default red_button">
