@@ -62,20 +62,21 @@
     {
         padding-top:15px;
     }
+    .recipe-reviews
+    {
+        margin-top: 30px;
+    }
     </style>
 {% endblock %}
+
+{% import 'macros.html' as macros%}
 
 {% block body %}
     <div class="row content">
         <div class="recipe-main col-sm-12">
             <p class="recipe-name">{{recipe.name}}</p>
             {% if recipe.author is not none %}
-            <p class="recipe-author"><a href="/user/{{recipe.author.username}}"><img style="height:40px;width:40px;border-radius:50%" src="/user/{{recipe.author.username}}/profilepic.jpg" alt="Profile picture"></a> | <a href="/user/{{recipe.author.username}}">{{recipe.author.display_name}}</a></p>
-            {% endif %}
-            {% if recipe.author == session_user %}
-                <form action="/editrecipe/{{recipe.id}}">
-                    <button class="btn btn-default" type="submit" style="background-color:#ee3333;color:#efefef;border:none;">Edit this recipe</button>
-                </form>
+            <p class="recipe-author"><a href="/user/{{recipe.author.username}}"><img style="width: 40px; height: auto; border-radius:50%" src="/user/{{recipe.author.username}}/profilepic.jpg" alt="Profile picture"></a> | <a href="/user/{{recipe.author.username}}">{{recipe.author.display_name}}</a></p>
             {% endif %}
 
             {% if recipe.recipe_image_id is not none %}
@@ -84,7 +85,10 @@
             <p><img class="img-rounded" height="200" src="/static/default_recipe_pic.jpg"/></p>
             {% endif %}
 
+            {% if recipe.blurb is not none %}
             <p class="recipe-blurb">&#8220;{{recipe.blurb}}&#8221;</p>
+            {% endif %}
+
             <div class="boxed">
             <p id="infobar">
                 {% if recipe.meal_type %}
@@ -94,8 +98,8 @@
                 <span>{{"%d hr " % hours if hours else ""}}{{"%d min" % minutes if minutes else ""}} | </span>
                 <span>Serves {{recipe.serving_size}}</span>
             </p>
-            
             </div>
+
             <div class="recipe-ingredients">
                 <h3>Ingredients</h3>
                 {% set ingredients = recipe.get_ingredients() %}
@@ -104,7 +108,7 @@
                   {% for quantitied in ingredients %}
                     <li>
                       <a class="ingredient-link" href="/ingredient/{{quantitied.ingredient.name.replace(' ', '_')}}">
-                        <span style="display:inline-block; width: 25px;">{{-quantitied.quantity or ""}}</span>{{quantitied.prefix or ""}} {{quantitied.ingredient.name}} {{quantitied.suffix or ""-}}
+                        {{-quantitied.quantity or ""}} {{quantitied.prefix or ""}} {{quantitied.ingredient.name}} {{quantitied.suffix or ""-}}
                       </a>
                     </li>
                   {% endfor %}
@@ -119,13 +123,24 @@
                 {% endfor %}
             </div>
         </div>
-        <div style="float:left; margin-left:20px;">
-            {% if session_user %}
-                <form action="/recipe/{{recipe.id}}/{{recipe.slug}}/newreview">
-                    <button class="btn btn-default" type="submit" style="background-color:#ee3333;color:#efefef;border:none;">Review this recipe</button>
-                </form>
-        {% endif %}
-            </div>
+        <div style="margin-left:20px;">
+            {% if recipe.author == session_user %}
+                <a href="/editrecipe/{{recipe.id}}" class="btn btn-default red_button">
+                    Edit this recipe <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            {% endif %}
+            {% if session_user != recipe.author %}
+                <a href="/recipe/{{recipe.id}}/{{recipe.slug}}/newreview" class="btn btn-default red_button">
+                    Review this recipe  <span class="glyphicon glyphicon-star"></span>
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="recipe-reviews">
+            {% for review in recipe.get_reviews() %}
+                {{macros.review_card(review)}}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
 

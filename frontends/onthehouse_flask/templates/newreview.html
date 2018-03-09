@@ -92,48 +92,46 @@ form .stars span {
         <div class="col-sm-5">
             <h1 style="padding-top:50px;font-family:Verdana;font-size:32px;color:#555555;text-shadow:2px 2px #dddddd">Reviewing <a style="color:#ee3333" href="/recipe/{{recipe.id}}/{{recipe.slug}}">{{recipe.name}}</a></h1>
             <p>Rate this recipe:</p>
-            <form id="ratingsForm">
+            <div id="ratingsForm">
                 <div class="stars">
-                    <input type="radio" name="star" class="star-1" id="star-1" />
-                    <label class="star-1" for="star-1">1</label>
-                    <input type="radio" name="star" class="star-2" id="star-2" />
-                    <label class="star-2" for="star-2">2</label>
-                    <input type="radio" name="star" class="star-3" id="star-3" />
-                    <label class="star-3" for="star-3">3</label>
-                    <input type="radio" name="star" class="star-4" id="star-4" />
-                    <label class="star-4" for="star-4">4</label>
-                    <input type="radio" name="star" class="star-5" id="star-5" />
-                    <label class="star-5" for="star-5">5</label>
+                    <input type="radio" name="star" value="1" id="star-1" /> <label class="star-1" for="star-1">1</label> |
+                    <input type="radio" name="star" value="2" id="star-2" /> <label class="star-2" for="star-2">2</label> |
+                    <input type="radio" name="star" value="3" id="star-3" /> <label class="star-3" for="star-3">3</label> |
+                    <input type="radio" name="star" value="4" id="star-4" /> <label class="star-4" for="star-4">4</label> |
+                    <input type="radio" name="star" value="5" id="star-5" /> <label class="star-5" for="star-5">5</label>
                     <span></span>
                 </div>
-            </form>
             <textarea id="review_text" rows="15" cols="70" class = "form-control" placeholder="Give a written review..."></textarea>
-            <form action="/recipe/{{recipe.id}}/{{recipe.slug}}">
-            <button class="btn btn-default" type="submit" style="background-color:#ee3333;border:none;
-    color:efefef" onclick="submit_review()">Post review</button>
-            </form>
+            <button class="btn btn-default red_button" onclick="submit_review()">Post review</button>
+            </div>
         </div>
     </div>
 
     <script>
-        var logID = 'log',
-        log = $('<div id="'+logID+'"></div>');
-        $('body').append(log);
-        $('[type*="radio"]').change(function () {
-        var me = $(this);
-        log.html(me.attr('value'));
-    });
-    function submit_review() {
-        var score = userScore;
-        var text = document.getElementById("review_text").value;
+    function submit_review()
+    {
+        var url = "/recipe/{{recipe.id}}/{{recipe.slug}}/newreview";
         var data = new FormData();
-        
-        data.append("score", score;
+        var selected_star = document.querySelector("input[name='star']:checked");
+        if (selected_star !== null)
+        {
+            data.append("score", selected_star.value);
+        }
+
+        var text = document.getElementById("review_text").value;
         data.append("text", text);
-        var url = "/recipe/{{recipe.id}}/{{recipe.slug}}";
-        return post(url, data, receive_callback);
+
+        post(url, data, receive_callback);
     }
-    function receive_callback(response) {
+    function receive_callback(response)
+    {
+        if ("error_type" in response)
+        {
+        }
+        else
+        {
+            window.location.href = "/recipe/" + response['recipeid'];
+        }
     }
     </script>
 {% else %}
