@@ -37,6 +37,12 @@
     {
         color:#ee3333
     }
+    .recipe-blurb
+    {
+        font-family:"URW Chancery L";
+        font-size:24px;
+        font-style:italic;
+    }
     .recipe-ingredients
     {
         float: left;
@@ -52,7 +58,6 @@
         padding-top:50px;
         font-family:Verdana;font-size:32px;color:#555555;text-shadow:2px 2px #dddddd
     }
-
     .recipe-main
     {
         padding-top:15px;
@@ -64,20 +69,22 @@
     <div class="row content">
         <div class="recipe-main col-sm-12">
             <p class="recipe-name">{{recipe.name}}</p>
-
-            {% if recipe.recipe_image_id is not none %}
-            <p><img class="img-rounded" width="600" src="/image/{{recipe.recipe_image_id}}"/></p>
-            {% else %}
-            <p><img class="img-rounded" width="600" src="/static/default_recipe_pic.jpg"/></p>
-            {% endif %}
-
             {% if recipe.author is not none %}
-            <p class="recipe-author">Recipe by <a href="/user/{{recipe.author.username}}">{{recipe.author.display_name}}</a></p>
+            <p class="recipe-author"><a href="/user/{{recipe.author.username}}"><img style="height:40px;width:40px;border-radius:50%" src="/user/{{recipe.author.username}}/profilepic.jpg" alt="Profile picture"></a> | <a href="/user/{{recipe.author.username}}">{{recipe.author.display_name}}</a></p>
             {% endif %}
             {% if recipe.author == session_user %}
-            <a href="/editrecipe/{{recipe.id}}">Edit</a>
+                <form action="/editrecipe/{{recipe.id}}">
+                    <button class="btn btn-default" type="submit" style="background-color:#ee3333;color:#efefef;border:none;">Edit this recipe</button>
+                </form>
             {% endif %}
-            <hr>
+
+            {% if recipe.recipe_image_id is not none %}
+            <p><img class="img-rounded" height="200" src="/image/{{recipe.recipe_image_id}}"/></p>
+            {% else %}
+            <p><img class="img-rounded" height="200" src="/static/default_recipe_pic.jpg"/></p>
+            {% endif %}
+
+            <p class="recipe-blurb">&#8220;{{recipe.blurb}}&#8221;</p>
             <div class="boxed">
             <p id="infobar">
                 {% if recipe.meal_type %}
@@ -97,7 +104,7 @@
                   {% for quantitied in ingredients %}
                     <li>
                       <a class="ingredient-link" href="/ingredient/{{quantitied.ingredient.name.replace(' ', '_')}}">
-                        {{-quantitied.quantity or ""}} {{quantitied.prefix or ""}} {{quantitied.ingredient.name}} {{quantitied.suffix or ""-}}
+                        <span style="display:inline-block; width: 25px;">{{-quantitied.quantity or ""}}</span>{{quantitied.prefix or ""}} {{quantitied.ingredient.name}} {{quantitied.suffix or ""-}}
                       </a>
                     </li>
                   {% endfor %}
@@ -112,6 +119,13 @@
                 {% endfor %}
             </div>
         </div>
+        <div style="float:left; margin-left:20px;">
+            {% if session_user %}
+                <form action="/recipe/{{recipe.id}}/{{recipe.slug}}/newreview">
+                    <button class="btn btn-default" type="submit" style="background-color:#ee3333;color:#efefef;border:none;">Review this recipe</button>
+                </form>
+        {% endif %}
+            </div>
     </div>
 {% endblock %}
 
