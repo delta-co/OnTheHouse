@@ -4,87 +4,29 @@
 {% block head %}
     {{ super() }}
     <title>Reviewing {{recipe.name}} | OnTheHouse</title>
-{% endblock %}
-
 <style>
-
-form .stars {
-  background: url("stars.png") repeat-x 0 0;
-  width: 150px;
-  margin: 0 auto;
+input[type*="radio"]
+{
+    display: none;
 }
- 
-form .stars input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  filter: alpha(opacity=0);
+.starred, .unstarred
+{
+    font-size: 0;
 }
-form .stars input[type="radio"].star-5:checked ~ span {
-  width: 100%;
+.starred::before
+{
+    font-size: 24pt;
+    content: "★";
 }
-form .stars input[type="radio"].star-4:checked ~ span {
-  width: 80%;
-}
-form .stars input[type="radio"].star-3:checked ~ span {
-  width: 60%;
-}
-form .stars input[type="radio"].star-2:checked ~ span {
-  width: 40%;
-}
-form .stars input[type="radio"].star-1:checked ~ span {
-  width: 20%;
-}
-form .stars label {
-  display: block;
-  width: 30px;
-  height: 30px;
-  margin: 0!important;
-  padding: 0!important;
-  text-indent: -999em;
-  float: left;
-  position: relative;
-  z-index: 10;
-  background: transparent!important;
-  cursor: pointer;
-}
-form .stars label:hover ~ span {
-  background-position: 0 -30px;
-}
-form .stars label.star-5:hover ~ span {
-  width: 100% !important;
-}
-form .stars label.star-4:hover ~ span {
-  width: 80% !important;
-}
-form .stars label.star-3:hover ~ span {
-  width: 60% !important;
-}
-form .stars label.star-2:hover ~ span {
-  width: 40% !important;
-}
-form .stars label.star-1:hover ~ span {
-  width: 20% !important;
-}
-form .stars span {
-  display: block;
-  width: 0;
-  position: relative;
-  top: 0;
-  left: 0;
-  height: 30px;
-  background: url("/static/favicon.png") repeat-x 0 -60px;
-  -webkit-transition: -webkit-width 0.5s;
-  -moz-transition: -moz-width 0.5s;
-  -ms-transition: -ms-width 0.5s;
-  -o-transition: -o-width 0.5s;
-  transition: width 0.5s;
+.unstarred::before
+{
+    font-size: 24pt;
+    content: "☆";
 }
 </style>
 
-<label>
-  <input type="radio">
-  <img src="static/favicon.jpg">
-</label>
+{% endblock %}
+
 
 {% block body %}
 {% if session_user %}
@@ -94,12 +36,11 @@ form .stars span {
             <p>Rate this recipe:</p>
             <div id="ratingsForm">
                 <div class="stars">
-                    <input type="radio" name="star" value="1" id="star-1" /> <label class="star-1" for="star-1">1</label> |
-                    <input type="radio" name="star" value="2" id="star-2" /> <label class="star-2" for="star-2">2</label> |
-                    <input type="radio" name="star" value="3" id="star-3" /> <label class="star-3" for="star-3">3</label> |
-                    <input type="radio" name="star" value="4" id="star-4" /> <label class="star-4" for="star-4">4</label> |
-                    <input type="radio" name="star" value="5" id="star-5" /> <label class="star-5" for="star-5">5</label>
-                    <span></span>
+                    <input type="radio" name="star" value="1" id="star-1" /> <label class="unstarred" for="star-1">1</label>
+                    <input type="radio" name="star" value="2" id="star-2" /> <label class="unstarred" for="star-2">2</label>
+                    <input type="radio" name="star" value="3" id="star-3" /> <label class="unstarred" for="star-3">3</label>
+                    <input type="radio" name="star" value="4" id="star-4" /> <label class="unstarred" for="star-4">4</label>
+                    <input type="radio" name="star" value="5" id="star-5" /> <label class="unstarred" for="star-5">5</label>
                 </div>
             <textarea id="review_text" rows="15" cols="70" class = "form-control" placeholder="Give a written review..."></textarea>
             <button class="btn btn-default red_button" onclick="submit_review()">Post review</button>
@@ -108,6 +49,29 @@ form .stars span {
     </div>
 
     <script>
+    var radio_buttons = document.querySelectorAll("input[type*='radio']");
+    for (var index = 0; index < radio_buttons.length; index += 1)
+    {
+        function hook(event)
+        {
+            var label = event.target.nextElementSibling;
+            console.log(label);
+            var labels = Array.from(label.parentElement.getElementsByTagName("label"));
+            var myindex = labels.indexOf(label);
+            for (var index = 0; index <= myindex; index += 1)
+            {
+                labels[index].classList.remove("unstarred");
+                labels[index].classList.add("starred");
+            }
+            for (var index = myindex+1; index < labels.length; index += 1)
+            {
+                labels[index].classList.remove("starred");
+                labels[index].classList.add("unstarred");
+            }
+        }
+        radio_buttons[index].addEventListener("change", hook);
+    }
+
     function submit_review()
     {
         var url = "/recipe/{{recipe.id}}/{{recipe.slug}}/newreview";
