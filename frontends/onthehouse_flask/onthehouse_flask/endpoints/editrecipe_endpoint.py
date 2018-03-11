@@ -22,7 +22,13 @@ def edit_recipe_page(recipeid):
         ]
         ingredients.append(ingredient_attribute_list)
 
-    response = render_template("editrecipe.html", recipe=recipe, session_user=common.get_session(request), ingredients = ingredients)
+    response = render_template(
+        "editrecipe.html",
+        recipe=recipe,
+        action="editing",
+        session_user=common.get_session(request),
+        ingredients=ingredients,
+    )
     return response
 
 @site.route('/editrecipe/<recipeid>', methods=['POST'])
@@ -56,14 +62,6 @@ def edit_recipe(recipeid):
 
     if user==None:
         flask.abort(403)
-
-    #if instructions == "":
-    #   flash('Instructions cannot be blank')
-    #    flask.abort(403)
-
-    #if ingredients == "":
-    #   flash('Must have at least 1 ingredient')
-    #   flask.abort(403)
 
     recipe = common.rdb.get_recipe(recipeid)
     recipe.edit(
