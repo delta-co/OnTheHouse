@@ -10,7 +10,7 @@ angela = rdb.new_user(
     display_name = "Angela",
     password = "A",
     bio_text = "Hello! This is a sample biography for Angela.",
-    profile_image = rdb.new_image(image_dir.with_child('angel_cake.jpg'))
+    profile_image = rdb.new_image(image_dir.with_child('angela.jpg'))
 )
 
 bob = rdb.new_user(
@@ -18,7 +18,7 @@ bob = rdb.new_user(
     display_name = "Bob",
     password = "A",
     bio_text = "Hello! This is a sample biography for Bob.",
-    profile_image = rdb.new_image(image_dir.with_child('homemade_pizza.jpg'))
+    profile_image = rdb.new_image(image_dir.with_child('bob.jpg'))
 )
 
 caitlyn = rdb.new_user(
@@ -26,7 +26,7 @@ caitlyn = rdb.new_user(
     display_name = "Caitlyn",
     password = "A",
     bio_text = "Hello! This is a sample biography for Caitlyn.",
-    profile_image = rdb.new_image(image_dir.with_child('meringue.jpg'))
+    profile_image = rdb.new_image(image_dir.with_child('caitlyn.jpg'))
 )
 
 ethan = rdb.new_user(
@@ -2165,9 +2165,15 @@ import random
 AGE_MAX = 30 * 24 * 60 * 60
 now = recipedb.helpers.now()
 cur = rdb.sql.cursor()
-cur.execute('SELECT RecipeID FROM Recipe')
-recipe_ids = [x[0] for x in cur.fetchall()]
-for recipe_id in recipe_ids:
+recipes = rdb.get_recipes()
+for recipe in recipes:
     created = now - random.randint(1, AGE_MAX)
-    cur.execute('UPDATE Recipe SET DateAdded=? WHERE RecipeID=?', [created, recipe_id])
+    cur.execute('UPDATE Recipe SET DateAdded=? WHERE RecipeID=?', [created, recipe.id])
+
+reviews = rdb.get_reviews()
+for review in reviews:
+    recipe = rdb.get_recipe(review.recipe_id)
+    created = random.randint(int(recipe.date_added), int(now))
+    cur.execute('UPDATE Review SET DateAdded=? WHERE ReviewID=?', [created, review.id])
+
 rdb.sql.commit()

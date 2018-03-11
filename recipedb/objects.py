@@ -345,9 +345,9 @@ class Recipe(ObjectBase):
         cur = self.recipedb.sql.cursor()
         cur.execute('SELECT * FROM Review WHERE RecipeID = ?', [self.id])
         rows = cur.fetchall()
-        recipes = [Review(self.recipedb, row) for row in rows]
-        recipes.sort(key=lambda x: x.date_added, reverse=True)
-        return recipes
+        reviews = [Review(self.recipedb, row) for row in rows]
+        reviews.sort(key=lambda x: x.date_added, reverse=True)
+        return reviews
 
     def set_ingredients(self, ingredients):
         ingredients = [self.recipedb._coerce_quantitied_ingredient(i) for i in ingredients]
@@ -515,9 +515,9 @@ class User(UserMixin, ObjectBase):
         cur = self.recipedb.sql.cursor()
         cur.execute('SELECT * FROM Review WHERE AuthorID = ?', [self.id])
         rows = cur.fetchall()
-        recipes = [Review(self.recipedb, row) for row in rows]
-        recipes.sort(key=lambda x: x.date_added, reverse=True)
-        return recipes
+        reviews = [Review(self.recipedb, row) for row in rows]
+        reviews.sort(key=lambda x: x.date_added, reverse=True)
+        return reviews
 
     def set_bio_text(self, bio_text):
         if not isinstance(bio_text, (NoneType, str)):
