@@ -45,12 +45,14 @@ def edit_recipe(recipeid):
         keep_ingredients.append(ingredient)
     ingredients = keep_ingredients
     instructions = request.form['instructions'].strip()
-    image = request.files['recipe image']
+    image = request.files.get('recipe image')
 
     user = common.get_session(request)
 
     if image != None:
         recipeimage = common.process_uploaded_image(image)
+    else:
+        recipeimage = None
 
     if user==None:
         flask.abort(403)
@@ -73,7 +75,6 @@ def edit_recipe(recipeid):
         meal_type= mealtype,
         name= recipename,
         prep_time= preptime,
-        #recipe_image= recipe_image,
         serving_size= servingsize,
         recipe_image= recipeimage,
     )
