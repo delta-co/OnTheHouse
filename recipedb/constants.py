@@ -18,6 +18,7 @@ DATABASE_VERSION = 1
 DB_INIT = '''
 PRAGMA count_changes = OFF;
 PRAGMA cache_size = 10000;
+PRAGMA foreign_keys = ON;
 PRAGMA user_version = {user_version};
 
 ----------------------------------------------------------------------------------------------------
