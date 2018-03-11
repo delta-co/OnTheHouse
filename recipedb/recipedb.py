@@ -368,6 +368,17 @@ class RecipeDB:
 
         return review
 
+    def get_reviews(self):
+        '''
+        Returns all reviews
+        '''
+        cur = self.sql.cursor()
+        cur.execute('SELECT * FROM Review')
+        rows = cur.fetchall()
+        reviews = [objects.Review(self, row) for row in rows]
+        reviews.sort(key=lambda x: x.date_added, reverse=True)
+        return reviews
+
     def get_user(self, *, id=None, username=None):
         '''
         Fetch an user by their ID
