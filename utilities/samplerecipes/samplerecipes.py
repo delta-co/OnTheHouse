@@ -10,7 +10,7 @@ angela = rdb.new_user(
     display_name = "Angela",
     password = "A",
     bio_text = "Hello! This is a sample biography for Angela.",
-    profile_image = rdb.new_image(image_dir.with_child('angel_cake.jpg'))
+    profile_image = rdb.new_image(image_dir.with_child('angela.jpg'))
 )
 
 bob = rdb.new_user(
@@ -18,7 +18,7 @@ bob = rdb.new_user(
     display_name = "Bob",
     password = "A",
     bio_text = "Hello! This is a sample biography for Bob.",
-    profile_image = rdb.new_image(image_dir.with_child('homemade_pizza.jpg'))
+    profile_image = rdb.new_image(image_dir.with_child('bob.jpg'))
 )
 
 caitlyn = rdb.new_user(
@@ -26,7 +26,7 @@ caitlyn = rdb.new_user(
     display_name = "Caitlyn",
     password = "A",
     bio_text = "Hello! This is a sample biography for Caitlyn.",
-    profile_image = rdb.new_image(image_dir.with_child('meringue.jpg'))
+    profile_image = rdb.new_image(image_dir.with_child('caitlyn.jpg'))
 )
 
 ethan = rdb.new_user(
