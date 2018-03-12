@@ -1283,6 +1283,174 @@ rdb.new_recipe(
     recipe_image=rdb.new_image(image_dir.with_child('monkey_bread.jpg')),
 )
 
+#v11
+instructions = '''
+Cook macaroni according to package directions. Drain well and place macaroni
+in a large bowl. Shred carrots and onion.(I like to use a tupperware bowl with 
+a lid so I can easily
+refrigerate later).
+
+While macaroni is still hot, sprinkle on vinegar and add carrot and onion. Toss 
+together until well combined. Allow to cool for about 10-15 minutes.
+
+In a separate, smaller bowl, whisk together mayo, milk, and sugar.
+
+Fold mayo mixture into the macaroni until all the noodles are evenly coated. 
+Add salt and pepper to taste.
+
+Cover and refrigerate at least 4 hours (best if overnight). Gently stir before 
+serving adding a little more milk if needed, no more than a tablespoon or two.
+'''
+rdb.new_recipe(
+    name='Hawaiian Macaroni Salad',
+    author=panmomma,
+    blurb='The secret is in the ungodly amount of mayo',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('3 pound','macaroni'),
+        ('1 tbs', 'apple cider vinegar'),
+        ('2','carrots'),
+        ('1/4','onion'),
+        ('2 1/2 cups','moyonnaise'),
+        ('1/4 cup','milk'),
+        ('2 tsps', 'sugar'),
+        ('kosher salt'),
+        ('black pepper')
+      ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type="Anytime",
+    prep_time=60,
+    recipe_image=rdb.new_image(image_dir.with_child('hawaiian_mac_salad.jpg')),
+)
+
+#v12
+instructions = '''
+Slice the SPAM into about 8-10 slices (depending on how thick you like it) and put in 
+a Ziploc bag. Mix together oyster sauce, soy sauce and sugar until sugar is dissolved and add 
+to the bag with the SPAM. Marinate for about 15 minutes.
+
+Drain off marinade and fry SPAM on each side over medium heat until slightly 
+crispy or until desired doneness. (Some people like to glaze the SPAM with the marinade/sauce 
+AFTER frying.. either way tastes great!) Place a strip of nori on a cutting board or clean surface
+(shiny side down). Place your Musubi mold across the middle of the nori (so if you folded up the 
+sides of the nori, it would wrap around the middle of the can)
+
+Add rice to the mold, pressing down firmly and evenly, so there is about 1-1 1/2 inches of rice 
+(if the rice starts to stick to the mold too much, dip it in water. You will notice you will 
+have to dip your fingers in water quite a bit because the rice is so sticky. I usually just 
+keep a bowl of water right next to where I am working.) Next, remove the mold from the rice.
+Now you will have a nice little block of rice right on the nori. Add some of the cooked spam
+to the top. Wrap up one side of the nori and stick it to the top of the SPAM, then wrap up
+the other side. Just like you are wrapping a nice little package. Use a little water on your
+finger to seal if needed. Serve warm.
+'''
+rdb.new_recipe(
+    name='Spam Musubi',
+    author=panmomma,
+    blurb='Delicious and salty',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('1 can','spam'),
+        ('1/4 cup', 'oyster sauce'),
+        ('1/4 cup','soy sauce'),
+        ('1/2 cup','sugar'),
+        ('3 sheets','nori seaweed'),
+        ('5 cups','cooked', 'sushi rice')
+      ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type="Anytime",
+    prep_time=30,
+    recipe_image=rdb.new_image(image_dir.with_child('spam_musubi.jpg')),
+)
+
+#v13
+instructions = '''
+Combine the eggs, salt, and 1/2 cup water in a heat-safe ceramic bowl, such as a 
+ramekin or small ddukbaegi. Whisk until well combined and foamy.
+
+Place the bowl in a pot. Fill the pot with hot (not boiling) water to come halfway
+up the sides of the bowl. Cover the pot, preferably with a clear glass lid so you 
+can easily watch the water and eggs. Cook over low-medium heat for 12 minutes, making 
+sure the water stays at a gentle simmer.
+
+Sprinkle the scallions on top of the eggs and continue to cook for about 3 minutes or 
+until the eggs are set. They should be firm but jiggly.
+
+Carefully lift the bowl from the pot and serve.
+'''
+rdb.new_recipe(
+    name='Steamed Egg',
+    author=panmomma,
+    blurb='Steamed eggs are silky and savory',
+    country_of_origin='Korea',
+    cuisine=None,
+    ingredients=[
+        ('2 large','eggs'),
+        ('1/2 cup', 'water'),
+        ('1/4 tsp','salt'),
+        ('1/2','scallion')
+      ],
+    instructions=instructions,
+    serving_size=8,
+    meal_type="Anytime",
+    prep_time=20,
+    recipe_image=rdb.new_image(image_dir.with_child('steamed_egg.jpg')),
+)
+
+#v14
+instructions = '''
+In a bowl, combine chicken, lime from 2 limes, garlic, taco seasoning mix, 1 tablespoon 
+of the oil and brown sugar. Massage onto meat and marinate for about 4 to 5 hours. 
+Drain chicken from the marinade and cut into 1-inch pieces.
+
+Dice tomatoes and shred lettuce.
+
+In a pan over medium heat, heat remaining 1 tablespoon oil. Add chicken and cook, 
+stirring occasionally, until lightly browned and cooked through. Remove from heat 
+and keep warm. 
+
+Alternatively, grill chicken over hot coal until nicely charred and cooked through. 
+Cut into 1-inch pieces.
+
+In an ungreased skillet over medium heat, place tortilla and cook for about 20 to 30 
+seconds on each side or until warm and pliable. 
+
+Combine mayo, milk, and juice from half a lime to make the secret sauce.
+
+To assemble, place chicken in the middle of warmed tortilla, top with lettuce and tomato, 
+drizzle secret sauce, and sprinkle cheese.
+'''
+rdb.new_recipe(
+    name='Delta Co Chicken Soft Tacos',
+    author=panmomma,
+    blurb='Perfection wrapped in a tortilla',
+    country_of_origin=None,
+    cuisine=None,
+    ingredients=[
+        ('2 pounds','boneless, skinless','chicken thighs'),
+        ('2 1/2', 'limes'),
+        ('2 cloves','garlic'),
+        ('2 tbs','taco seasoning'),
+        ('2 tbs','vegetable oil'),
+        ('1 tsp','brown sugar'),
+        ('1/2 head', 'lettuce'),
+        ('2', 'tomatoes'),
+        ('8','flour tortillas'),
+        ('1/2 cup','queso fresco'),
+        ('1 tbs','milk'),
+        ('1/4 cup', 'mayonnaise')
+      ],
+    instructions=instructions,
+    serving_size=5,
+    meal_type="Anytime",
+    prep_time=60,
+    recipe_image=rdb.new_image(image_dir.with_child('chicken_taco.jpg')),
+)
+
 
 instructions = '''
 Mix together egg, milk, salt, vanilla, and cinnamon or other spicesin a wide,
