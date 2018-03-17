@@ -649,7 +649,7 @@ class RecipeDB:
         cur = self.sql.cursor()
 
         user_id = helpers.random_hex()
-        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        password_hash = helpers.hash_password(password)
         date_joined = helpers.now()
 
         if not display_name:

@@ -2,6 +2,7 @@
 This file contains toplevel functions that are used throughout the program
 but don't belong to any one class in particular.
 '''
+import bcrypt
 import datetime
 import math
 import os
@@ -11,6 +12,15 @@ import unicodedata
 from . import constants
 from . import exceptions
 
+NoneType = type(None)
+
+
+def hash_password(password):
+    if not isinstance(password, (NoneType, str)):
+        raise TypeError('password should be None/str instead of %s.' % type(password))
+
+    password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    return password_hash
 
 def now(timestamp=True):
     '''
