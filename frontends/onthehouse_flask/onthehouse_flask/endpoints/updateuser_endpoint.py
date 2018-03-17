@@ -14,33 +14,31 @@ def update_page():
 
 @site.route('/updateuser', methods=['POST'])
 def post_update():
-    displayname = request.form.get('displayname', '')
-    password = request.form.get('new password', '')
-    password2 = request.form.get('re-enter password', '')
-    bio_text = request.form.get('bio text', '')
-    print(request.files)
+    display_name = request.form.get('displayname', None)
+    password = request.form.get('new password', None)
+    password2 = request.form.get('re-enter password', None)
+    bio_text = request.form.get('bio text', None)
     uimage = request.files.get('user image', None)
-    print(uimage)
 
     user = common.get_session(request)
     if user is None:
         flask.abort(403)
 
-    if password != "":
+    if password == '':
+        password = None
+
+    if password is not None:
         if password != password2:
             #flash('Passwords must match')
             flask.abort(403)
-        user.set_password(password)
 
-    if displayname != "":
-        user.set_display_name(displayname)
-
-    if bio_text != "":
-        user.set_bio_text(bio_text)
-
-    if uimage != None:
-        userimage = common.process_uploaded_image(uimage)
-        user.set_profile_image(userimage)
+    profile_image = common.process_uploaded_image(uimage)
+    user.edit(
+        bio_text=bio_text,
+        display_name=display_name,
+        password=password,
+        profile_image=profile_image,
+    )
 
     response = jsonify.make_json_response({'username': user.username})
 
