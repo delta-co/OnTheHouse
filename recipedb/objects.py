@@ -469,6 +469,29 @@ class User(UserMixin, ObjectBase):
         users = [self.recipedb.get_user(id=i) for i in user_ids]
         return users
 
+    def edit(self, display_name=None, bio_text=None, password=None, profile_image=None):
+        if display_name is not None:
+            self.display_name = display_name
+
+        if bio_text is not None:
+            self.bio_text = bio_text
+
+        if password is not None:
+            self.recipedb._assert_valid_password(password)
+            self.password_hash = helpers.hash_password(password)
+
+        if profile_image is not None:
+            self.profile_image_id = profile_image.id
+
+        query = '''
+        UPDATE User SET DisplayName = ?, BioText = ?, PasswordHash = ?, ProfileImageID = ?
+        WHERE UserID = ?
+        '''
+        bindings = [self.display_name, self.bio_text, self.password_hash, self.profile_image_id, self.id]
+        cur = self.recipedb.sql.cursor()
+        cur.execute(query, bindings)
+        self.recipedb.sql.commit()
+
     def get_feed(self):
         '''
         Return a list containing the recipes and reviews published by the
