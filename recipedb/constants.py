@@ -178,4 +178,7 @@ PASSWORD_MINLENGTH = 1
 
 DEFAULT_CONFIGURATION = {
     'log_level': logging.DEBUG,
+    'features': {
+        'allow_image_uploads': True,
+    }
 }

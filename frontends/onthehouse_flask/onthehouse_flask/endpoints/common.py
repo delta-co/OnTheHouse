@@ -59,6 +59,12 @@ def get_session(request):
     return get_user_from_cookie(cookie_check)
 
 def process_uploaded_image(uploaded_image):
+    if uploaded_image is None:
+        return None
+
+    if not rdb.config['features']['allow_image_uploads']:
+        return None
+
     tmp = tempfile.NamedTemporaryFile(delete=False,suffix='.jpg')
     try:
         tmp.write(uploaded_image.read())
@@ -68,11 +74,6 @@ def process_uploaded_image(uploaded_image):
     finally:
         os.unlink(tmp.name)
     return processed_image
-    # generate a temporary filename and save the file.
-    # call rdb.new_image with that temp name.
-    # delete the temp file.
-    # return the rdb image that was created.
-    #pass
 
 def send_file(filepath, override_mimetype=None):
     '''
