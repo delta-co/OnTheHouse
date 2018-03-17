@@ -1,4 +1,3 @@
-from . import decorators
 from . import endpoints
 from . import jsonify
 
