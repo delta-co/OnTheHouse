@@ -31,5 +31,9 @@ def user():
 
 @site.route('/feed')
 def get_feed():
-    response = render_template('feed.html', session_user=common.get_session(request))
+    user = common.get_session(request)
+    if user is None:
+        return flask.redirect('/login')
+
+    response = render_template('feed.html', session_user=user)
     return response
